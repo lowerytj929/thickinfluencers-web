@@ -130,4 +130,5 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`\n✅ Bot listening on port ${PORT}`);
   console.log(`Health: http://localhost:${PORT}/`);
+  console.log("Ready for Telegram updates!");
 });
