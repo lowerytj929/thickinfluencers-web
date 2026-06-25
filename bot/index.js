@@ -144,5 +144,6 @@ app.get("/", (req, res) => res.send("Bot is running"));
 
 app.listen(PORT, () => {
   console.log(`Telegram bot running on port ${PORT}`);
-  console.log(`Set webhook: https://api.telegram.org/bot${TELEGRAM_TOKEN}/setWebhook?url=https://YOUR-RAILWAY-URL/`);
+  console.log(`Set webhook: https://api.telegram.org/bot${TELEGRAM_TOKEN.substring(0, 10)}.../setWebhook?url=https://YOUR-RAILWAY-URL/`);
+  console.log("Bot started at:", new Date().toISOString());
 });
