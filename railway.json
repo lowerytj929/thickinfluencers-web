@@ -1,11 +1,11 @@
 {
   "build": {
     "builder": "NIXPACKS",
-    "watchPatterns": ["bot/**", "supabase/**"]
+    "buildCommand": "npm install"
   },
   "deploy": {
     "numReplicas": 1,
-    "startCommand": "cd bot && bun run telegram-bot.ts",
+    "startCommand": "node bot/index.js",
     "healthcheckPath": "/",
     "restartPolicyType": "ON_FAILURE"
   }
