@@ -1,61 +1,69 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
+import { useEffect, useState } from 'react';
+import { ShieldCheck } from 'lucide-react';
 
 export default function AgeVerificationModal() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Check local storage to see if user has already verified
-    const isVerified = localStorage.getItem("age-verified");
-    if (!isVerified) {
-      // Block scrolling
-      document.body.style.overflow = "hidden";
-      setIsOpen(true);
+    const verified = sessionStorage.getItem('ageVerified');
+    if (!verified) {
+      setVisible(true);
     }
   }, []);
 
-  const handleEnter = () => {
-    localStorage.setItem("age-verified", "true");
-    document.body.style.overflow = "auto";
-    setIsOpen(false);
+  const handleYes = () => {
+    sessionStorage.setItem('ageVerified', 'true');
+    setVisible(false);
   };
 
-  const handleExit = () => {
-    window.location.href = "https://www.google.com";
+  const handleNo = () => {
+    window.location.href = 'https://www.google.com';
   };
 
-  if (!isOpen) return null;
+  if (!visible) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-      <div className="max-w-md w-full bg-[#1A0A12] border border-pink-900/50 rounded-2xl shadow-2xl overflow-hidden p-8 text-center animate-in fade-in zoom-in duration-300">
-        <div className="w-16 h-16 bg-pink-600/20 rounded-full flex items-center justify-center mx-auto mb-6">
-          <span className="text-2xl font-bold text-pink-500">18+</span>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm animate-fade-in">
+      <div className="relative bg-bg-card border border-border-dark rounded-2xl p-8 sm:p-10 max-w-md w-full mx-4 shadow-2xl animate-zoom-in">
+        {/* Icon */}
+        <div className="flex justify-center mb-5">
+          <div className="w-16 h-16 rounded-full bg-accent-pink/10 flex items-center justify-center">
+            <ShieldCheck className="w-8 h-8 text-accent-pink" />
+          </div>
         </div>
-        
-        <h2 className="text-2xl font-bold text-white mb-4 tracking-tight">Age Verification Required</h2>
-        
-        <p className="text-gray-300 mb-8 leading-relaxed">
-          This site is intended for adults 18+ only. By entering, you confirm you are at least 18 years old and agree to view age-restricted content.
+
+        {/* Heading */}
+        <h2 className="text-xl font-bold text-text-primary text-center mb-2">
+          Age Verification
+        </h2>
+
+        {/* Description */}
+        <p className="text-sm text-text-secondary text-center leading-relaxed mb-7">
+          This platform contains media content intended for adults.
+          Please confirm that you are at least 18 years of age to continue.
         </p>
 
-        <div className="space-y-4">
-          <button 
-            onClick={handleEnter}
-            className="w-full py-4 px-6 bg-gradient-to-r from-[#FFD700] to-[#FFEA00] text-black font-bold text-lg rounded-xl shadow-[0_0_20px_rgba(255,215,0,0.3)] hover:shadow-[0_0_30px_rgba(255,215,0,0.5)] transition-all transform hover:scale-[1.02]"
+        {/* Buttons */}
+        <div className="flex flex-col sm:flex-row gap-3">
+          <button
+            onClick={handleYes}
+            className="flex-1 btn-primary text-sm !py-3"
           >
-            I am 18+ — Enter
+            Yes, I am 18+
           </button>
-          
-          <button 
-            onClick={handleExit}
-            className="w-full py-4 px-6 bg-transparent text-gray-400 font-semibold rounded-xl hover:text-white transition-colors"
+          <button
+            onClick={handleNo}
+            className="flex-1 btn-secondary text-sm !py-3"
           >
-            Exit
+            No, Leave Site
           </button>
         </div>
+
+        <p className="text-center text-[11px] text-text-muted mt-5 leading-relaxed">
+          Your choice is saved for this session only.
+        </p>
       </div>
     </div>
   );

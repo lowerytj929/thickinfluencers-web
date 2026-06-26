@@ -1,14 +1,21 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import AgeVerificationModal from "@/components/shared/AgeVerificationModal";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import NavBar from '@/components/shared/NavBar';
+import MobileNav from '@/components/shared/MobileNav';
+import Footer from '@/components/shared/Footer';
+import AgeVerificationModal from '@/components/shared/AgeVerificationModal';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
 
 export const metadata: Metadata = {
-  title: "Thick Influencers | Your Private Influencer Vault",
-  description: "The Internet's Largest Influencer Vault. 200,000+ community reach across our network. Updated daily. Only approved, consensual 18+ content.",
-  keywords: ["influencer vault", "private membership", "exclusive content", "influencers"],
+  title: 'ThickInfluencers — Premium Media Platform',
+  description:
+    'Discover and share premium media content from creators worldwide. A curated platform for visual storytelling and artistic expression.',
 };
 
 export default function RootLayout({
@@ -17,10 +24,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark h-full antialiased">
-      <body className={`${inter.className} min-h-full flex flex-col bg-[#0A0508] text-white`}>
+    <html lang="en" className={inter.variable}>
+      <body className="antialiased bg-bg-primary text-text-primary font-sans min-h-screen flex flex-col">
         <AgeVerificationModal />
-        {children}
+        <NavBar />
+        <main className="flex-1 pt-16 pb-20 md:pb-0">{children}</main>
+        <Footer />
+        <MobileNav />
       </body>
     </html>
   );
