@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Crown, Eye, Heart, Flame, Sparkles, Lock, Grid, Users, ShoppingBag, ChevronRight, MessageCircle, Twitter, ExternalLink } from "lucide-react";
+import { ArrowRight, Crown, Eye, Heart, Flame, Sparkles, Lock, Grid, Users, ShoppingBag, ChevronRight, MessageCircle, AtSign, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import MediaCard from "@/components/shared/MediaCard";
 import CreatorCard from "@/components/shared/CreatorCard";
@@ -271,7 +271,7 @@ export default function HomePage() {
               className="group bg-bg-card border border-border-dark rounded-xl p-8 card-hover text-center hover:border-accent-blue/40 transition-all"
             >
               <div className="w-16 h-16 rounded-full bg-accent-blue/10 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform">
-                <Twitter className="w-8 h-8 text-accent-blue" />
+                <AtSign className="w-8 h-8 text-accent-blue" />
               </div>
               <h3 className="text-xl font-bold text-text-primary mb-2">Follow on Twitter</h3>
               <p className="text-2xl font-bold text-text-secondary mb-2">@vaultEmpireHQ</p>
