@@ -55,7 +55,15 @@ export async function POST(request: NextRequest) {
   try {
     switch (event.type) {
       case "checkout.session.completed": {
-        await handleCheckoutCompleted(event.data.object);
+        const session = event.data.object as {
+          id: string;
+          metadata?: Record<string, string> | null;
+          payment_intent?: string | null;
+          amount_total?: number | null;
+          currency?: string | null;
+          customer?: string | null;
+        };
+        await handleCheckoutCompleted(session);
         break;
       }
 
