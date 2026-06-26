@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Crown, Eye, Heart, Flame, Sparkles, Lock, Grid, Users, ShoppingBag, ChevronRight } from "lucide-react";
+import { ArrowRight, Crown, Eye, Heart, Flame, Sparkles, Lock, Grid, Users, ShoppingBag, ChevronRight, MessageCircle, Twitter, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import MediaCard from "@/components/shared/MediaCard";
 import CreatorCard from "@/components/shared/CreatorCard";
@@ -222,6 +222,65 @@ export default function HomePage() {
               View Membership Plans
               <ArrowRight className="w-4 h-4" />
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Community Section: Reddit + Twitter ─── */}
+      <section className="w-full bg-gradient-to-b from-bg-primary via-[#1a0a18] to-bg-primary border-t border-border-dark py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-purple/10 border border-accent-purple/20 mb-4">
+              <MessageCircle className="w-4 h-4 text-accent-purple" />
+              <span className="text-xs font-semibold text-accent-purple tracking-widest uppercase">Join the Community</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-4">
+              Connect With Us
+            </h2>
+            <p className="text-text-secondary max-w-2xl mx-auto">
+              Join 100K+ members on Reddit and follow us on Twitter for the latest updates,
+              exclusive previews, and community discussions.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            {/* Reddit Card */}
+            <a
+              href="https://reddit.com/r/thickinfluencersNSFW"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-bg-card border border-border-dark rounded-xl p-8 card-hover text-center hover:border-accent-orange/40 transition-all"
+            >
+              <div className="w-16 h-16 rounded-full bg-[#FF4500]/10 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform">
+                <MessageCircle className="w-8 h-8 text-[#FF4500]" />
+              </div>
+              <h3 className="text-xl font-bold text-text-primary mb-2">Reddit Community</h3>
+              <p className="text-3xl font-black text-accent-gold mb-2">100K+</p>
+              <p className="text-sm text-text-secondary mb-5">Members on r/thickinfluencersNSFW</p>
+              <span className="inline-flex items-center gap-2 px-6 py-3 bg-[#FF4500] text-white font-semibold text-sm rounded-xl group-hover:opacity-90 transition-all">
+                Join on Reddit
+                <ExternalLink className="w-4 h-4" />
+              </span>
+            </a>
+
+            {/* Twitter Card */}
+            <a
+              href="https://twitter.com/vaultEmpireHQ"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-bg-card border border-border-dark rounded-xl p-8 card-hover text-center hover:border-accent-blue/40 transition-all"
+            >
+              <div className="w-16 h-16 rounded-full bg-accent-blue/10 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform">
+                <Twitter className="w-8 h-8 text-accent-blue" />
+              </div>
+              <h3 className="text-xl font-bold text-text-primary mb-2">Follow on Twitter</h3>
+              <p className="text-2xl font-bold text-text-secondary mb-2">@vaultEmpireHQ</p>
+              <p className="text-sm text-text-secondary mb-5">Latest updates, previews & announcements</p>
+              <span className="inline-flex items-center gap-2 px-6 py-3 bg-accent-blue text-white font-semibold text-sm rounded-xl group-hover:opacity-90 transition-all">
+                Follow @vaultEmpireHQ
+                <ExternalLink className="w-4 h-4" />
+              </span>
+            </a>
           </div>
         </div>
       </section>
