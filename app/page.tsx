@@ -54,25 +54,25 @@ export default function HomePage() {
         <div className="relative z-10 max-w-4xl mx-auto text-center py-20">
           {/* Pill badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 animate-fade-in">
-            <Flame className="w-4 h-4 text-accent-pink" />
+            <Crown className="w-4 h-4 text-accent-gold" />
             <span className="text-xs font-medium text-text-secondary tracking-widest uppercase">
-              Premium Media Platform
+              Vault Empire — Premium Content Vault
             </span>
           </div>
 
           {/* Headline */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-text-primary mb-6 leading-none animate-slide-up">
-            Discover
+            Enter
             <br />
             <span className="bg-gradient-to-r from-accent-gold via-accent-pink to-accent-purple bg-clip-text text-transparent">
-              Exclusive Content
+              The Vault
             </span>
           </h1>
 
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-10 animate-fade-in">
-            Explore curated galleries from top creators worldwide. Join a thriving
-            community of visual storytellers and unlock premium media collections.
+            Unlock the empire's finest thicc influencer content. Curated galleries
+            from the vault, powered by the r/thickinfluencersNSFW community.
           </p>
 
           {/* CTA Buttons */}
@@ -82,16 +82,38 @@ export default function HomePage() {
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-accent-pink to-accent-purple text-white font-bold text-base rounded-xl hover:opacity-90 transition-all transform hover:scale-[1.02] shadow-lg shadow-accent-pink/20"
             >
               <Eye className="w-5 h-5" />
-              Explore Trending
+              Explore the Vault
               <ChevronRight className="w-4 h-4" />
             </Link>
             <Link
               href="/premium"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/5 border border-white/10 text-text-primary font-semibold text-base rounded-xl hover:bg-white/10 hover:border-accent-pink/30 transition-all"
             >
-              <Crown className="w-5 h-5 text-accent-gold" />
-              Join Premium
+              <Lock className="w-5 h-5 text-accent-gold" />
+              Unlock Premium
             </Link>
+          </div>
+
+          {/* Community badge */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3 animate-fade-in">
+            <a
+              href="https://reddit.com/r/thickinfluencersNSFW"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FF4500]/10 border border-[#FF4500]/20 text-xs font-semibold text-[#FF4500] hover:bg-[#FF4500]/20 transition-all"
+            >
+              <MessageCircle className="w-3.5 h-3.5" />
+              Powered by r/thickinfluencersNSFW
+            </a>
+            <a
+              href="https://twitter.com/vaultEmpireHQ"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-blue/10 border border-accent-blue/20 text-xs font-semibold text-accent-blue hover:bg-accent-blue/20 transition-all"
+            >
+              <AtSign className="w-3.5 h-3.5" />
+              Follow @VaultEmpireHQ
+            </a>
           </div>
         </div>
       </section>
@@ -101,17 +123,17 @@ export default function HomePage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-2">
-              Trending Galleries
+              Trending in the Vault
             </h2>
             <p className="text-sm text-text-secondary">
-              Most viewed collections this week
+              Hottest collections from the empire this week
             </p>
           </div>
           <Link
             href="/search"
             className="hidden sm:flex items-center gap-1 text-sm text-accent-pink hover:text-accent-pink/80 transition-colors font-medium"
           >
-            View All
+            See All Vault Content
             <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
@@ -134,7 +156,7 @@ export default function HomePage() {
             href="/search"
             className="inline-flex items-center gap-2 px-6 py-3 bg-bg-surface border border-border-dark text-text-primary font-medium text-sm rounded-xl hover:border-accent-pink/30 transition-all"
           >
-            View All Galleries
+            Explore the Full Vault
             <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
@@ -145,17 +167,17 @@ export default function HomePage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-2">
-              Featured Creators
+              Vault Creators
             </h2>
             <p className="text-sm text-text-secondary">
-              Discover talented visual artists and photographers
+              Top talent in the empire's collection
             </p>
           </div>
           <Link
             href="/search?filter=creators"
             className="hidden sm:flex items-center gap-1 text-sm text-accent-pink hover:text-accent-pink/80 transition-colors font-medium"
           >
-            View All
+            All Vault Creators
             <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
@@ -179,15 +201,15 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-gold/10 border border-accent-gold/20 mb-4">
-              <Crown className="w-4 h-4 text-accent-gold" />
-              <span className="text-xs font-semibold text-accent-gold tracking-widest uppercase">Premium Access</span>
+              <Lock className="w-4 h-4 text-accent-gold" />
+              <span className="text-xs font-semibold text-accent-gold tracking-widest uppercase">Vault Access</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-4">
-              Unlock the Full Experience
+              Unlock the Full Vault
             </h2>
             <p className="text-text-secondary max-w-2xl mx-auto">
-              Go beyond the previews. Get unlimited access to all premium galleries,
-              exclusive content drops, and creator communities.
+              Go beyond the previews. Get unlimited access to every vault gallery,
+              exclusive content drops, and the empire's inner circles.
             </p>
           </div>
 
@@ -199,8 +221,8 @@ export default function HomePage() {
                   key={i}
                   className="bg-bg-card border border-border-dark rounded-xl p-6 card-hover"
                 >
-                  <div className="w-12 h-12 rounded-lg bg-accent-pink/10 flex items-center justify-center mb-4">
-                    <Icon className="w-6 h-6 text-accent-pink" />
+                  <div className="w-12 h-12 rounded-lg bg-accent-gold/10 flex items-center justify-center mb-4">
+                    <Icon className="w-6 h-6 text-accent-gold" />
                   </div>
                   <h3 className="text-lg font-semibold text-text-primary mb-2">
                     {feature.title}
@@ -219,7 +241,7 @@ export default function HomePage() {
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-accent-gold to-accent-pink text-white font-bold text-base rounded-xl hover:opacity-90 transition-all transform hover:scale-[1.02] shadow-lg shadow-accent-pink/20"
             >
               <Crown className="w-5 h-5" />
-              View Membership Plans
+              Claim Vault Access
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -231,53 +253,56 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-purple/10 border border-accent-purple/20 mb-4">
-              <MessageCircle className="w-4 h-4 text-accent-purple" />
-              <span className="text-xs font-semibold text-accent-purple tracking-widest uppercase">Join the Community</span>
+              <Users className="w-4 h-4 text-accent-purple" />
+              <span className="text-xs font-semibold text-accent-purple tracking-widest uppercase">The Empire — Join 300K+</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-4">
-              Connect With Us
+              Enter the Empire
             </h2>
             <p className="text-text-secondary max-w-2xl mx-auto">
-              Join 200K+ members on Telegram, 100K+ on Reddit, and follow us on Twitter for the latest updates,
-              exclusive previews, and community discussions.
+              The vault is powered by the community. Join 100K+ on Reddit, follow
+              200K+ on Telegram, and connect with us on Twitter for exclusive previews,
+              drops, and the finest thicc influencer content in the empire.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {/* Reddit Card — moved first for prominence */}
+            <a
+              href="https://reddit.com/r/thickinfluencersNSFW"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-bg-card border border-border-dark rounded-xl p-8 card-hover text-center hover:border-[#FF4500]/40 transition-all relative overflow-hidden"
+            >
+              <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#FF4500] to-accent-pink" />
+              <div className="w-16 h-16 rounded-full bg-[#FF4500]/10 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform">
+                <MessageCircle className="w-8 h-8 text-[#FF4500]" />
+              </div>
+              <h3 className="text-xl font-bold text-text-primary mb-2">r/thickinfluencersNSFW</h3>
+              <p className="text-3xl font-black text-accent-gold mb-2">100K+</p>
+              <p className="text-sm text-text-secondary mb-5">Thicc enthusiasts in the empire</p>
+              <span className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#FF4500] to-accent-pink text-white font-semibold text-sm rounded-xl group-hover:opacity-90 transition-all">
+                Enter the Subreddit
+                <ExternalLink className="w-4 h-4" />
+              </span>
+            </a>
+
             {/* Telegram Card */}
             <a
               href="https://t.me/+MPDBT1cPlFBjNTkx"
               target="_blank"
               rel="noopener noreferrer"
-              className="group bg-bg-card border border-border-dark rounded-xl p-8 card-hover text-center hover:border-[#229ED9]/40 transition-all"
+              className="group bg-bg-card border border-border-dark rounded-xl p-8 card-hover text-center hover:border-[#229ED9]/40 transition-all relative overflow-hidden"
             >
+              <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#229ED9] to-accent-purple" />
               <div className="w-16 h-16 rounded-full bg-[#229ED9]/10 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform">
                 <Send className="w-8 h-8 text-[#229ED9]" />
               </div>
-              <h3 className="text-xl font-bold text-text-primary mb-2">Telegram Community</h3>
+              <h3 className="text-xl font-bold text-text-primary mb-2">Telegram Vault</h3>
               <p className="text-3xl font-black text-accent-gold mb-2">200K+</p>
-              <p className="text-sm text-text-secondary mb-5">Members on Telegram channels</p>
+              <p className="text-sm text-text-secondary mb-5">Members in the vault channels</p>
               <span className="inline-flex items-center gap-2 px-6 py-3 bg-[#229ED9] text-white font-semibold text-sm rounded-xl group-hover:opacity-90 transition-all">
-                Join Free Preview
-                <ExternalLink className="w-4 h-4" />
-              </span>
-            </a>
-
-            {/* Reddit Card */}
-            <a
-              href="https://reddit.com/r/thickinfluencersNSFW"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-bg-card border border-border-dark rounded-xl p-8 card-hover text-center hover:border-[#FF4500]/40 transition-all"
-            >
-              <div className="w-16 h-16 rounded-full bg-[#FF4500]/10 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform">
-                <MessageCircle className="w-8 h-8 text-[#FF4500]" />
-              </div>
-              <h3 className="text-xl font-bold text-text-primary mb-2">Reddit Community</h3>
-              <p className="text-3xl font-black text-accent-gold mb-2">100K+</p>
-              <p className="text-sm text-text-secondary mb-5">Members on r/thickinfluencersNSFW</p>
-              <span className="inline-flex items-center gap-2 px-6 py-3 bg-[#FF4500] text-white font-semibold text-sm rounded-xl group-hover:opacity-90 transition-all">
-                Join on Reddit
+                Unlock Free Preview
                 <ExternalLink className="w-4 h-4" />
               </span>
             </a>
@@ -287,16 +312,17 @@ export default function HomePage() {
               href="https://twitter.com/vaultEmpireHQ"
               target="_blank"
               rel="noopener noreferrer"
-              className="group bg-bg-card border border-border-dark rounded-xl p-8 card-hover text-center hover:border-accent-blue/40 transition-all"
+              className="group bg-bg-card border border-border-dark rounded-xl p-8 card-hover text-center hover:border-accent-blue/40 transition-all relative overflow-hidden"
             >
+              <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-accent-blue to-accent-gold" />
               <div className="w-16 h-16 rounded-full bg-accent-blue/10 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform">
                 <AtSign className="w-8 h-8 text-accent-blue" />
               </div>
-              <h3 className="text-xl font-bold text-text-primary mb-2">Follow on Twitter</h3>
-              <p className="text-2xl font-bold text-text-secondary mb-2">@vaultEmpireHQ</p>
-              <p className="text-sm text-text-secondary mb-5">Latest updates, previews & announcements</p>
+              <h3 className="text-xl font-bold text-text-primary mb-2">Twitter / X</h3>
+              <p className="text-2xl font-bold text-accent-gold mb-2">@VaultEmpireHQ</p>
+              <p className="text-sm text-text-secondary mb-5">Vault updates & announcements</p>
               <span className="inline-flex items-center gap-2 px-6 py-3 bg-accent-blue text-white font-semibold text-sm rounded-xl group-hover:opacity-90 transition-all">
-                Follow @vaultEmpireHQ
+                Follow the Empire
                 <ExternalLink className="w-4 h-4" />
               </span>
             </a>
@@ -305,13 +331,13 @@ export default function HomePage() {
       </section>
 
       {/* ─── Categories Section ─── */}
-      <section className="w-full max-w-7xl mx-auto px-4 py-16 md:py-24">
+      <section className="w-full max-w-7xl mx-auto px-4 py-16 md:py-24 border-t border-border-dark">
         <div className="text-center mb-10">
           <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-2">
-            Browse by Category
+            Vault Categories
           </h2>
           <p className="text-sm text-text-secondary">
-            Find exactly what you are looking for
+            Explore the empire by collection type
           </p>
         </div>
         <div className="flex flex-wrap justify-center gap-3">

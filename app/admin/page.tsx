@@ -21,9 +21,10 @@ import {
   ExternalLink,
   Shield,
   BarChart3,
+  Crown,
 } from "lucide-react";
 
-type TabId = "content" | "orders" | "members" | "reports" | "settings";
+type TabId = "content" | "orders" | "members" | "reports" | "settings" | "integrations";
 
 interface Stats {
   totalUsers: number;
@@ -61,6 +62,7 @@ export default function AdminPage() {
   const [memberships, setMemberships] = useState<any[]>([]);
   const [packages, setPackages] = useState<any[]>([]);
   const [reports, setReports] = useState<ReportItem[]>([]);
+  const [integrations, setIntegrations] = useState<any[]>([]);
   const [tab, setTab] = useState<TabId>("orders");
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
@@ -87,11 +89,12 @@ export default function AdminPage() {
       setIsAdmin(true);
 
       // Load data
-      const [ordRes, memRes, pkgRes, repRes, userCount, galCount] = await Promise.all([
+      const [ordRes, memRes, pkgRes, repRes, intRes, userCount, galCount] = await Promise.all([
         supabase.from("orders").select("*").order("created_at", { ascending: false }).limit(50),
         supabase.from("memberships").select("*, profiles(username), packages(name)").limit(50),
         supabase.from("packages").select("*").order("price_cents"),
         supabase.from("reports").select("*, profiles(username)").order("created_at", { ascending: false }).limit(50),
+        supabase.from("creator_integrations").select("*, profiles(username)").order("connected_at", { ascending: false }).limit(50),
         supabase.from("profiles").select("id", { count: "exact", head: true }),
         supabase.from("galleries").select("id", { count: "exact", head: true }),
       ]);
@@ -100,6 +103,7 @@ export default function AdminPage() {
       setMemberships(memRes.data || []);
       setPackages(pkgRes.data || []);
       setReports(repRes.data || []);
+      setIntegrations(intRes.data || []);
 
       const totalRevenue = (ordRes.data || [])
         .filter(o => o.status === "completed")
@@ -162,6 +166,7 @@ export default function AdminPage() {
     { id: "orders", label: "Orders", icon: CreditCard },
     { id: "members", label: "Members", icon: Users },
     { id: "reports", label: "Reports", icon: Flag },
+    { id: "integrations", label: "Integrations", icon: Crown },
     { id: "settings", label: "Settings", icon: Settings },
   ];
 
@@ -481,6 +486,61 @@ export default function AdminPage() {
                 ))}
               </div>
             )}
+          </div>
+        )}
+
+        {/* ── Integrations Tab ── */}
+        {tab === "integrations" && (
+          <div>
+            <h2 className="text-lg font-bold text-text-primary mb-4">OnlyFans Integrations</h2>
+            <div className="bg-bg-card border border-border-dark rounded-xl overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border-dark text-text-muted">
+                      <th className="text-left p-4 font-medium">Auth ID</th>
+                      <th className="text-left p-4 font-medium">Username / Profile</th>
+                      <th className="text-left p-4 font-medium">Connected At</th>
+                      <th className="text-left p-4 font-medium">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {integrations.length === 0 ? (
+                      <tr>
+                        <td colSpan={4} className="p-8 text-center">
+                          <Crown className="w-12 h-12 text-text-muted mx-auto mb-4 opacity-40" />
+                          <p className="text-text-secondary font-medium">No OnlyFans accounts connected yet</p>
+                          <p className="text-sm text-text-muted mt-1">Creators will appear here once they link their OnlyFans account.</p>
+                        </td>
+                      </tr>
+                    ) : (
+                      integrations.map((int: any) => (
+                        <tr key={int.id} className="border-b border-border-dark/50 text-text-primary">
+                          <td className="p-4 font-mono text-xs">{int.auth_id?.slice(0, 16)}...</td>
+                          <td className="p-4">{int.profiles?.username || int.creator_id?.slice(0, 8)}</td>
+                          <td className="p-4 text-text-muted">
+                            {int.connected_at ? new Date(int.connected_at).toLocaleDateString() : "—"}
+                          </td>
+                          <td className="p-4">
+                            <button
+                              onClick={async () => {
+                                if (!confirm("Disconnect this OnlyFans account?")) return;
+                                await supabase.from("creator_integrations").delete().eq("id", int.id);
+                                window.location.reload();
+                              }}
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-900/20 text-red-400 text-xs font-medium rounded-lg hover:bg-red-900/30 transition-all"
+                            >
+                              <XCircle className="w-3 h-3" />
+                              Disconnect
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         )}
 

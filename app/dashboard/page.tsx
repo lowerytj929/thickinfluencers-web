@@ -22,6 +22,7 @@ import {
   Edit3,
 } from "lucide-react";
 import Link from "next/link";
+import OnlyFansConnect from "@/components/shared/OnlyFansConnect";
 
 interface Membership {
   id: string;
@@ -194,6 +195,11 @@ export default function DashboardPage() {
               ))}
             </div>
           )}
+        </section>
+
+        {/* ─── OnlyFans Connect ─── */}
+        <section>
+          <OnlyFansConnect />
         </section>
 
         {/* ─── Your Content (placeholder) ─── */}
