@@ -29,6 +29,8 @@ if (SUPABASE_URL && SUPABASE_KEY) {
     console.log("Supabase: ✓ initialized (service role)");
   } catch (e) {
     console.error("Supabase init error:", e.message);
+    console.error("Supabase URL starts with:", SUPABASE_URL.substring(0, 25));
+    console.error("Supabase KEY starts with:", SUPABASE_KEY.substring(0, 10));
   }
 } else if (SUPABASE_URL && SUPABASE_ANON) {
   try {
