@@ -1,128 +1,91 @@
 "use client";
 
 import { useState } from "react";
-import { Crown, Check, X, Sparkles, Shield, Zap, Download, Eye, Heart, Users, ChevronDown, ChevronUp, ArrowRight } from "lucide-react";
+import { Crown, Check, Sparkles, ChevronDown, ChevronUp, ArrowRight, MessageCircle, Send, ExternalLink, Users, Zap, Shield } from "lucide-react";
 import Link from "next/link";
 
 const tiers = [
   {
-    name: "Explorer",
-    price: "$9.99",
-    period: "/month",
-    description: "Perfect for getting started with premium content.",
+    name: "FYP Access",
+    price: "$10",
+    period: "one-time",
+    description: "FYP channel access with daily influencer drops and instant Telegram invite.",
     features: [
-      "Access to 50+ galleries",
-      "Standard quality downloads",
-      "Basic support",
-      "Weekly content updates",
+      "FYP channel access",
+      "Daily content updates",
+      "Instant Telegram invite",
     ],
-    excluded: [
-      "Early access to new drops",
-      "HD quality streaming",
-      "Exclusive creator communities",
-      "Ad-free experience",
-    ],
+    cta: "Get FYP Access",
+    paymentLink: "https://square.link/u/2WEpsl0e?src=sheet",
     highlighted: false,
-    cta: "Get Started",
   },
   {
-    name: "Pro",
-    price: "$19.99",
-    period: "/month",
-    description: "For dedicated fans who want full access.",
+    name: "ThickVip",
+    price: "$15",
+    period: "one-time",
+    description: "Premium VIP access to exclusive Telegram communities with daily content drops.",
     features: [
-      "Access to 200+ galleries",
-      "HD quality downloads",
+      "VIP Telegram channel access",
+      "Exclusive content drops",
+      "Premium community access",
+      "Daily updates",
+    ],
+    cta: "Join ThickVip",
+    paymentLink: "https://square.link/u/Rf9OsolT?src=sheet",
+    highlighted: false,
+  },
+  {
+    name: "ThickCenter+",
+    price: "$25",
+    period: "one-time",
+    description: "Everything in ThickVip plus ThickCenter+ private channel and vault content.",
+    features: [
+      "Everything in ThickVip",
+      "ThickCenter+ private access",
+      "Premium vault content",
       "Priority support",
-      "Daily content updates",
-      "Early access to new drops",
-      "Ad-free experience",
     ],
-    excluded: [
-      "Exclusive creator communities",
-      "Behind-the-scenes content",
+    cta: "Get ThickCenter+",
+    paymentLink: "https://square.link/u/UYFxrabd?src=sheet",
+    highlighted: false,
+  },
+  {
+    name: "Full Bundle",
+    price: "$35",
+    period: "one-time",
+    description: "Best value — get full access to everything across all tiers.",
+    features: [
+      "Everything in all tiers",
+      "Full vault access",
+      "All Telegram communities",
+      "Lifetime access",
     ],
+    cta: "Get Full Bundle",
+    paymentLink: "https://square.link/u/FWjQoLfT?src=sheet",
     highlighted: true,
-    cta: "Go Pro",
   },
-  {
-    name: "Premium",
-    price: "$34.99",
-    period: "/month",
-    description: "The ultimate experience for true enthusiasts.",
-    features: [
-      "Unlimited gallery access",
-      "HD quality downloads",
-      "Priority support",
-      "Daily content updates",
-      "Early access to new drops",
-      "Ad-free experience",
-      "Exclusive creator communities",
-      "Behind-the-scenes content",
-    ],
-    excluded: [],
-    highlighted: false,
-    cta: "Go Premium",
-  },
-  {
-    name: "Lifetime",
-    price: "$299",
-    period: " one-time",
-    description: "One payment. Forever access.",
-    features: [
-      "Unlimited gallery access",
-      "HD quality downloads",
-      "Priority support",
-      "Daily content updates",
-      "Early access to new drops",
-      "Ad-free experience",
-      "Exclusive creator communities",
-      "Behind-the-scenes content",
-      "Lifetime updates",
-      "Special badge & recognition",
-    ],
-    excluded: [],
-    highlighted: false,
-    cta: "Get Lifetime",
-  },
-];
-
-const featureComparison = [
-  { feature: "Gallery Access", explorer: "50+", pro: "200+", premium: "Unlimited", lifetime: "Unlimited" },
-  { feature: "Download Quality", explorer: "Standard", pro: "HD", premium: "HD", lifetime: "HD" },
-  { feature: "Content Updates", explorer: "Weekly", pro: "Daily", premium: "Daily", lifetime: "Daily" },
-  { feature: "Early Access", explorer: false, pro: true, premium: true, lifetime: true },
-  { feature: "Ad-Free", explorer: false, pro: true, premium: true, lifetime: true },
-  { feature: "Creator Communities", explorer: false, pro: false, premium: true, lifetime: true },
-  { feature: "Behind-the-Scenes", explorer: false, pro: false, premium: true, lifetime: true },
-  { feature: "Priority Support", explorer: false, pro: true, premium: true, lifetime: true },
-  { feature: "Lifetime Access", explorer: false, pro: false, premium: false, lifetime: true },
 ];
 
 const faqs = [
   {
-    q: "What is Premium membership?",
-    a: "Premium membership unlocks exclusive galleries, early access to new content, HD downloads, and an ad-free browsing experience. It is our way of supporting creators while giving you the best possible experience on the platform.",
+    q: "How does access work?",
+    a: "After completing your purchase, message @richballer1 on Telegram with proof of payment. You will receive a unique invite link granting immediate access to the private channels.",
   },
   {
-    q: "How do I upgrade or downgrade my plan?",
-    a: "You can change your membership plan at any time from your dashboard. Upgrades take effect immediately, while downgrades apply at the start of the next billing cycle.",
+    q: "How long does it take to gain access?",
+    a: "Access is typically granted within minutes after you message the admin with your receipt.",
   },
   {
-    q: "Can I cancel anytime?",
-    a: "Yes, you can cancel your subscription at any time. Your access will continue until the end of your current billing period, after which your account will revert to the free tier.",
-  },
-  {
-    q: "Is there a free trial?",
-    a: "We occasionally offer free trials for new members. Check the current promotions on the sign-up page or follow us on social media for trial announcements.",
+    q: "Is this a one-time purchase?",
+    a: "Yes. Access is a one-time payment for the selected groups, until a subscription model is introduced.",
   },
   {
     q: "What payment methods are accepted?",
-    a: "We accept all major credit cards (Visa, Mastercard, American Express) as well as PayPal. All transactions are processed securely through our payment partners.",
+    a: "Payments are processed securely through Square. All major credit and debit cards are accepted.",
   },
   {
-    q: "Can I gift a membership to someone else?",
-    a: "Yes, gift memberships are available. You can purchase a gift subscription for a friend or family member from the checkout page.",
+    q: "Is this legit?",
+    a: "Yes. Our community spans over 200,000 members across Telegram and Reddit and continues to grow daily.",
   },
 ];
 
@@ -141,18 +104,18 @@ export default function PremiumPage() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-gold/10 border border-accent-gold/20 mb-6">
             <Crown className="w-4 h-4 text-accent-gold" />
             <span className="text-xs font-semibold text-accent-gold tracking-widest uppercase">
-              Premium Membership
+              Vault Access
             </span>
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-text-primary mb-6 leading-tight">
             Unlock{" "}
             <span className="bg-gradient-to-r from-accent-gold to-accent-pink bg-clip-text text-transparent">
-              Premium Access
+              The Vault
             </span>
           </h1>
           <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8">
-            Choose the plan that fits your lifestyle. Get unlimited access to exclusive
-            galleries, early releases, and a premium viewing experience.
+            Join 200,000+ members getting daily influencer drops, exclusive content,
+            and access to private Telegram communities.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
@@ -163,67 +126,62 @@ export default function PremiumPage() {
               View Plans
             </a>
             <a
-              href="#faq"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 border border-white/10 text-text-primary font-semibold rounded-xl hover:bg-white/10 transition-all"
+              href="https://t.me/+MPDBT1cPlFBjNTkx"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-[#229ED9]/10 border border-[#229ED9]/30 text-white font-semibold rounded-xl hover:bg-[#229ED9]/20 transition-all"
             >
-              Learn More
+              <Send className="w-5 h-5 text-[#229ED9]" />
+              Free Preview
             </a>
           </div>
         </div>
       </section>
 
-      {/* ─── Features Comparison ─── */}
-      <section className="max-w-6xl mx-auto px-4 py-16 md:py-24">
-        <h2 className="text-2xl md:text-3xl font-bold text-text-primary text-center mb-4">
-          Compare Plans
-        </h2>
-        <p className="text-text-secondary text-center mb-10 max-w-xl mx-auto">
-          Find the perfect plan for your needs. All plans include access to our growing library of content.
-        </p>
-
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[600px] border-collapse">
-            <thead>
-              <tr>
-                <th className="text-left p-4 text-sm font-semibold text-text-secondary">Feature</th>
-                {["Explorer", "Pro", "Premium", "Lifetime"].map((name) => (
-                  <th key={name} className="p-4 text-center text-sm font-bold text-text-primary">
-                    {name}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {featureComparison.map((row, i) => (
-                <tr key={i} className="border-t border-border-dark">
-                  <td className="p-4 text-sm text-text-secondary">{row.feature}</td>
-                  {(["explorer", "pro", "premium", "lifetime"] as const).map((tier) => (
-                    <td key={tier} className="p-4 text-center">
-                      {typeof row[tier] === "boolean" ? (
-                        row[tier] ? (
-                          <Check className="w-5 h-5 text-accent-pink mx-auto" />
-                        ) : (
-                          <X className="w-5 h-5 text-text-muted mx-auto" />
-                        )
-                      ) : (
-                        <span className="text-sm font-medium text-text-primary">{row[tier]}</span>
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {/* ─── Telegram Community Preview ─── */}
+      <section className="max-w-6xl mx-auto px-4 py-12">
+        <div className="bg-gradient-to-r from-[#229ED9]/10 to-accent-purple/10 border border-[#229ED9]/20 rounded-2xl p-8 md:p-10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-full bg-[#229ED9]/20 flex items-center justify-center shrink-0">
+                <Send className="w-7 h-7 text-[#229ED9]" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-text-primary">Free Telegram Previews</h3>
+                <p className="text-sm text-text-secondary">See what's inside before you buy</p>
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a
+                href="https://t.me/+MPDBT1cPlFBjNTkx"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#229ED9] text-white font-semibold text-sm rounded-xl hover:opacity-90 transition-all"
+              >
+                <Send className="w-4 h-4" />
+                Join Free Preview
+              </a>
+              <a
+                href="https://t.me/+IkQXd4SPd1VkMGJh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 border border-white/10 text-text-primary font-semibold text-sm rounded-xl hover:bg-white/10 transition-all"
+              >
+                <Send className="w-4 h-4" />
+                ForTheCulture Preview
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* ─── Pricing Cards ─── */}
       <section id="pricing" className="max-w-7xl mx-auto px-4 py-16 md:py-24">
         <h2 className="text-2xl md:text-3xl font-bold text-text-primary text-center mb-4">
-          Choose Your Membership
+          Choose Your Access
         </h2>
         <p className="text-text-secondary text-center mb-12 max-w-xl mx-auto">
-          All prices in USD. Cancel anytime. Memberships auto-renew unless cancelled.
+          One-time payment. Instant Telegram access after purchase.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -232,13 +190,13 @@ export default function PremiumPage() {
               key={i}
               className={`relative rounded-2xl border p-6 flex flex-col transition-all duration-300 ${
                 tier.highlighted
-                  ? "bg-gradient-to-b from-accent-pink/10 to-accent-purple/5 border-accent-pink/40 shadow-xl shadow-accent-pink/10 scale-[1.02]"
+                  ? "bg-gradient-to-b from-accent-gold/10 to-accent-pink/5 border-accent-gold/40 shadow-xl shadow-accent-gold/10 scale-[1.02]"
                   : "bg-bg-card border-border-dark hover:border-accent-pink/30"
               }`}
             >
               {tier.highlighted && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-accent-gold to-accent-pink rounded-full text-[10px] font-bold text-white uppercase tracking-wider">
-                  Most Popular
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-accent-gold to-accent-pink rounded-full text-[10px] font-bold text-white uppercase tracking-wider whitespace-nowrap">
+                  Best Value 🔥
                 </div>
               )}
 
@@ -259,55 +217,97 @@ export default function PremiumPage() {
                     <span className="text-sm text-text-secondary">{feature}</span>
                   </div>
                 ))}
-                {tier.excluded.map((feature, j) => (
-                  <div key={`ex-${j}`} className="flex items-start gap-3 opacity-40">
-                    <X className="w-4 h-4 text-text-muted shrink-0 mt-0.5" />
-                    <span className="text-sm text-text-muted">{feature}</span>
-                  </div>
-                ))}
               </div>
 
-              <Link
-                href={`/checkout/${tier.name.toLowerCase()}`}
+              <a
+                href={tier.paymentLink}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`w-full inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold text-sm rounded-xl transition-all ${
                   tier.highlighted
-                    ? "bg-gradient-to-r from-accent-pink to-accent-purple text-white hover:opacity-90 shadow-lg shadow-accent-pink/20"
+                    ? "bg-gradient-to-r from-accent-gold to-accent-pink text-white hover:opacity-90 shadow-lg shadow-accent-gold/20"
                     : "bg-white/5 border border-border-dark text-text-primary hover:bg-white/10 hover:border-accent-pink/30"
                 }`}
               >
                 {tier.cta}
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
+          ))}
+        </div>
+
+        {/* Payment Info */}
+        <div className="mt-8 text-center">
+          <p className="text-sm text-text-muted">
+            💳 All payments processed securely via Square. After purchase, DM{" "}
+            <a href="https://t.me/richballer1" target="_blank" rel="noopener noreferrer" className="text-accent-pink hover:underline">
+              @richballer1
+            </a> on Telegram with your receipt for instant access.
+          </p>
+        </div>
+      </section>
+
+      {/* ─── Stats Banner ─── */}
+      <section className="max-w-6xl mx-auto px-4 py-12">
+        <div className="bg-bg-card border border-border-dark rounded-2xl p-8 md:p-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            {[
+              { icon: Users, value: "200K+", label: "Telegram Members" },
+              { icon: MessageCircle, value: "100K+", label: "Reddit Community" },
+              { icon: Zap, value: "Daily", label: "Content Updates" },
+            ].map((stat, i) => {
+              const Icon = stat.icon;
+              return (
+                <div key={i}>
+                  <Icon className="w-8 h-8 text-accent-gold mx-auto mb-3" />
+                  <div className="text-3xl font-black text-text-primary">{stat.value}</div>
+                  <div className="text-sm text-text-muted mt-1">{stat.label}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── How It Works ─── */}
+      <section className="max-w-4xl mx-auto px-4 py-16">
+        <h2 className="text-2xl md:text-3xl font-bold text-text-primary text-center mb-12">
+          How It Works
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          {[
+            { step: "1", title: "Choose Your VIP", desc: "Select the access package you want." },
+            { step: "2", title: "Complete Payment", desc: "Finish the payment for the VIP you selected." },
+            { step: "3", title: "Contact the Admin", desc: "Message @richballer1 on Telegram after purchasing." },
+            { step: "4", title: "Get Instant Access", desc: "Receive your private invite link within seconds." },
+          ].map((item, i) => (
+            <div key={i} className="bg-bg-card border border-border-dark rounded-xl p-6 text-center">
+              <div className="w-10 h-10 rounded-full bg-accent-pink/10 flex items-center justify-center mx-auto mb-4">
+                <span className="text-lg font-bold text-accent-pink">{item.step}</span>
+              </div>
+              <h3 className="text-lg font-bold text-text-primary mb-2">{item.title}</h3>
+              <p className="text-sm text-text-secondary">{item.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ─── Benefits Section ─── */}
-      <section className="max-w-6xl mx-auto px-4 py-16 md:py-24 border-t border-border-dark">
-        <h2 className="text-2xl md:text-3xl font-bold text-text-primary text-center mb-12">
-          Why Go Premium?
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            { icon: Eye, title: "Unlimited Viewing", desc: "Browse thousands of galleries with no restrictions or pay-per-view limits." },
-            { icon: Download, title: "HD Downloads", desc: "Download your favorite content in the highest quality for offline viewing." },
-            { icon: Shield, title: "Privacy First", desc: "Your membership and activity are completely private and secure." },
-            { icon: Zap, title: "Early Access", desc: "Be the first to see new content drops before they are publicly released." },
-            { icon: Heart, title: "Support Creators", desc: "Your membership directly supports the artists and photographers you love." },
-            { icon: Users, title: "Community Access", desc: "Join exclusive creator communities and connect with fellow fans." },
-          ].map((benefit, i) => {
-            const Icon = benefit.icon;
-            return (
-              <div key={i} className="bg-bg-card border border-border-dark rounded-xl p-6 card-hover">
-                <div className="w-12 h-12 rounded-lg bg-accent-pink/10 flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-accent-pink" />
-                </div>
-                <h3 className="text-lg font-semibold text-text-primary mb-2">{benefit.title}</h3>
-                <p className="text-sm text-text-secondary leading-relaxed">{benefit.desc}</p>
-              </div>
-            );
-          })}
+      {/* ─── Free Alternative ─── */}
+      <section className="max-w-4xl mx-auto px-4 py-12">
+        <div className="bg-gradient-to-r from-accent-purple/10 to-accent-pink/10 border border-accent-purple/20 rounded-2xl p-8 md:p-10 text-center">
+          <h3 className="text-xl font-bold text-text-primary mb-3">Free Alternative</h3>
+          <p className="text-text-secondary mb-6 max-w-lg mx-auto">
+            Not ready for VIP? Get free access to premium content through our free preview channel.
+          </p>
+          <a
+            href="https://t.me/+nygE2-zAWX45MTFh"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-accent-purple text-white font-bold text-base rounded-xl hover:opacity-90 transition-all shadow-lg shadow-accent-purple/20"
+          >
+            <Send className="w-5 h-5" />
+            Join Free Channel
+          </a>
         </div>
       </section>
 
@@ -317,7 +317,7 @@ export default function PremiumPage() {
           Frequently Asked Questions
         </h2>
         <p className="text-text-secondary text-center mb-10">
-          Everything you need to know about Premium membership.
+          Everything you need to know about Vault access.
         </p>
 
         <div className="space-y-3">
@@ -349,22 +349,22 @@ export default function PremiumPage() {
 
       {/* ─── Final CTA ─── */}
       <section className="max-w-4xl mx-auto px-4 py-16 text-center">
-        <div className="bg-gradient-to-r from-accent-pink/10 via-accent-purple/5 to-transparent border border-accent-pink/20 rounded-2xl p-10 md:p-14">
+        <div className="bg-gradient-to-r from-accent-gold/10 via-accent-pink/10 to-accent-purple/10 border border-accent-pink/20 rounded-2xl p-10 md:p-14">
           <Crown className="w-12 h-12 text-accent-gold mx-auto mb-4" />
           <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-4">
-            Ready to Upgrade?
+            Ready to Join the Vault?
           </h2>
           <p className="text-text-secondary max-w-xl mx-auto mb-8">
-            Join thousands of members enjoying premium content. Choose your plan and start exploring today.
+            Join 200,000+ members getting daily exclusive content. Choose your plan above and get instant access.
           </p>
-          <Link
-            href="/auth"
+          <a
+            href="#pricing"
             className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-accent-gold to-accent-pink text-white font-bold text-base rounded-xl hover:opacity-90 transition-all shadow-lg shadow-accent-pink/20"
           >
             <Crown className="w-5 h-5" />
-            Get Started Now
+            View Plans
             <ArrowRight className="w-4 h-4" />
-          </Link>
+          </a>
         </div>
       </section>
     </div>

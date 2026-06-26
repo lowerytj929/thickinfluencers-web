@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Crown, Eye, Heart, Flame, Sparkles, Lock, Grid, Users, ShoppingBag, ChevronRight, MessageCircle, AtSign, ExternalLink } from "lucide-react";
+import { ArrowRight, Crown, Eye, Heart, Flame, Sparkles, Lock, Grid, Users, ShoppingBag, ChevronRight, MessageCircle, AtSign, ExternalLink, Send } from "lucide-react";
 import Link from "next/link";
 import MediaCard from "@/components/shared/MediaCard";
 import CreatorCard from "@/components/shared/CreatorCard";
@@ -226,7 +226,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── Community Section: Reddit + Twitter ─── */}
+      {/* ─── Community Section: Reddit + Twitter + Telegram ─── */}
       <section className="w-full bg-gradient-to-b from-bg-primary via-[#1a0a18] to-bg-primary border-t border-border-dark py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
@@ -238,18 +238,37 @@ export default function HomePage() {
               Connect With Us
             </h2>
             <p className="text-text-secondary max-w-2xl mx-auto">
-              Join 100K+ members on Reddit and follow us on Twitter for the latest updates,
+              Join 200K+ members on Telegram, 100K+ on Reddit, and follow us on Twitter for the latest updates,
               exclusive previews, and community discussions.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {/* Telegram Card */}
+            <a
+              href="https://t.me/+MPDBT1cPlFBjNTkx"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-bg-card border border-border-dark rounded-xl p-8 card-hover text-center hover:border-[#229ED9]/40 transition-all"
+            >
+              <div className="w-16 h-16 rounded-full bg-[#229ED9]/10 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform">
+                <Send className="w-8 h-8 text-[#229ED9]" />
+              </div>
+              <h3 className="text-xl font-bold text-text-primary mb-2">Telegram Community</h3>
+              <p className="text-3xl font-black text-accent-gold mb-2">200K+</p>
+              <p className="text-sm text-text-secondary mb-5">Members on Telegram channels</p>
+              <span className="inline-flex items-center gap-2 px-6 py-3 bg-[#229ED9] text-white font-semibold text-sm rounded-xl group-hover:opacity-90 transition-all">
+                Join Free Preview
+                <ExternalLink className="w-4 h-4" />
+              </span>
+            </a>
+
             {/* Reddit Card */}
             <a
               href="https://reddit.com/r/thickinfluencersNSFW"
               target="_blank"
               rel="noopener noreferrer"
-              className="group bg-bg-card border border-border-dark rounded-xl p-8 card-hover text-center hover:border-accent-orange/40 transition-all"
+              className="group bg-bg-card border border-border-dark rounded-xl p-8 card-hover text-center hover:border-[#FF4500]/40 transition-all"
             >
               <div className="w-16 h-16 rounded-full bg-[#FF4500]/10 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform">
                 <MessageCircle className="w-8 h-8 text-[#FF4500]" />
