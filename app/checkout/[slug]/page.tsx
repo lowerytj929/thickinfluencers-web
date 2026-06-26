@@ -1,140 +1,184 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
-import { Check, Loader2 } from "lucide-react";
+import { useParams } from "next/navigation";
+import { Crown, Loader2, AlertCircle, Shield, ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
-interface Package {
-  id: string;
-  name: string;
-  slug: string;
-  price_cents: number;
-  price_display: string;
-  features: string[];
-  popular: boolean;
-}
+const tierInfo: Record<string, { name: string; price: string }> = {
+  vault_access: { name: "Vault Access", price: "$15/mo" },
+  vault_pro: { name: "Vault Pro", price: "$25/mo" },
+};
 
 export default function CheckoutPage() {
   const params = useParams();
-  const router = useRouter();
-  const [pkg, setPkg] = useState<Package | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [processing, setProcessing] = useState(false);
-  const [user, setUser] = useState<any>(null);
-  const [orderResult, setOrderResult] = useState<string | null>(null);
-  const supabase = createClient();
+  const slug = params.slug as string;
+  const [status, setStatus] = useState<"loading" | "redirecting" | "error">(
+    "loading"
+  );
+  const [errorMsg, setErrorMsg] = useState<string>("");
+  const tier = tierInfo[slug];
 
   useEffect(() => {
-    async function load() {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
+    if (!slug) return;
 
-      const { data } = await supabase
-        .from("packages")
-        .select("*")
-        .eq("slug", params.slug)
-        .single();
-      setPkg(data);
-      setLoading(false);
-    }
-    load();
-  }, [params.slug]);
+    // Brief delay so user sees the page, then redirect
+    const timer = setTimeout(async () => {
+      setStatus("redirecting");
 
-  const handleCheckout = async () => {
-    if (!user) {
-      router.push(`/auth?redirect=/checkout/${params.slug}`);
-      return;
-    }
-    setProcessing(true);
+      try {
+        const res = await fetch("/api/stripe/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ package_slug: slug }),
+        });
 
-    try {
-      // Create order in Supabase
-      const { data: order, error } = await supabase
-        .from("orders")
-        .insert({
-          user_id: user.id,
-          package_id: pkg!.id,
-          package_name: pkg!.name,
-          amount_cents: pkg!.price_cents,
-          status: "pending",
-          payer_email: user.email,
-        })
-        .select()
-        .single();
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(
+            data.error || data.message || "Failed to start checkout"
+          );
+        }
 
-      if (error) throw error;
+        const data = await res.json();
 
-      // Since we're keeping Square for now, show payment instructions
-      setOrderResult(
-        `Order created! Please complete payment and DM @richballer1 on Telegram with your receipt.`
-      );
-    } catch (err: any) {
-      setOrderResult("Error: " + err.message);
-    } finally {
-      setProcessing(false);
-    }
-  };
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          throw new Error("No checkout URL returned");
+        }
+      } catch (err: any) {
+        setErrorMsg(
+          err.message || "Something went wrong. Please try again."
+        );
+        setStatus("error");
+      }
+    }, 800);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0A0508]">
-        <Loader2 className="w-8 h-8 text-pink-500 animate-spin" />
-      </div>
-    );
-  }
-
-  if (!pkg) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0A0508]">
-        <p className="text-gray-400">Package not found</p>
-      </div>
-    );
-  }
+    return () => clearTimeout(timer);
+  }, [slug]);
 
   return (
-    <div className="min-h-screen bg-[#0A0508] flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-lg">
-        <div className="bg-[#1A0A12] border border-pink-900/30 rounded-2xl p-8 text-center">
-          <h1 className="text-3xl font-bold text-white mb-2">{pkg.name}</h1>
-          <p className="text-5xl font-extrabold text-white mb-8">
-            {pkg.price_display}
-          </p>
+    <div className="min-h-screen bg-bg-primary flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-md">
+        {/* Back link */}
+        <Link
+          href="/premium"
+          className="inline-flex items-center gap-1.5 text-sm text-text-secondary hover:text-text-primary transition-colors mb-8"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to plans
+        </Link>
 
-          <ul className="space-y-3 mb-8 text-left">
-            {pkg.features.map((f, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <Check className="w-5 h-5 text-pink-500 shrink-0 mt-0.5" />
-                <span className="text-gray-300">{f}</span>
-              </li>
-            ))}
-          </ul>
+        <div className="bg-bg-card border border-border-dark rounded-2xl p-8 text-center">
+          {/* Icon */}
+          <div className="w-16 h-16 rounded-full bg-accent-gold/10 flex items-center justify-center mx-auto mb-6">
+            <Crown className="w-8 h-8 text-accent-gold" />
+          </div>
 
-          {orderResult ? (
-            <div className="bg-[#0A0508] border border-pink-900/30 rounded-xl p-6">
-              <p className="text-gray-300">{orderResult}</p>
-              <button
-                onClick={() => router.push("/dashboard")}
-                className="mt-4 w-full py-3 bg-gradient-to-r from-pink-600 to-pink-500 text-white font-bold rounded-xl"
-              >
-                Go to Dashboard
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={handleCheckout}
-              disabled={processing}
-              className="w-full py-4 bg-gradient-to-r from-pink-600 to-pink-500 text-white font-bold rounded-xl hover:shadow-[0_0_20px_rgba(217,29,91,0.4)] transition-all disabled:opacity-50"
-            >
-              {processing ? "Processing..." : `Get ${pkg.name}`}
-            </button>
-          )}
+          {/* Title */}
+          <h1 className="text-2xl font-bold text-text-primary mb-2">
+            {status === "error"
+              ? "Checkout Unavailable"
+              : tier
+              ? tier.name
+              : "Premium Membership"}
+          </h1>
 
-          {!user && !orderResult && (
-            <p className="mt-4 text-sm text-gray-500">
-              You'll need to sign in to complete the purchase.
+          {tier && status !== "error" && (
+            <p className="text-4xl font-extrabold text-text-primary mb-6">
+              {tier.price}
             </p>
           )}
+
+          {/* Status content */}
+          {status === "loading" && (
+            <div className="space-y-4">
+              <div className="flex justify-center">
+                <div className="w-12 h-12 rounded-full bg-accent-pink/10 flex items-center justify-center">
+                  <Loader2 className="w-6 h-6 text-accent-pink animate-spin" />
+                </div>
+              </div>
+              <p className="text-sm text-text-secondary">
+                Preparing your secure checkout...
+              </p>
+            </div>
+          )}
+
+          {status === "redirecting" && (
+            <div className="space-y-4">
+              <div className="flex justify-center">
+                <div className="w-12 h-12 rounded-full bg-accent-gold/10 flex items-center justify-center">
+                  <Loader2 className="w-6 h-6 text-accent-gold animate-spin" />
+                </div>
+              </div>
+              <p className="text-sm text-text-secondary">
+                Redirecting to secure Stripe checkout...
+              </p>
+              <div className="w-full bg-bg-surface rounded-full h-2 overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-accent-gold to-accent-pink rounded-full animate-pulse w-3/4" />
+              </div>
+            </div>
+          )}
+
+          {status === "error" && (
+            <div className="space-y-4">
+              <div className="flex justify-center">
+                <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center">
+                  <AlertCircle className="w-6 h-6 text-red-400" />
+                </div>
+              </div>
+              <div className="bg-red-900/20 border border-red-500/30 rounded-xl p-4">
+                <p className="text-sm text-red-400">{errorMsg}</p>
+                {errorMsg.toLowerCase().includes("stripe") ||
+                errorMsg.toLowerCase().includes("configure") ? (
+                  <p className="text-xs text-red-400/70 mt-2">
+                    Stripe payments are not fully configured yet. Please try
+                    again later or contact support.
+                  </p>
+                ) : null}
+              </div>
+              <div className="flex flex-col gap-3 pt-2">
+                <button
+                  onClick={() => {
+                    setStatus("redirecting");
+                    setErrorMsg("");
+                    fetch("/api/stripe/checkout", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ package_slug: slug }),
+                    })
+                      .then((r) => r.json())
+                      .then((d) => {
+                        if (d.url) window.location.href = d.url;
+                        else throw new Error("No URL");
+                      })
+                      .catch((e) => {
+                        setErrorMsg(e.message || "Retry failed");
+                        setStatus("error");
+                      });
+                  }}
+                  className="w-full py-3 bg-gradient-to-r from-accent-pink to-accent-purple text-white font-bold text-sm rounded-xl hover:opacity-90 transition-all"
+                >
+                  Try Again
+                </button>
+                <Link
+                  href="/premium"
+                  className="w-full py-3 bg-white/5 border border-border-dark text-text-primary font-semibold text-sm rounded-xl hover:bg-white/10 transition-all text-center"
+                >
+                  Back to Plans
+                </Link>
+              </div>
+            </div>
+          )}
+
+          {/* Secure badge */}
+          <div className="mt-8 pt-6 border-t border-border-dark">
+            <p className="text-xs text-text-muted flex items-center justify-center gap-1.5">
+              <Shield className="w-3.5 h-3.5" />
+              Secured by Stripe · 256-bit SSL encryption
+            </p>
+          </div>
         </div>
       </div>
     </div>

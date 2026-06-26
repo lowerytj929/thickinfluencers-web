@@ -14,66 +14,46 @@ export const NAV_LINKS = [
 
 export const PREMIUM_TIERS = [
   {
-    id: "fyp",
-    name: "FYP Access",
-    price: 10,
-    priceCents: 1000,
-    slug: "fyp",
-    description: "Get FYP access with daily influencer drops.",
+    id: "vault_access",
+    name: "Vault Access",
+    price: 15,
+    priceCents: 1500,
+    slug: "vault_access",
+    description:
+      "Get FYP access with daily influencer drops and vault content.",
     features: [
       "FYP channel access",
       "Daily content updates",
+      "Vault content access",
       "Instant Telegram invite",
     ],
     paymentLink: "https://square.link/u/2WEpsl0e?src=sheet",
   },
   {
-    id: "thickvip",
-    name: "ThickVip",
-    price: 15,
-    priceCents: 1500,
-    slug: "thickvip",
-    description: "Premium VIP access to exclusive Telegram communities.",
+    id: "vault_pro",
+    name: "Vault Pro",
+    price: 25,
+    priceCents: 2500,
+    slug: "vault_pro",
+    description:
+      "Everything in Vault Access plus premium VIP Telegram communities.",
     features: [
+      "Everything in Vault Access",
       "VIP Telegram channel access",
       "Exclusive content drops",
       "Premium community access",
-    ],
-    paymentLink: "https://square.link/u/Rf9OsolT?src=sheet",
-  },
-  {
-    id: "thickcenter",
-    name: "ThickCenter+",
-    price: 25,
-    priceCents: 2500,
-    slug: "thickcenter",
-    description: "Everything in ThickVip plus ThickCenter+ exclusive access.",
-    features: [
-      "Everything in ThickVip",
-      "ThickCenter+ private access",
-      "Premium vault content",
       "Priority support",
     ],
-    paymentLink: "https://square.link/u/UYFxrabd?src=sheet",
-  },
-  {
-    id: "full_bundle",
-    name: "Full Bundle",
-    price: 35,
-    priceCents: 3500,
-    slug: "full-bundle",
-    description: "Get everything — the best value for the full experience.",
-    features: [
-      "Everything in all tiers",
-      "Full vault access",
-      "All Telegram communities",
-      "Lifetime access",
-      "Best value",
-    ],
     popular: true,
-    paymentLink: "https://square.link/u/FWjQoLfT?src=sheet",
+    paymentLink: "https://square.link/u/Rf9OsolT?src=sheet",
   },
 ] as const;
+
+/** Stripe price IDs — user must populate from Stripe Dashboard after creating products. */
+export const PRICE_IDS: Record<string, string> = {
+  vault_access: "", // TODO: set from Stripe Dashboard
+  vault_pro: "", // TODO: set from Stripe Dashboard
+} as const;
 
 export const CATEGORIES = [
   { id: "curvy", name: "Curvy", slug: "curvy" },

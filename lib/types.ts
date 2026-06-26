@@ -104,6 +104,7 @@ export interface Order {
   amount_cents: number;
   currency: string;
   status: OrderStatus;
+  access_granted: boolean;
   stripe_payment_intent_id: string | null;
   stripe_session_id: string | null;
   created_at: string;
@@ -122,9 +123,11 @@ export type OrderStatus =
 export interface Package {
   id: string;
   name: string;
+  slug: string;
   description: string | null;
   price_cents: number;
   features: string[];
+  telegram_link: string | null;
   is_active: boolean;
   sort_order: number;
   created_at: string;

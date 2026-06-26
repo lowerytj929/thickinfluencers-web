@@ -28,6 +28,11 @@ const featuredCreators = [
   { displayName: "Olivia Grant", username: "@oliviagrant", isVerified: true, galleryCount: 35, followerCount: 78400 },
 ];
 
+const premiumTiers = [
+  { name: "Vault Access", price: "$15", period: "/mo", desc: "Full gallery access, exclusive drops, ad-free" },
+  { name: "Vault Pro", price: "$25", period: "/mo", desc: "Everything + early access, priority support, Pro vault" },
+];
+
 const premiumFeatures = [
   { icon: Crown, title: "Full Access", description: "Unlock every gallery and album across all creators with no restrictions." },
   { icon: Sparkles, title: "Early Access", description: "Get exclusive early access to new content before public release." },
@@ -235,13 +240,34 @@ export default function HomePage() {
             })}
           </div>
 
+          {/* Pricing tiers */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-lg mx-auto mb-8">
+            {premiumTiers.map((tier, i) => (
+              <div
+                key={i}
+                className="bg-bg-card border border-border-dark rounded-xl p-5 text-center card-hover"
+              >
+                <h3 className="text-sm font-semibold text-text-primary mb-1">
+                  {tier.name}
+                </h3>
+                <div className="flex items-baseline justify-center gap-0.5 mb-2">
+                  <span className="text-2xl font-black text-text-primary">
+                    {tier.price}
+                  </span>
+                  <span className="text-xs text-text-muted">{tier.period}</span>
+                </div>
+                <p className="text-xs text-text-secondary">{tier.desc}</p>
+              </div>
+            ))}
+          </div>
+
           <div className="text-center">
             <Link
               href="/premium"
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-accent-gold to-accent-pink text-white font-bold text-base rounded-xl hover:opacity-90 transition-all transform hover:scale-[1.02] shadow-lg shadow-accent-pink/20"
             >
               <Crown className="w-5 h-5" />
-              Claim Vault Access
+              Unlock the Vault — From $15/mo
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
