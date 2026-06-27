@@ -42,6 +42,7 @@ interface Order {
 }
 
 export default function DashboardPage() {
+  console.log('📊 Dashboard rendering, loading:', true);
   const [user, setUser] = useState<any>(null);
   const [memberships, setMemberships] = useState<Membership[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -51,7 +52,9 @@ export default function DashboardPage() {
 
   useEffect(() => {
     async function load() {
+      console.log('📊 Dashboard useEffect started');
       const { data: { user } } = await supabase.auth.getUser();
+      console.log('📊 getUser result:', user ? 'found' : 'null');
       if (!user) {
         setLoading(false);
         return;

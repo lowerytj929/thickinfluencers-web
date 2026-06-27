@@ -72,8 +72,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="antialiased bg-bg-primary text-text-primary font-sans min-h-screen flex flex-col">
+    <html lang="en" className={inter.variable} style={{ backgroundColor: '#0A0A0F' }}>
+      <body className="antialiased bg-bg-primary text-text-primary font-sans min-h-screen flex flex-col" style={{ backgroundColor: '#0A0A0F' }}>
         <AgeVerificationModal />
         <NavBar />
         <main className="flex-1 pt-16 pb-20 md:pb-0">{children}</main>
