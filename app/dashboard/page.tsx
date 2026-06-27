@@ -52,9 +52,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     async function load() {
-      console.log('📊 Dashboard useEffect started');
       const { data: { user } } = await supabase.auth.getUser();
-      console.log('📊 getUser result:', user ? 'found' : 'null');
       if (!user) {
         setLoading(false);
         return;
@@ -80,7 +78,7 @@ export default function DashboardPage() {
       setLoading(false);
     }
     load();
-  }, [router, supabase]);
+  }, [supabase]);
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
