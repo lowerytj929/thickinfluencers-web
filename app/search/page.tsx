@@ -14,12 +14,12 @@ const filterChips = [
 ];
 
 const suggestions = [
-  { icon: ImageIcon, label: "Summer fashion", query: "summer fashion" },
-  { icon: TrendingUp, label: "Trending this week", query: "trending" },
-  { icon: Users, label: "Top creators", query: "top creators" },
-  { icon: Tag, label: "Portrait photography", query: "portrait photography" },
-  { icon: Compass, label: "New arrivals", query: "new arrivals" },
-  { icon: ImageIcon, label: "Behind the scenes", query: "behind the scenes" },
+  { icon: Users, label: "Gracie Bon VIP Leaks", query: "Gracie Bon" },
+  { icon: TrendingUp, label: "Mia Malkova Uncensored", query: "Mia Malkova" },
+  { icon: ImageIcon, label: "Reddit NSFW Leaks", query: "reddit" },
+  { icon: Tag, label: "OnlyFans Exclusive Drops", query: "onlyfans" },
+  { icon: Compass, label: "Abella Danger Vault", query: "Abella Danger" },
+  { icon: ImageIcon, label: "Thicc Influencer Sets", query: "thicc" },
 ];
 
 function SearchContent() {
