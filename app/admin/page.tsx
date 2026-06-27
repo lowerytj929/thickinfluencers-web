@@ -76,14 +76,16 @@ export default function AdminPage() {
       if (!user) { setLoading(false); setNotSignedIn(true); return; }
       setUser(user);
 
-      // Check if admin
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("is_admin")
-        .eq("id", user.id)
-        .single();
-
-      if (!profile?.is_admin) {
+      // Check if admin via server API (bypasses RLS)
+      try {
+        const res = await fetch("/api/public/check-admin");
+        const data = await res.json();
+        if (!data.isAdmin) {
+          setNotAdmin(true);
+          setLoading(false);
+          return;
+        }
+      } catch {
         setNotAdmin(true);
         setLoading(false);
         return;
