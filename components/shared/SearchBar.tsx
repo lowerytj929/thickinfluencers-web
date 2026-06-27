@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Search, Filter } from 'lucide-react';
 
 const filterOptions = [
@@ -15,9 +16,20 @@ export default function SearchBar() {
   const [query, setQuery] = useState('');
   const [filterOpen, setFilterOpen] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState('all');
+  const router = useRouter();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const q = query.trim();
+    if (!q) return;
+    const params = new URLSearchParams();
+    params.set('q', q);
+    if (selectedFilter !== 'all') params.set('filter', selectedFilter);
+    router.push(`/search?${params.toString()}`);
+  };
 
   return (
-    <div className="relative w-full max-w-2xl">
+    <form onSubmit={handleSearch} className="relative w-full max-w-2xl">
       <div className="flex items-center gap-2">
         {/* Input */}
         <div className="relative flex-1">
@@ -64,6 +76,6 @@ export default function SearchBar() {
           </div>
         </div>
       )}
-    </div>
+    </form>
   );
 }
