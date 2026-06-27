@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 mb-12">
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
           <h3 className="text-2xl font-bold text-white tracking-tight mb-2">Thick Influencers</h3>
-          <p className="text-sm text-gray-500 max-w-sm">The internet's premium vault for exclusive content.</p>
+          <p className="text-sm text-gray-500 max-w-sm">The internet&apos;s premium vault for exclusive content.</p>
         </div>
 
         <div className="flex flex-wrap justify-center gap-6 text-sm font-medium">

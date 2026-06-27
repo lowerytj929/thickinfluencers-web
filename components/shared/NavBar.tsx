@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import {
   Search,
-  Crown,
   LogIn,
   UserPlus,
   Menu,
@@ -14,8 +13,8 @@ import {
 
 const navLinks = [
   { label: 'Home', href: '/' },
-  { label: 'Trending', href: '/trending' },
-  { label: 'Galleries', href: '/galleries' },
+  { label: 'Trending', href: '/search?sort=trending' },
+  { label: 'Galleries', href: '/search' },
   { label: 'Premium', href: '/premium' },
   { label: 'Search', href: '/search', icon: Search },
 ];
@@ -54,14 +53,14 @@ export default function NavBar() {
         {/* Right: Auth buttons (desktop) */}
         <div className="hidden md:flex items-center gap-3">
           <Link
-            href="/login"
+            href="/auth"
             className="btn-secondary text-sm !py-2 !px-5"
           >
             <LogIn className="w-4 h-4" />
             Login
           </Link>
           <Link
-            href="/signup"
+            href="/auth"
             className="btn-primary text-sm !py-2 !px-5"
           >
             <UserPlus className="w-4 h-4" />
@@ -99,7 +98,7 @@ export default function NavBar() {
             })}
             <hr className="border-border-dark my-3" />
             <Link
-              href="/login"
+              href="/auth"
               className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-text-secondary rounded-lg hover:text-accent-pink hover:bg-white/5 transition-all"
               onClick={() => setMobileOpen(false)}
             >
@@ -107,7 +106,7 @@ export default function NavBar() {
               Login
             </Link>
             <Link
-              href="/signup"
+              href="/auth"
               className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-accent-pink rounded-lg hover:bg-white/5 transition-all"
               onClick={() => setMobileOpen(false)}
             >

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Crown, Eye, Heart, Flame, Sparkles, Lock, Grid, Users, ShoppingBag, ChevronRight, MessageCircle, AtSign, ExternalLink, Send } from "lucide-react";
+import { ArrowRight, Crown, Eye, Heart, Sparkles, Lock, Users, ChevronRight, MessageCircle, AtSign, ExternalLink, Send } from "lucide-react";
 import Link from "next/link";
 import MediaCard from "@/components/shared/MediaCard";
 import CreatorCard from "@/components/shared/CreatorCard";
@@ -76,7 +76,7 @@ export default function HomePage() {
 
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-10 animate-fade-in">
-            Unlock the empire's finest thicc influencer content. Curated galleries
+            Unlock the empire&apos;s finest thicc influencer content. Curated galleries
             from the vault, powered by the r/thickinfluencersNSFW community.
           </p>
 
@@ -175,7 +175,7 @@ export default function HomePage() {
               Vault Creators
             </h2>
             <p className="text-sm text-text-secondary">
-              Top talent in the empire's collection
+              Top talent in the empire&apos;s collection
             </p>
           </div>
           <Link
@@ -214,7 +214,7 @@ export default function HomePage() {
             </h2>
             <p className="text-text-secondary max-w-2xl mx-auto">
               Go beyond the previews. Get unlimited access to every vault gallery,
-              exclusive content drops, and the empire's inner circles.
+              exclusive content drops, and the empire&apos;s inner circles.
             </p>
           </div>
 

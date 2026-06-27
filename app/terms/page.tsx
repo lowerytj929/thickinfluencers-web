@@ -26,11 +26,11 @@ export default function TermsPage() {
           <section>
             <h2 className="text-xl font-bold text-text-primary mb-4">1. Acceptance of Terms</h2>
             <p className="leading-relaxed mb-4">
-              By accessing or using ThickInfluencers (the "Platform"), you agree to be bound by these Terms of Service
-              ("Terms"). If you do not agree to all the Terms, you may not access or use the Platform.
+              By accessing or using ThickInfluencers (the &quot;Platform&quot;), you agree to be bound by these Terms of Service
+              (&quot;Terms&quot;). If you do not agree to all the Terms, you may not access or use the Platform.
             </p>
             <p className="leading-relaxed">
-              These Terms apply to all visitors, users, and others who access or use the Platform ("Users").
+              These Terms apply to all visitors, users, and others who access or use the Platform (&quot;Users&quot;).
               By using the Platform, you represent that you are at least 18 years of age or the age of majority in your jurisdiction.
             </p>
           </section>
@@ -116,7 +116,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-xl font-bold text-text-primary mb-4">7. Limitation of Liability</h2>
             <p className="leading-relaxed mb-4">
-              The Platform is provided on an "as is" and "as available" basis. ThickInfluencers makes no warranties,
+              The Platform is provided on an &quot;as is&quot; and &quot;as available&quot; basis. ThickInfluencers makes no warranties,
               express or implied, regarding the operation or availability of the Platform.
             </p>
             <p className="leading-relaxed">

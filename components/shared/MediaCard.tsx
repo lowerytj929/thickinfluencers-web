@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Eye, Heart, Lock } from 'lucide-react';
 import PremiumBadge from './PremiumBadge';
 import TagChip from './TagChip';
@@ -28,10 +29,12 @@ export default function MediaCard({
       {/* Cover Image */}
       <div className="relative aspect-[4/5] overflow-hidden bg-bg-surface">
         {imageSrc ? (
-          <img
+          <Image
+            fill
             src={imageSrc}
             alt={title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 768px) 50vw, 25vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-text-muted">

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, SlidersHorizontal, Compass, TrendingUp, Users, Tag, ImageIcon } from "lucide-react";
+import { Search, Compass, TrendingUp, Users, Tag, ImageIcon } from "lucide-react";
 import SearchBar from "@/components/shared/SearchBar";
 import TagChip from "@/components/shared/TagChip";
 

@@ -1,6 +1,7 @@
 'use client';
 
-import { BadgeCheck, ImageIcon, Users, MapPin, Link as LinkIcon, Calendar } from 'lucide-react';
+import Image from 'next/image';
+import { BadgeCheck, MapPin, Link as LinkIcon, Calendar } from 'lucide-react';
 
 interface ProfileCardProps {
   displayName?: string;
@@ -34,9 +35,9 @@ export default function ProfileCard({
   return (
     <div className="bg-bg-card rounded-lg border border-border-dark overflow-hidden">
       {/* Cover */}
-      <div className="h-32 sm:h-40 bg-gradient-to-r from-accent-pink/20 via-accent-purple/20 to-accent-gold/10 overflow-hidden">
+      <div className="h-32 sm:h-40 bg-gradient-to-r from-accent-pink/20 via-accent-purple/20 to-accent-gold/10 overflow-hidden relative">
         {coverSrc ? (
-          <img src={coverSrc} alt="" className="w-full h-full object-cover" />
+          <Image fill src={coverSrc} alt="" sizes="100vw" className="object-cover" />
         ) : null}
       </div>
 
@@ -44,12 +45,14 @@ export default function ProfileCard({
       <div className="px-5 pb-5 relative">
         {/* Avatar */}
         <div className="flex justify-center -mt-12 mb-4 relative">
-          <div className="w-24 h-24 rounded-full overflow-hidden bg-bg-surface ring-4 ring-bg-card border-2 border-border-dark">
+          <div className="w-24 h-24 rounded-full overflow-hidden bg-bg-surface ring-4 ring-bg-card border-2 border-border-dark relative">
             {avatarSrc ? (
-              <img
+              <Image
+                fill
                 src={avatarSrc}
                 alt={displayName}
-                className="w-full h-full object-cover"
+                sizes="96px"
+                className="object-cover"
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-text-muted">

@@ -2,13 +2,12 @@
 
 import { useState } from "react";
 import { Crown, ExternalLink, Loader2, CheckCircle, XCircle } from "lucide-react";
-
 export default function OnlyFansConnect() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [step, setStep] = useState<"form" | "polling" | "connected" | "error">("form");
   const [message, setMessage] = useState("");
-  const [attemptId, setAttemptId] = useState<string | null>(null);
+  const [_attemptId, setAttemptId] = useState<string | null>(null);
   const [profile, setProfile] = useState<any>(null);
 
   const startAuth = async (e: React.FormEvent) => {

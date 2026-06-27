@@ -77,7 +77,7 @@ export default function DashboardPage() {
       setLoading(false);
     }
     load();
-  }, []);
+  }, [router, supabase]);
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
@@ -201,6 +201,56 @@ export default function DashboardPage() {
         <section>
           <OnlyFansConnect />
         </section>
+
+        {/* ─── Your Vault (for members) ─── */}
+        {memberships.length > 0 && (
+          <section>
+            <h2 className="text-lg font-bold text-text-primary mb-4 flex items-center gap-2">
+              <Crown className="w-5 h-5 text-accent-gold" />
+              The Vault
+            </h2>
+            <div className="bg-bg-card border border-border-dark rounded-xl p-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+                <p className="text-sm text-text-secondary">
+                  You have access to premium vault content. Browse the latest galleries and exclusive drops.
+                </p>
+                <Link
+                  href="/search"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-accent-pink to-accent-purple text-white text-sm font-semibold rounded-xl hover:opacity-90 transition-all shrink-0"
+                >
+                  <Crown className="w-4 h-4" />
+                  Browse Vault
+                </Link>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                {[
+                  { title: "Summer Collection", badge: "New" },
+                  { title: "Behind the Scenes", badge: "Premium" },
+                  { title: "Nightlife Series", badge: "Trending" },
+                  { title: "Portrait Masterclass", badge: null },
+                  { title: "Travel Diary: Bali", badge: "Popular" },
+                  { title: "Artistic Nudes", badge: "Premium" },
+                ].map((item, i) => (
+                  <Link
+                    key={i}
+                    href={`/gallery/${i + 1}`}
+                    className="group relative aspect-[3/4] rounded-xl overflow-hidden bg-bg-surface border border-border-dark hover:border-accent-pink/30 transition-all"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-accent-pink/5 via-accent-purple/5 to-bg-surface" />
+                    {item.badge && (
+                      <span className="absolute top-2 left-2 px-2 py-0.5 bg-accent-pink/90 text-white text-[10px] font-bold uppercase tracking-wider rounded-md z-10">
+                        {item.badge}
+                      </span>
+                    )}
+                    <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/60 to-transparent">
+                      <p className="text-xs font-medium text-white">{item.title}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ─── Your Content (placeholder) ─── */}
         <section>

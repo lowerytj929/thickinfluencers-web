@@ -20,8 +20,8 @@ export default function Hero() {
             <span className="text-xl font-bold tracking-tight text-white/90">VAULT</span>
           </div>
           <div className="flex items-center gap-4 text-sm">
-            <Link href="/models" className="text-gray-400 hover:text-white transition-colors">Models</Link>
-            <Link href="/categories" className="text-gray-400 hover:text-white transition-colors">Categories</Link>
+            <Link href="/search" className="text-gray-400 hover:text-white transition-colors">Models</Link>
+            <Link href="/search" className="text-gray-400 hover:text-white transition-colors">Categories</Link>
             <Link href="/checkout/vault-pro" className="px-5 py-2.5 bg-gradient-to-r from-pink-600 to-purple-700 text-white font-semibold rounded-lg hover:opacity-90 transition-all text-sm">
               Get Access
             </Link>

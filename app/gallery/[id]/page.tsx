@@ -21,6 +21,7 @@ const galleriesData: Record<string, {
   tags: string[];
   imageCount: number;
   createdAt: string;
+    mediaUrl?: string;
 }> = {
   "1": {
     id: "1",
@@ -34,6 +35,7 @@ const galleriesData: Record<string, {
     tags: ["summer", "photography", "lifestyle", "fashion", "editorial"],
     imageCount: 24,
     createdAt: "June 2025",
+    mediaUrl: "https://www.redgifs.com/watch/illfatedquizzicalunicorn",
   },
   "2": {
     id: "2",
@@ -47,6 +49,7 @@ const galleriesData: Record<string, {
     tags: ["behind-the-scenes", "exclusive", "production", "photography"],
     imageCount: 36,
     createdAt: "May 2025",
+    mediaUrl: "https://www.redgifs.com/watch/nauticalnervousalligatorgar",
   },
   "3": {
     id: "3",

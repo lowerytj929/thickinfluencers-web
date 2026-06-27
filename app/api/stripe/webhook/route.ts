@@ -152,51 +152,38 @@ async function handleCheckoutCompleted(session: {
   }
 
   // ── Upsert membership ────────────────────────────────────────────────
-  // Look for existing membership for this user
-  const { data: existingMembership } = await supabase
-    .from("memberships")
-    .select("id")
-    .eq("user_id", userId)
-    .single();
-
   const now = new Date().toISOString();
-  // For one-time payments, set period_end ~1 year out
+  // For subscriptions, set period_end 1 month out
   const periodEnd = new Date(
-    Date.now() + 365 * 24 * 60 * 60 * 1000,
+    Date.now() + 30 * 24 * 60 * 60 * 1000,
   ).toISOString();
 
-  const membershipRecord = {
+  // Look up the package to get package_id
+  const { data: pkg } = await supabase
+    .from("packages")
+    .select("id")
+    .eq("slug", packageSlug)
+    .single();
+
+  const membershipRecord: Record<string, any> = {
     user_id: userId,
-    tier,
-    status: "active" as MembershipStatus,
-    current_period_start: now,
-    current_period_end: periodEnd,
-    stripe_customer_id: stripeCustomerId,
-    updated_at: now,
+    is_active: true,
+    started_at: now,
+    expires_at: periodEnd,
   };
 
-  if (existingMembership) {
-    // Update existing membership
-    const { error: updateError } = await supabase
-      .from("memberships")
-      .update(membershipRecord)
-      .eq("user_id", userId);
+  if (pkg) {
+    membershipRecord.package_id = pkg.id;
+  }
+  membershipRecord.plan = tier;
 
-    if (updateError) {
-      console.error("Failed to update membership:", updateError);
-    }
-  } else {
-    // Create new membership
-    const { error: insertError } = await supabase
-      .from("memberships")
-      .insert({
-        ...membershipRecord,
-        created_at: now,
-      });
+  // Upsert: use the unique constraint on (user_id, package_id)
+  const { error: membershipError } = await supabase
+    .from("memberships")
+    .upsert(membershipRecord, { onConflict: "user_id,package_id" });
 
-    if (insertError) {
-      console.error("Failed to create membership:", insertError);
-    }
+  if (membershipError) {
+    console.error("Failed to upsert membership:", membershipError);
   }
 
   // ── Update profile membership_tier ──────────────────────────────────

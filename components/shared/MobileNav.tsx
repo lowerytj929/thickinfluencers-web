@@ -7,9 +7,9 @@ import { Home, Search, Flame, Crown, User } from 'lucide-react';
 const tabs = [
   { label: 'Home', href: '/', icon: Home },
   { label: 'Search', href: '/search', icon: Search },
-  { label: 'Trending', href: '/trending', icon: Flame },
+  { label: 'Trending', href: '/search?sort=trending', icon: Flame },
   { label: 'Premium', href: '/premium', icon: Crown },
-  { label: 'Profile', href: '/profile', icon: User },
+  { label: 'Profile', href: '/auth', icon: User },
 ];
 
 export default function MobileNav() {

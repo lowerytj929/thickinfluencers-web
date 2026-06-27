@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import { Crown, Loader2, AlertCircle, Shield, ArrowLeft } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { Crown, Loader2, AlertCircle, Shield, ArrowLeft, LogIn } from "lucide-react";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
 
 const tierInfo: Record<string, { name: string; price: string }> = {
   vault_access: { name: "Vault Access", price: "$15/mo" },
@@ -12,8 +13,9 @@ const tierInfo: Record<string, { name: string; price: string }> = {
 
 export default function CheckoutPage() {
   const params = useParams();
+  const router = useRouter();
   const slug = params.slug as string;
-  const [status, setStatus] = useState<"loading" | "redirecting" | "error">(
+  const [status, setStatus] = useState<"loading" | "redirecting" | "error" | "needs-auth">(
     "loading"
   );
   const [errorMsg, setErrorMsg] = useState<string>("");
@@ -22,8 +24,17 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (!slug) return;
 
-    // Brief delay so user sees the page, then redirect
-    const timer = setTimeout(async () => {
+    // Check if user is logged in first
+    const checkAuth = async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+        setStatus("needs-auth");
+        return;
+      }
+
+      // User is logged in, proceed to checkout
       setStatus("redirecting");
 
       try {
@@ -53,10 +64,11 @@ export default function CheckoutPage() {
         );
         setStatus("error");
       }
-    }, 800);
+    };
 
+    const timer = setTimeout(checkAuth, 500);
     return () => clearTimeout(timer);
-  }, [slug]);
+  }, [slug, router]);
 
   return (
     <div className="min-h-screen bg-bg-primary flex items-center justify-center px-4 py-12">
@@ -118,6 +130,31 @@ export default function CheckoutPage() {
               <div className="w-full bg-bg-surface rounded-full h-2 overflow-hidden">
                 <div className="h-full bg-gradient-to-r from-accent-gold to-accent-pink rounded-full animate-pulse w-3/4" />
               </div>
+            </div>
+          )}
+
+          {status === "needs-auth" && (
+            <div className="space-y-4">
+              <div className="flex justify-center">
+                <div className="w-12 h-12 rounded-full bg-accent-pink/10 flex items-center justify-center">
+                  <LogIn className="w-6 h-6 text-accent-pink" />
+                </div>
+              </div>
+              <p className="text-sm text-text-secondary">
+                Please sign in or create an account to continue.
+              </p>
+              <Link
+                href={`/auth?redirect=/checkout/${slug}`}
+                className="w-full block py-3 bg-gradient-to-r from-accent-pink to-accent-purple text-white font-bold text-sm rounded-xl hover:opacity-90 transition-all text-center"
+              >
+                Sign In to Subscribe
+              </Link>
+              <Link
+                href="/premium"
+                className="w-full block py-3 bg-white/5 border border-border-dark text-text-primary font-semibold text-sm rounded-xl hover:bg-white/10 transition-all text-center"
+              >
+                Back to Plans
+              </Link>
             </div>
           )}
 

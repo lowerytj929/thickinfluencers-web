@@ -41,8 +41,9 @@ async function main() {
         } else {
           success++;
         }
-      } catch (e: any) {
-        console.log(`  [${i}] ERROR: ${e.message.slice(0, 100)}`);
+      } catch (e: unknown) {
+        const msg = e instanceof Error ? e.message : String(e);
+        console.log(`  [${i}] ERROR: ${msg.slice(0, 100)}`);
         failed++;
       }
     }

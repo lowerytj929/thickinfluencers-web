@@ -27,7 +27,7 @@ function AuthForm() {
         router.push(redirectTo);
       }
     });
-  }, []);
+  }, [redirectTo, router, supabase.auth]);
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,12 +49,15 @@ function AuthForm() {
           text: "Check your email for the confirmation link!",
         });
       } else {
-        const { error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
+        // Use server-side login API
+        const res = await fetch("/api/public/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
         });
-        if (error) throw error;
-        router.push(redirectTo);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Login failed");
+        router.push(data.redirect || redirectTo);
         router.refresh();
       }
     } catch (err: any) {

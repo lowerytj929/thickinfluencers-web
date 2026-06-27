@@ -71,22 +71,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // ── Determine Price ID for subscription ──────────────────────────
+    const { PRICE_IDS } = await import("@/lib/constants");
+
     // ── Create Stripe Checkout Session ──────────────────────────────────
     const stripe = getStripe();
 
     const session = await stripe.checkout.sessions.create({
-      mode: "payment",
+      mode: "subscription",
       payment_method_types: ["card"],
       line_items: [
         {
-          price_data: {
-            currency: "usd",
-            product_data: {
-              name: pkg.name,
-              description: pkg.description ?? undefined,
-            },
-            unit_amount: pkg.price_cents,
-          },
+          price: PRICE_IDS[package_slug],
           quantity: 1,
         },
       ],

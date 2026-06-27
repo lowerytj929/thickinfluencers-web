@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import {
-  Package,
   Users,
   CreditCard,
   Settings,
@@ -18,10 +17,10 @@ import {
   CheckCircle,
   XCircle,
   ChevronRight,
-  ExternalLink,
   Shield,
   BarChart3,
   Crown,
+  Upload,
 } from "lucide-react";
 
 type TabId = "content" | "orders" | "members" | "reports" | "settings" | "integrations";
@@ -60,7 +59,7 @@ export default function AdminPage() {
   });
   const [orders, setOrders] = useState<any[]>([]);
   const [memberships, setMemberships] = useState<any[]>([]);
-  const [packages, setPackages] = useState<any[]>([]);
+  const [_packages, setPackages] = useState<any[]>([]);
   const [reports, setReports] = useState<ReportItem[]>([]);
   const [integrations, setIntegrations] = useState<any[]>([]);
   const [tab, setTab] = useState<TabId>("orders");
@@ -122,7 +121,7 @@ export default function AdminPage() {
       setLoading(false);
     }
     load();
-  }, []);
+  }, [router, supabase]);
 
   const grantAccess = async (orderId: string) => {
     setActionLoading(orderId);
@@ -181,6 +180,10 @@ export default function AdminPage() {
           </div>
           <div className="flex items-center gap-4 text-sm">
             <span className="text-text-muted hidden sm:block">@{user?.email?.split("@")[0]}</span>
+            <a href="/admin/upload" className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-accent-pink/10 text-accent-pink text-xs font-medium rounded-lg hover:bg-accent-pink/20 transition-all">
+              <Upload className="w-3.5 h-3.5" />
+              Upload Content
+            </a>
             <a href="/dashboard" className="text-accent-pink hover:text-accent-pink/80 transition-colors">
               Dashboard
             </a>

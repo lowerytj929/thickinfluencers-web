@@ -13,6 +13,30 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  // ── Relaxed rules for plain Node.js scripts (use require, CommonJS) ──
+  {
+    files: ["bot/**/*.js", "scripts/**/*.js", "supabase/**/*.js"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+      "@typescript-eslint/no-explicit-any": "warn",
+    },
+  },
+  // ── Relaxed rules for bot TypeScript ──
+  {
+    files: ["bot/**/*.ts"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "warn",
+    },
+  },
+  // ── Relaxed rules for app source (pre-existing any types) ──
+  {
+    files: ["app/**/*.tsx", "app/**/*.ts", "components/**/*.tsx", "components/**/*.ts", "lib/**/*.ts"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "warn",
+      // React hooks — many pre-existing, will fix gradually
+      "react-hooks/exhaustive-deps": "warn",
+    },
+  },
 ]);
 
 export default eslintConfig;

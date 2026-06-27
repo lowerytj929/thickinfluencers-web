@@ -4,9 +4,9 @@ const footerLinks = [
   { label: 'Terms of Service', href: '/terms' },
   { label: 'Privacy Policy', href: '/privacy' },
   { label: 'Copyright Policy', href: '/copyright' },
-  { label: 'DMCA Notice', href: '/dmca' },
-  { label: '2257 Compliance', href: '/2257' },
-  { label: 'Contact Us', href: '/contact' },
+  { label: 'Compliance', href: '/compliance' },
+  { label: 'Takedown', href: '/takedown' },
+  { label: 'Contact Admin', href: 'https://t.me/richballer1' },
 ];
 
 export default function Footer() {

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { BadgeCheck, ImageIcon, Users } from 'lucide-react';
 
 interface CreatorCardProps {
@@ -27,12 +28,14 @@ export default function CreatorCard({
       <div className="flex flex-col items-center text-center gap-3">
         {/* Avatar */}
         <div className="relative">
-          <div className="w-16 h-16 rounded-full overflow-hidden bg-bg-surface ring-2 ring-border-dark group-hover:ring-accent-pink/50 transition-all duration-300">
+          <div className="w-16 h-16 rounded-full overflow-hidden bg-bg-surface ring-2 ring-border-dark group-hover:ring-accent-pink/50 transition-all duration-300 relative">
             {avatarSrc ? (
-              <img
+              <Image
+                fill
                 src={avatarSrc}
                 alt={displayName}
-                className="w-full h-full object-cover"
+                sizes="64px"
+                className="object-cover"
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-text-muted">

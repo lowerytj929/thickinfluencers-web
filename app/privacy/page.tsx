@@ -127,7 +127,7 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-bold text-text-primary mb-4">8. Changes to This Policy</h2>
             <p className="leading-relaxed">
               We may update this Privacy Policy from time to time. We will notify you of material changes by posting
-              the new policy on this page and updating the "Last updated" date. Your continued use of the Platform
+              the new policy on this page and updating the &quot;Last updated&quot; date. Your continued use of the Platform
               after changes constitutes acceptance of the updated policy.
             </p>
           </section>

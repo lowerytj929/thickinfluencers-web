@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import { BadgeCheck, ImageIcon, Eye, Users, Calendar, ExternalLink, Share2 } from "lucide-react";
 import Link from "next/link";
@@ -93,9 +94,9 @@ export default function CreatorProfilePage() {
           <div className="relative -mt-20 md:-mt-24 flex flex-col md:flex-row md:items-end gap-6 md:gap-8 pb-8 border-b border-border-dark">
             {/* Avatar */}
             <div className="relative shrink-0">
-              <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border-4 border-bg-primary bg-bg-surface shadow-xl">
+              <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border-4 border-bg-primary bg-bg-surface shadow-xl relative">
                 {creator.avatarSrc ? (
-                  <img src={creator.avatarSrc} alt={creator.displayName} className="w-full h-full object-cover" />
+                  <Image fill src={creator.avatarSrc} alt={creator.displayName} sizes="(max-width: 768px) 128px, 160px" className="object-cover" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-accent-pink/20 to-accent-purple/20">
                     <span className="text-4xl md:text-5xl font-bold text-text-muted">

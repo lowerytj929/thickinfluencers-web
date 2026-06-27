@@ -105,8 +105,8 @@ export default function PremiumPage() {
       const data = await res.json();
 
       if (data.url) {
-        // Redirect to Stripe Checkout
-        window.location.href = data.url;
+        // Redirect to Stripe Checkout via location.assign
+        window.location.assign(data.url);
       } else {
         throw new Error("No checkout URL returned");
       }
