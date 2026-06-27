@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase/server";
+import { createClient, createAdminClient } from "@/lib/supabase/server";
 
 export async function POST(req: NextRequest) {
   try {
     let email: string, password: string;
 
-    // Handle both JSON and FormData
     const ct = req.headers.get("content-type") || "";
     if (ct.includes("application/json")) {
       const body = await req.json();
@@ -20,81 +19,53 @@ export async function POST(req: NextRequest) {
     const isForm = (req.headers.get("accept") || "").includes("text/html");
 
     const errRedirect = (msg: string) => {
-      if (isForm) {
-        return NextResponse.redirect(
-          new URL(`/auth?error=${encodeURIComponent(msg)}`, req.url),
-        );
-      }
+      if (isForm) return NextResponse.redirect(new URL(`/auth?error=${encodeURIComponent(msg)}`, req.url));
       return NextResponse.json({ error: msg }, { status: 400 });
     };
 
     if (!email || !password) return errRedirect("Email and password are required.");
 
-    const supabase = await createAdminClient();
     const redirect = req.nextUrl.searchParams.get("redirect") || "/dashboard";
+
+    // Use SSR client — this sets proper Supabase cookies when we call auth methods
+    const supabase = await createClient();
 
     // First try normal sign-in
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-    // If sign-in fails because email isn't confirmed, auto-confirm and retry
+    // If email not confirmed, auto-confirm and retry
     const isConfirmError =
       error?.message?.includes("Email not confirmed") ||
       error?.message?.includes("email_not_confirmed");
 
     if (isConfirmError) {
-      const { data: users } = await supabase.auth.admin.listUsers();
+      const admin = await createAdminClient();
+      const { data: users } = await admin.auth.admin.listUsers();
       const user = users?.users?.find((u: any) => u.email === email);
       if (user) {
-        await supabase.auth.admin.updateUserById(user.id, {
-          email_confirm: true,
-        });
-        // Retry sign-in
-        const { data: retryData, error: retryError } =
-          await supabase.auth.signInWithPassword({ email, password });
+        await admin.auth.admin.updateUserById(user.id, { email_confirm: true });
+        // Retry sign-in with SSR client
+        const { data: retryData, error: retryError } = await supabase.auth.signInWithPassword({ email, password });
         if (retryError) return errRedirect(retryError.message);
         if (retryData.session) {
-          return sendSession(retryData, redirect, req);
+          // The SSR client has now set proper session cookies — redirect
+          if (isForm) return NextResponse.redirect(new URL(redirect, req.url));
+          return NextResponse.json({ user: retryData.user, redirect });
         }
       }
     }
 
     if (error) return errRedirect(error.message);
     if (!data?.session) return errRedirect("No session created");
-    return sendSession(data, redirect, req);
+
+    // The SSR client has set proper session cookies via signInWithPassword
+    // Just redirect — the cookies are already in the response
+    if (isForm) return NextResponse.redirect(new URL(redirect, req.url));
+    return NextResponse.json({ user: data.user, redirect });
   } catch (e: any) {
     console.error("Login error:", e);
     const isForm = (req.headers.get("accept") || "").includes("text/html");
-    if (isForm) {
-      return NextResponse.redirect(
-        new URL(`/auth?error=${encodeURIComponent(e.message || "Server error")}`, req.url),
-      );
-    }
+    if (isForm) return NextResponse.redirect(new URL(`/auth?error=${encodeURIComponent(e.message || "Server error")}`, req.url));
     return NextResponse.json({ error: e.message || "Server error" }, { status: 500 });
   }
-}
-
-function sendSession(
-  data: { user: any; session: any },
-  redirect: string,
-  req: NextRequest,
-) {
-  const isForm = (req.headers.get("accept") || "").includes("text/html");
-  const opts = {
-    path: "/",
-    maxAge: 604800,
-    sameSite: "lax" as const,
-    secure: true,
-  };
-
-  if (isForm) {
-    const res = NextResponse.redirect(new URL(redirect, req.url));
-    res.cookies.set("sb-access-token", data.session.access_token, opts);
-    res.cookies.set("sb-refresh-token", data.session.refresh_token, opts);
-    return res;
-  }
-
-  const jsonRes = NextResponse.json({ user: data.user, redirect });
-  jsonRes.cookies.set("sb-access-token", data.session.access_token, opts);
-  jsonRes.cookies.set("sb-refresh-token", data.session.refresh_token, opts);
-  return jsonRes;
 }

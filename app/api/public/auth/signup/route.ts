@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAdminClient } from "@/lib/supabase/server";
+import { createClient, createAdminClient } from "@/lib/supabase/server";
 
 export async function POST(req: NextRequest) {
   try {
     let email: string, password: string;
 
-    // Handle both JSON and FormData
     const ct = req.headers.get("content-type") || "";
     if (ct.includes("application/json")) {
       const body = await req.json();
@@ -17,110 +16,45 @@ export async function POST(req: NextRequest) {
       password = (form.get("password") as string) || "";
     }
 
-    if (!email || !password) {
-      const accept = req.headers.get("accept") || "";
-      if (accept.includes("text/html")) {
-        return NextResponse.redirect(
-          new URL("/auth?error=Email+and+password+required", req.url),
-        );
-      }
-      return NextResponse.json(
-        { error: "Email and password are required." },
-        { status: 400 },
-      );
-    }
-    if (password.length < 6) {
-      const accept = req.headers.get("accept") || "";
-      if (accept.includes("text/html")) {
-        return NextResponse.redirect(
-          new URL("/auth?error=Password+must+be+at+least+6+characters", req.url),
-        );
-      }
-      return NextResponse.json(
-        { error: "Password must be at least 6 characters." },
-        { status: 400 },
-      );
-    }
+    const isForm = (req.headers.get("accept") || "").includes("text/html");
 
-    const supabase = await createAdminClient();
+    const errRedirect = (msg: string) => {
+      if (isForm) return NextResponse.redirect(new URL(`/auth?error=${encodeURIComponent(msg)}`, req.url));
+      return NextResponse.json({ error: msg }, { status: 400 });
+    };
 
-    // Create user via admin API — auto-confirms so no email needed
-    const { data, error } = await supabase.auth.admin.createUser({
+    if (!email || !password) return errRedirect("Email and password are required.");
+    if (password.length < 6) return errRedirect("Password must be at least 6 characters.");
+
+    const redirect = req.nextUrl.searchParams.get("redirect") || "/dashboard";
+
+    // Create user via admin API — auto-confirms
+    const admin = await createAdminClient();
+    const { data, error } = await admin.auth.admin.createUser({
       email,
       password,
       email_confirm: true,
     });
 
-    if (error) {
-      console.error("Signup error:", error);
-      const accept = req.headers.get("accept") || "";
-      if (accept.includes("text/html")) {
-        const msg = encodeURIComponent(error.message);
-        return NextResponse.redirect(
-          new URL(`/auth?error=${msg}`, req.url),
-        );
-      }
-      return NextResponse.json({ error: error.message }, { status: 400 });
-    }
+    if (error) return errRedirect(error.message);
 
-    // Now sign them in to create a session
+    // Now sign them in using SSR client — this sets proper cookies
+    const supabase = await createClient();
     const { data: signInData, error: signInError } =
       await supabase.auth.signInWithPassword({ email, password });
 
-    const redirect = req.nextUrl.searchParams.get("redirect") || "/dashboard";
-
     if (signInError || !signInData?.session) {
-      // User was created but can't sign in — redirect to login
-      const accept = req.headers.get("accept") || "";
-      if (accept.includes("text/html")) {
-        return NextResponse.redirect(
-          new URL(
-            `/auth?success=Account+created!+Please+sign+in`,
-            req.url,
-          ),
-        );
-      }
-      return NextResponse.json({
-        user: data.user,
-        message: "Account created. Please sign in.",
-      });
+      if (isForm) return NextResponse.redirect(new URL(`/auth?success=Account+created!+Please+sign+in`, req.url));
+      return NextResponse.json({ user: data.user, message: "Account created. Please sign in." });
     }
 
-    // Set cookies
-    const res = NextResponse.redirect(new URL(redirect, req.url));
-    const opts = {
-      path: "/",
-      maxAge: 604800,
-      sameSite: "lax" as const,
-      secure: true,
-    };
-    res.cookies.set("sb-access-token", signInData.session.access_token, opts);
-    res.cookies.set("sb-refresh-token", signInData.session.refresh_token, opts);
-
-    // For JSON clients, return JSON instead of redirect
-    const accept = req.headers.get("accept") || "";
-    if (!accept.includes("text/html")) {
-      const jsonRes = NextResponse.json({
-        user: signInData.user,
-        redirect,
-      });
-      jsonRes.cookies.set("sb-access-token", signInData.session.access_token, opts);
-      jsonRes.cookies.set("sb-refresh-token", signInData.session.refresh_token, opts);
-      return jsonRes;
-    }
-
-    return res;
+    // SSR client has set proper cookies — redirect
+    if (isForm) return NextResponse.redirect(new URL(redirect, req.url));
+    return NextResponse.json({ user: signInData.user, redirect });
   } catch (e: any) {
     console.error("Signup error:", e);
-    const accept = req.headers.get("accept") || "";
-    if (accept.includes("text/html")) {
-      return NextResponse.redirect(
-        new URL(`/auth?error=${encodeURIComponent(e.message || "Server error")}`, req.url),
-      );
-    }
-    return NextResponse.json(
-      { error: e.message || "Server error" },
-      { status: 500 },
-    );
+    const isForm = (req.headers.get("accept") || "").includes("text/html");
+    if (isForm) return NextResponse.redirect(new URL(`/auth?error=${encodeURIComponent(e.message || "Server error")}`, req.url));
+    return NextResponse.json({ error: e.message || "Server error" }, { status: 500 });
   }
 }
