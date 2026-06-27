@@ -15,9 +15,49 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Thick Influencers | Your Private Influencer Vault',
+  title: {
+    default: 'Thick Influencers | Your Private Influencer Vault',
+    template: '%s | Thick Influencers',
+  },
   description:
-    'Discover and share premium influencer content. Your private vault for exclusive media, memberships, and community access.',
+    'Your private vault for exclusive influencer media, premium memberships, and community access. Unlock the Vault with Vault Access or Vault Pro.',
+  keywords: [
+    'thick influencers',
+    'vault empire',
+    'premium content',
+    'influencer vault',
+    'exclusive media',
+    'membership',
+  ],
+  authors: [{ name: 'Vault Empire' }],
+  creator: 'Vault Empire',
+  publisher: 'Vault Empire',
+  metadataBase: new URL('https://thickinfluencers-web.vercel.app'),
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    siteName: 'Thick Influencers',
+    title: 'Thick Influencers | Your Private Influencer Vault',
+    description:
+      'Your private vault for exclusive influencer media, premium memberships, and community access.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Thick Influencers | Your Private Influencer Vault',
+    description:
+      'Your private vault for exclusive influencer media, premium memberships, and community access.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 export default function RootLayout({
