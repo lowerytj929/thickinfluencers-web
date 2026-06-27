@@ -37,7 +37,7 @@ const creatorsData: Record<string, {
     instagram: "graciebon",
     onlyfans: "graciebon",
     galleries: [
-      { id: "1", title: "Summer Poolside Glow 2025", viewCount: 28400, likeCount: 3200, isPremium: false, tags: ["summer", "pool", "thicc", "bikini"], imageSrc: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80" },
+      { id: "1", title: "Tropical Bikini Unboxing & Poolside Try-On", viewCount: 28400, likeCount: 3200, isPremium: false, tags: ["bikini", "unboxing", "poolside", "tryon"], imageSrc: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80" },
       { id: "2", title: "Miami Yacht Party VIP Leaks", viewCount: 45200, likeCount: 6100, isPremium: true, tags: ["yacht", "vip", "exclusive"], imageSrc: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80" },
       { id: "3", title: "Casual Street Style Fit Check", viewCount: 19700, likeCount: 2400, isPremium: false, tags: ["streetwear", "curvy", "casual"], imageSrc: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80" },
     ],
@@ -55,7 +55,7 @@ const creatorsData: Record<string, {
     instagram: "sammydraper",
     onlyfans: "sammydraper",
     galleries: [
-      { id: "4", title: "Morning Gym Routine & Leg Day", viewCount: 22100, likeCount: 2900, isPremium: false, tags: ["fitness", "gym", "workout"], imageSrc: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80" },
+      { id: "4", title: "High-Energy Funk Dance & Twerk Warmup", viewCount: 22100, likeCount: 2900, isPremium: false, tags: ["dance", "twerk", "funk", "fitness"], imageSrc: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80" },
       { id: "5", title: "Late Night Bedroom Try-On Haul", viewCount: 38400, likeCount: 4900, isPremium: true, tags: ["try-on", "lingerie", "exclusive"], imageSrc: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80" },
     ],
   },
@@ -72,7 +72,7 @@ const creatorsData: Record<string, {
     instagram: "sophiehall",
     onlyfans: "sophiehall",
     galleries: [
-      { id: "6", title: "London Studio Editorial", viewCount: 34100, likeCount: 4100, isPremium: true, tags: ["editorial", "london", "glam"], imageSrc: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&auto=format&fit=crop&q=80" },
+      { id: "6", title: "Paris Night Glamour & Studio Editorial", viewCount: 34100, likeCount: 4100, isPremium: true, tags: ["paris", "glamour", "editorial", "night"], imageSrc: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&auto=format&fit=crop&q=80" },
       { id: "7", title: "Sunkissed in Ibiza", viewCount: 18900, likeCount: 2100, isPremium: false, tags: ["ibiza", "travel", "sun"], imageSrc: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&auto=format&fit=crop&q=80" },
     ],
   },
@@ -89,7 +89,7 @@ const creatorsData: Record<string, {
     instagram: "miamalkova",
     onlyfans: "miamalkova",
     galleries: [
-      { id: "8", title: "Twitch Setup Tour & Cosplay Reveal", viewCount: 52100, likeCount: 7800, isPremium: false, tags: ["gamer", "cosplay", "streamer"], imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Mia_Malkova_2016.jpg?width=600" },
+      { id: "8", title: "Behind The Scenes Bedroom Studio Shoot", viewCount: 52100, likeCount: 7800, isPremium: false, tags: ["bts", "bedroom", "studio", "uncensored"], imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Mia_Malkova_2016.jpg?width=600" },
       { id: "9", title: "Uncensored Vault Masterpiece Collection", viewCount: 98400, likeCount: 14200, isPremium: true, tags: ["uncensored", "vip", "masterpiece"], imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Mia_Malkova_2016.jpg?width=600" },
     ],
   },
@@ -106,7 +106,7 @@ const creatorsData: Record<string, {
     instagram: "abelladanger",
     onlyfans: "abelladanger",
     galleries: [
-      { id: "10", title: "South Beach Weekend Vibes", viewCount: 41200, likeCount: 5300, isPremium: false, tags: ["miami", "beach", "party"], imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Abella_Danger_2016.jpg?width=600" },
+      { id: "10", title: "Miami Party Twerk & Freestyle Dance Reel", viewCount: 41200, likeCount: 5300, isPremium: false, tags: ["miami", "party", "twerk", "freestyle"], imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Abella_Danger_2016.jpg?width=600" },
     ],
   },
   "violetmyers": {
@@ -122,7 +122,7 @@ const creatorsData: Record<string, {
     instagram: "waifu_violet",
     onlyfans: "violetmyers",
     galleries: [
-      { id: "11", title: "Custom Anime Waifu Cosplay Photoshoot", viewCount: 36700, likeCount: 4800, isPremium: false, tags: ["cosplay", "anime", "waifu"], imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Violet_Myers_(hru,_2022,_23minA).jpg?width=600" },
+      { id: "11", title: "Ultra 8K Studio Glamour & Fashion Reel", viewCount: 36700, likeCount: 4800, isPremium: false, tags: ["8k", "studio", "glamour", "fashion"], imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Violet_Myers_(hru,_2022,_23minA).jpg?width=600" },
       { id: "12", title: "VIP Private Stream Highlights", viewCount: 61200, likeCount: 8900, isPremium: true, tags: ["private", "stream", "vip"], imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Violet_Myers_(hru,_2022,_23minA).jpg?width=600" },
     ],
   },
@@ -139,7 +139,7 @@ const creatorsData: Record<string, {
     instagram: "moriahmills",
     onlyfans: "moriahmills",
     galleries: [
-      { id: "13", title: "Atlanta Mansion VIP Set", viewCount: 29400, likeCount: 3400, isPremium: true, tags: ["mansion", "atlanta", "vip"], imageSrc: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&auto=format&fit=crop&q=80" },
+      { id: "13", title: "Luxury Forest Lido & Villa Getaway", viewCount: 29400, likeCount: 3400, isPremium: true, tags: ["villa", "lido", "forest", "luxury"], imageSrc: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&auto=format&fit=crop&q=80" },
     ],
   },
   "angelawhite": {
@@ -155,7 +155,7 @@ const creatorsData: Record<string, {
     instagram: "theangelawhite",
     onlyfans: "angelawhite",
     galleries: [
-      { id: "14", title: "Golden Goddess Cinematic Series", viewCount: 78400, likeCount: 11200, isPremium: true, tags: ["goddess", "cinematic", "royalty"], imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Angela_White_2019_by_Glenn_Francis_(cropped).jpg?width=600" },
+      { id: "14", title: "Golden Goddess Studio Behind The Scenes", viewCount: 78400, likeCount: 11200, isPremium: true, tags: ["goddess", "bts", "studio", "royalty"], imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Angela_White_2019_by_Glenn_Francis_(cropped).jpg?width=600" },
     ],
   },
   "zoespencer": {
@@ -171,7 +171,7 @@ const creatorsData: Record<string, {
     instagram: "zoespencer",
     onlyfans: "zoespencer",
     galleries: [
-      { id: "15", title: "Zoe Spencer VIP Wardrobe Try-On & Slip Compilation", viewCount: 64200, likeCount: 8900, isPremium: false, tags: ["tryon", "slip", "thicc", "viral"], imageSrc: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80" },
+      { id: "15", title: "Zoe Spencer Swimwear Unboxing & Poolside Sets", viewCount: 64200, likeCount: 8900, isPremium: false, tags: ["bikini", "unboxing", "tryon", "thicc"], imageSrc: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80" },
     ],
   },
   "aspenkartier": {
@@ -187,7 +187,7 @@ const creatorsData: Record<string, {
     instagram: "aspenkartier",
     onlyfans: "aspenkartier",
     galleries: [
-      { id: "16", title: "Aspen Kartier Uncensored Poolside Stream Highlights", viewCount: 58100, likeCount: 7400, isPremium: true, tags: ["pool", "stream", "baddie", "bikini"], imageSrc: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80" },
+      { id: "16", title: "Aspen Kartier Poolside Twerk & Dance Stream", viewCount: 58100, likeCount: 7400, isPremium: true, tags: ["stream", "twerk", "dance", "pool"], imageSrc: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80" },
     ],
   },
   "amouranth": {
@@ -203,7 +203,7 @@ const creatorsData: Record<string, {
     instagram: "amouranth",
     onlyfans: "amouranth",
     galleries: [
-      { id: "17", title: "Amouranth Hot Tub Stream Viral Malfunction & Slips Vault", viewCount: 112000, likeCount: 18400, isPremium: false, tags: ["twitch", "hottub", "clip", "slip"], imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Amouranth_in_2022.jpg?width=600" },
+      { id: "17", title: "Amouranth Hot Tub Stream & Bikini Haul Unboxing", viewCount: 112000, likeCount: 18400, isPremium: false, tags: ["hottub", "twitch", "bikini", "unboxing"], imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Amouranth_in_2022.jpg?width=600" },
     ],
   },
   "corinnakopf": {
@@ -219,7 +219,7 @@ const creatorsData: Record<string, {
     instagram: "corinnakopf",
     onlyfans: "corinnakopf",
     galleries: [
-      { id: "18", title: "Celeb Slips: Corinna VIP Stream Afterparty Leaks", viewCount: 94300, likeCount: 15100, isPremium: true, tags: ["celeb", "slip", "afterparty", "vip"], imageSrc: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&auto=format&fit=crop&q=80" },
+      { id: "18", title: "Corinna VIP Paris Night Afterparty & Glamour", viewCount: 94300, likeCount: 15100, isPremium: true, tags: ["afterparty", "paris", "glamour", "vip"], imageSrc: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&auto=format&fit=crop&q=80" },
     ],
   },
   "skybri": {
@@ -235,7 +235,7 @@ const creatorsData: Record<string, {
     instagram: "realskybri",
     onlyfans: "skybri",
     galleries: [
-      { id: "19", title: "Sky Bri Podcast Raw Cut & Behind The Scenes Slips", viewCount: 82100, likeCount: 12300, isPremium: false, tags: ["podcast", "raw", "bts", "slip"], imageSrc: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&auto=format&fit=crop&q=80" },
+      { id: "19", title: "Sky Bri Outdoor Lido & Nature Retreat Shoot", viewCount: 82100, likeCount: 12300, isPremium: false, tags: ["nature", "lido", "photoshoot", "raw"], imageSrc: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&auto=format&fit=crop&q=80" },
     ],
   },
   "alinity": {
@@ -251,7 +251,7 @@ const creatorsData: Record<string, {
     instagram: "alinitydivine",
     onlyfans: "alinity",
     galleries: [
-      { id: "20", title: "Alinity Gaming Chair Wardrobe Slip & Viral Twitch Clip", viewCount: 76500, likeCount: 9800, isPremium: false, tags: ["twitch", "gaming", "slip", "viral"], imageSrc: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&auto=format&fit=crop&q=80" },
+      { id: "20", title: "Alinity Funk Dance Celebration Live Stream", viewCount: 76500, likeCount: 9800, isPremium: false, tags: ["twitch", "dance", "funk", "viral"], imageSrc: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&auto=format&fit=crop&q=80" },
     ],
   },
 };

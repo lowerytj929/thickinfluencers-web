@@ -13,6 +13,7 @@ import {
   Flame,
   User,
   LogOut,
+  Lock,
 } from 'lucide-react';
 
 const navLinks = [
@@ -51,12 +52,21 @@ export default function NavBar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass">
       <div className="container-app flex items-center justify-between h-16">
-        {/* Left: Logo */}
-        <Link href="/" className="flex items-center gap-2 shrink-0">
-          <Flame className="w-6 h-6 text-accent-pink" />
-          <span className="gradient-text text-lg font-extrabold tracking-tight whitespace-nowrap">
-            ThickInfluencers
-          </span>
+        {/* Left: Decked Out Vault Logo */}
+        <Link href="/" className="flex items-center gap-3 shrink-0 group">
+          <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-[#ff007a] via-[#a855f7] to-[#00f2fe] p-[2px] shadow-[0_0_20px_rgba(255,0,122,0.5)] group-hover:shadow-[0_0_30px_rgba(255,0,122,0.8)] transition-all duration-300">
+            <div className="flex items-center justify-center w-full h-full bg-[#0a0810] rounded-[10px]">
+              <Lock className="w-5 h-5 text-accent-pink group-hover:scale-110 transition-transform duration-300" />
+            </div>
+          </div>
+          <div className="flex flex-col">
+            <span className="gradient-text text-xl font-black tracking-wider uppercase leading-none">
+              THICK INFLUENCERS
+            </span>
+            <span className="text-[10px] font-extrabold tracking-[0.2em] text-accent-pink/90 uppercase mt-1 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent-pink animate-pulse" /> THE UNCENSORED VAULT
+            </span>
+          </div>
         </Link>
 
         {/* Center: Nav links (desktop) */}
