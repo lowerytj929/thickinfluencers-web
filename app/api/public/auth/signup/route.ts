@@ -92,7 +92,6 @@ export async function POST(req: NextRequest) {
       path: "/",
       maxAge: 604800,
       sameSite: "lax" as const,
-      httpOnly: true,
       secure: true,
     };
     res.cookies.set("sb-access-token", signInData.session.access_token, opts);

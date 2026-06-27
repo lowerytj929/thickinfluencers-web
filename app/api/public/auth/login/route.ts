@@ -83,7 +83,6 @@ function sendSession(
     path: "/",
     maxAge: 604800,
     sameSite: "lax" as const,
-    httpOnly: true,
     secure: true,
   };
 
