@@ -53,7 +53,7 @@ export default function DashboardPage() {
     async function load() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        router.push("/auth?redirect=/dashboard");
+        setLoading(false);
         return;
       }
       setUser(user);
@@ -89,6 +89,43 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-bg-primary">
         <Loader2 className="w-8 h-8 text-accent-pink animate-spin" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-bg-primary px-4">
+        <div className="text-center max-w-md">
+          <div className="w-16 h-16 rounded-full bg-accent-pink/10 flex items-center justify-center mx-auto mb-6">
+            <User className="w-8 h-8 text-accent-pink" />
+          </div>
+          <h1 className="text-2xl font-bold text-text-primary mb-3">Not Signed In</h1>
+          <p className="text-text-secondary mb-8 text-sm">
+            Sign up or sign in to access your dashboard, memberships, and vault content.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link
+              href="/auth"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-accent-pink to-accent-purple text-white font-semibold rounded-xl hover:opacity-90 transition-all text-sm"
+            >
+              <User className="w-4 h-4" />
+              Sign In
+            </Link>
+            <Link
+              href="/auth?mode=signup"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white/5 border border-border-dark text-text-primary font-semibold rounded-xl hover:bg-white/10 transition-all text-sm"
+            >
+              <User className="w-4 h-4" />
+              Create Account
+            </Link>
+          </div>
+          <div className="mt-6">
+            <Link href="/premium" className="text-sm text-accent-pink hover:underline">
+              Browse premium plans without signing in →
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }

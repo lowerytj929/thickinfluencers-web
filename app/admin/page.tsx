@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic';
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   Users,
   CreditCard,
@@ -21,6 +21,7 @@ import {
   BarChart3,
   Crown,
   Upload,
+  User,
 } from "lucide-react";
 
 type TabId = "content" | "orders" | "members" | "reports" | "settings" | "integrations";
@@ -65,13 +66,14 @@ export default function AdminPage() {
   const [tab, setTab] = useState<TabId>("orders");
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
-  const router = useRouter();
   const supabase = createClient();
+  const [notSignedIn, setNotSignedIn] = useState(false);
+  const [notAdmin, setNotAdmin] = useState(false);
 
   useEffect(() => {
     async function load() {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) { router.push("/auth?redirect=/admin"); return; }
+      if (!user) { setLoading(false); setNotSignedIn(true); return; }
       setUser(user);
 
       // Check if admin
@@ -82,7 +84,8 @@ export default function AdminPage() {
         .single();
 
       if (!profile?.is_admin) {
-        router.push("/dashboard");
+        setNotAdmin(true);
+        setLoading(false);
         return;
       }
       setIsAdmin(true);
@@ -121,7 +124,7 @@ export default function AdminPage() {
       setLoading(false);
     }
     load();
-  }, [router, supabase]);
+  }, [supabase]);
 
   const grantAccess = async (orderId: string) => {
     setActionLoading(orderId);
@@ -154,6 +157,60 @@ export default function AdminPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-bg-primary">
         <Loader2 className="w-8 h-8 text-accent-pink animate-spin" />
+      </div>
+    );
+  }
+
+  if (notSignedIn) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-bg-primary px-4">
+        <div className="text-center max-w-md">
+          <div className="w-16 h-16 rounded-full bg-accent-pink/10 flex items-center justify-center mx-auto mb-6">
+            <User className="w-8 h-8 text-accent-pink" />
+          </div>
+          <h1 className="text-2xl font-bold text-text-primary mb-3">Not Signed In</h1>
+          <p className="text-text-secondary mb-8 text-sm">
+            Sign up or sign in to access the admin panel.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link
+              href="/auth"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-accent-pink to-accent-purple text-white font-semibold rounded-xl hover:opacity-90 transition-all text-sm"
+            >
+              <User className="w-4 h-4" />
+              Sign In
+            </Link>
+            <Link
+              href="/auth?mode=signup"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white/5 border border-border-dark text-text-primary font-semibold rounded-xl hover:bg-white/10 transition-all text-sm"
+            >
+              <User className="w-4 h-4" />
+              Create Account
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (notAdmin) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-bg-primary px-4">
+        <div className="text-center max-w-md">
+          <div className="w-16 h-16 rounded-full bg-yellow-900/20 flex items-center justify-center mx-auto mb-6">
+            <Shield className="w-8 h-8 text-yellow-400" />
+          </div>
+          <h1 className="text-2xl font-bold text-text-primary mb-3">Admin Access Required</h1>
+          <p className="text-text-secondary mb-8 text-sm">
+            Your account does not have admin privileges. If you believe this is an error, contact support.
+          </p>
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent-pink text-white font-semibold rounded-xl hover:opacity-90 transition-all text-sm"
+          >
+            Go to Dashboard
+          </Link>
+        </div>
       </div>
     );
   }
