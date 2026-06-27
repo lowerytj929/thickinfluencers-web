@@ -12,22 +12,22 @@ const trendingGalleries = [
   { id: "1", title: "Summer Poolside Glow 2025", creatorName: "Gracie Bon", viewCount: 48400, likeCount: 6200, isPremium: false, tags: ["summer", "pool", "thicc", "bikini"], imageSrc: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80" },
   { id: "2", title: "Morning Gym Routine & Leg Day", creatorName: "Sammy Draper", viewCount: 39200, likeCount: 5100, isPremium: true, tags: ["fitness", "gym", "workout"], imageSrc: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80" },
   { id: "3", title: "London Studio Editorial Glam", creatorName: "Sophie Hall", viewCount: 35700, likeCount: 4800, isPremium: false, tags: ["editorial", "london", "glam"], imageSrc: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&auto=format&fit=crop&q=80" },
-  { id: "4", title: "Uncensored Vault Masterpiece", creatorName: "Mia Malkova", viewCount: 92100, likeCount: 14600, isPremium: true, tags: ["uncensored", "vip", "masterpiece"], imageSrc: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&auto=format&fit=crop&q=80" },
-  { id: "5", title: "South Beach Weekend Vibes", creatorName: "Abella Danger", viewCount: 62300, likeCount: 8500, isPremium: false, tags: ["miami", "beach", "party"], imageSrc: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&auto=format&fit=crop&q=80" },
-  { id: "6", title: "Custom Anime Waifu Cosplay", creatorName: "Violet Myers", viewCount: 54100, likeCount: 7100, isPremium: true, tags: ["cosplay", "anime", "waifu"], imageSrc: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&auto=format&fit=crop&q=80" },
+  { id: "4", title: "Uncensored Vault Masterpiece", creatorName: "Mia Malkova", viewCount: 92100, likeCount: 14600, isPremium: true, tags: ["uncensored", "vip", "masterpiece"], imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Mia_Malkova_2016.jpg?width=600" },
+  { id: "5", title: "South Beach Weekend Vibes", creatorName: "Abella Danger", viewCount: 62300, likeCount: 8500, isPremium: false, tags: ["miami", "beach", "party"], imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Abella_Danger_2016.jpg?width=600" },
+  { id: "6", title: "Custom Anime Waifu Cosplay", creatorName: "Violet Myers", viewCount: 54100, likeCount: 7100, isPremium: true, tags: ["cosplay", "anime", "waifu"], imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Violet_Myers_(hru,_2022,_23minA).jpg?width=600" },
   { id: "7", title: "Atlanta Mansion VIP Set", creatorName: "Moriah Mills", viewCount: 29800, likeCount: 4200, isPremium: false, tags: ["mansion", "atlanta", "vip"], imageSrc: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&auto=format&fit=crop&q=80" },
-  { id: "8", title: "Golden Goddess Cinematic Series", creatorName: "Angela White", viewCount: 87600, likeCount: 13400, isPremium: true, tags: ["goddess", "cinematic", "royalty"], imageSrc: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&auto=format&fit=crop&q=80" },
+  { id: "8", title: "Golden Goddess Cinematic Series", creatorName: "Angela White", viewCount: 87600, likeCount: 13400, isPremium: true, tags: ["goddess", "cinematic", "royalty"], imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Angela_White_2019_by_Glenn_Francis_(cropped).jpg?width=600" },
 ];
 
 const featuredCreators = [
   { displayName: "Gracie Bon", username: "@graciebon", isVerified: true, galleryCount: 42, followerCount: 5400000, instagram: "graciebon", onlyfans: "graciebon", avatarSrc: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80" },
   { displayName: "Sammy Draper", username: "@sammydraper", isVerified: true, galleryCount: 38, followerCount: 1800000, instagram: "sammydraper", onlyfans: "sammydraper", avatarSrc: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80" },
   { displayName: "Sophie Hall", username: "@sophiehall", isVerified: true, galleryCount: 31, followerCount: 2200000, instagram: "sophiehall", onlyfans: "sophiehall", avatarSrc: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&auto=format&fit=crop&q=80" },
-  { displayName: "Mia Malkova", username: "@miamalkova", isVerified: true, galleryCount: 64, followerCount: 11000000, instagram: "miamalkova", onlyfans: "miamalkova", avatarSrc: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&auto=format&fit=crop&q=80" },
-  { displayName: "Abella Danger", username: "@abelladanger", isVerified: true, galleryCount: 55, followerCount: 9500000, instagram: "abelladanger", onlyfans: "abelladanger", avatarSrc: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&auto=format&fit=crop&q=80" },
-  { displayName: "Violet Myers", username: "@violetmyers", isVerified: true, galleryCount: 47, followerCount: 3400000, instagram: "waifu_violet", onlyfans: "violetmyers", avatarSrc: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&auto=format&fit=crop&q=80" },
+  { displayName: "Mia Malkova", username: "@miamalkova", isVerified: true, galleryCount: 64, followerCount: 11000000, instagram: "miamalkova", onlyfans: "miamalkova", avatarSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Mia_Malkova_2016.jpg?width=600" },
+  { displayName: "Abella Danger", username: "@abelladanger", isVerified: true, galleryCount: 55, followerCount: 9500000, instagram: "abelladanger", onlyfans: "abelladanger", avatarSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Abella_Danger_2016.jpg?width=600" },
+  { displayName: "Violet Myers", username: "@violetmyers", isVerified: true, galleryCount: 47, followerCount: 3400000, instagram: "waifu_violet", onlyfans: "violetmyers", avatarSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Violet_Myers_(hru,_2022,_23minA).jpg?width=600" },
   { displayName: "Moriah Mills", username: "@moriahmills", isVerified: true, galleryCount: 29, followerCount: 4100000, instagram: "moriahmills", onlyfans: "moriahmills", avatarSrc: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&auto=format&fit=crop&q=80" },
-  { displayName: "Angela White", username: "@angelawhite", isVerified: true, galleryCount: 72, followerCount: 8900000, instagram: "theangelawhite", onlyfans: "angelawhite", avatarSrc: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&auto=format&fit=crop&q=80" },
+  { displayName: "Angela White", username: "@angelawhite", isVerified: true, galleryCount: 72, followerCount: 8900000, instagram: "theangelawhite", onlyfans: "angelawhite", avatarSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Angela_White_2019_by_Glenn_Francis_(cropped).jpg?width=600" },
 ];
 
 const premiumTiers = [
@@ -206,9 +206,14 @@ export default function HomePage() {
             <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-2 flex items-center gap-2">
               🔥 Popular Models & IG/OF Stars
             </h2>
-            <p className="text-sm text-text-secondary">
-              Featuring top verified creators from Instagram and OnlyFans
-            </p>
+            <div className="flex flex-wrap items-center gap-2">
+              <p className="text-sm text-text-secondary">
+                Featuring top verified creators from Instagram and OnlyFans
+              </p>
+              <span className="inline-block px-2 py-0.5 rounded text-[10px] bg-bg-surface border border-border-dark text-text-muted font-medium">
+                ⚖️ Independent Promotional Index — No Ownership Rights Claimed
+              </span>
+            </div>
           </div>
           <Link
             href="/search?filter=creators"

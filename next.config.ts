@@ -22,6 +22,30 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "images.unsplash.com",
       },
+      {
+        protocol: "https",
+        hostname: "**.wikimedia.org",
+      },
+      {
+        protocol: "https",
+        hostname: "**.redgifs.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.erome.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.imgur.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.reddit.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.redditmedia.com",
+      },
     ],
   },
 

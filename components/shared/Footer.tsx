@@ -11,7 +11,7 @@ const footerLinks = [
 
 export default function Footer() {
   return (
-    <footer className="hidden md:block bg-bg-card border-t border-border-dark mt-auto">
+    <footer className="bg-bg-card border-t border-border-dark mt-auto pb-24 md:pb-0">
       <div className="container-app py-10">
         {/* Links */}
         <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 mb-6">
@@ -40,16 +40,21 @@ export default function Footer() {
         </div>
 
         {/* Disclaimer */}
-        <p className="text-center text-xs text-text-muted max-w-2xl mx-auto leading-relaxed mb-4">
-          All content displayed on this platform is authorized, consensual, and complies with
-          applicable laws and regulations. ThickInfluencers is a media-sharing platform for
-          artistic and creative expression. Content creators are verified and all uploads
-          are reviewed for compliance.
-        </p>
+        <div className="text-center text-xs text-text-muted max-w-3xl mx-auto leading-relaxed mb-6 space-y-2 bg-bg-surface/50 p-4 rounded-xl border border-border-dark/50">
+          <p className="font-semibold text-text-secondary">
+            ⚠️ FAIR USE & OWNERSHIP NOTICE — NO RIGHTS CLAIMED
+          </p>
+          <p>
+            All models, images, videos, trademarks, brand names, and social media links featured on this platform are the sole property of their respective creators and copyright owners. ThickInfluencers claims no ownership rights, copyrights, or exclusive representation over any featured models or external media. This platform operates strictly as an independent search directory and promotional aggregator linking to third-party public content and official social profiles.
+          </p>
+          <p>
+            All content displayed complies with 18+ verification standards. If you are a content owner and wish to request removal or modification of your indexing profile, please visit our Takedown or Copyright Policy pages.
+          </p>
+        </div>
 
         {/* Copyright */}
         <p className="text-center text-xs text-text-muted">
-          &copy; {new Date().getFullYear()} ThickInfluencers. All rights reserved.
+          &copy; {new Date().getFullYear()} ThickInfluencers. All rights reserved. Promotional Index & Search Service.
         </p>
       </div>
     </footer>

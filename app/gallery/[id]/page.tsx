@@ -94,7 +94,7 @@ const galleriesData: Record<string, {
     tags: ["miami", "beach", "party"],
     imageCount: 15,
     createdAt: "February 2025",
-    mediaUrl: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=1200&auto=format&fit=crop&q=80",
+    mediaUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Abella_Danger_2016.jpg?width=1200",
   },
   "6": {
     id: "6",
@@ -108,7 +108,7 @@ const galleriesData: Record<string, {
     tags: ["cosplay", "anime", "waifu"],
     imageCount: 52,
     createdAt: "January 2025",
-    mediaUrl: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1200&auto=format&fit=crop&q=80",
+    mediaUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Violet_Myers_(hru,_2022,_23minA).jpg?width=1200",
   },
   "7": {
     id: "7",
@@ -136,7 +136,7 @@ const galleriesData: Record<string, {
     tags: ["goddess", "cinematic", "royalty"],
     imageCount: 64,
     createdAt: "January 2025",
-    mediaUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=1200&auto=format&fit=crop&q=80",
+    mediaUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Angela_White_2019_by_Glenn_Francis_(cropped).jpg?width=1200",
   },
 };
 
