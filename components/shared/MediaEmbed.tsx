@@ -13,11 +13,6 @@ interface MediaEmbedProps {
 }
 
 function getEmbedUrl(url: string): string | null {
-  // RedGIFs
-  const redgifsMatch = url.match(/redgifs\.com\/(?:watch\/)?([a-zA-Z0-9_-]+)/i);
-  if (redgifsMatch) {
-    return `https://www.redgifs.com/embed/${redgifsMatch[1]}`;
-  }
   // Reddit post embed
   const redditMatch = url.match(/reddit\.com\/r\/([a-zA-Z0-9_-]+)\/comments\/([a-zA-Z0-9_-]+)/i);
   if (redditMatch) {
@@ -55,7 +50,7 @@ export default function MediaEmbed({
   }
 
   const embedUrl = getEmbedUrl(displayUrl);
-  const isDirectVideo = !embedUrl && displayUrl.match(/\.(mp4|webm|mov|m4v)(\?.*)?$/i);
+  const isDirectVideo = !embedUrl && (displayUrl.match(/\.(mp4|webm|mov|m4v)(\?.*)?$/i) || displayUrl.includes('/sample/') || displayUrl.includes('v.redd.it') || displayUrl.includes('video'));
   const isImage = !embedUrl && !isDirectVideo && displayUrl.match(/\.(jpg|jpeg|png|gif|webp|avif)(\?.*)?$/i);
 
   const handleCopy = () => {

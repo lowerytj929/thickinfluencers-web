@@ -25,6 +25,7 @@ const galleriesData: Record<string, {
   imageCount: number;
   createdAt: string;
     mediaUrl?: string;
+    imageSrc?: string;
 }> = {
   "1": {
     id: "1",
@@ -38,7 +39,8 @@ const galleriesData: Record<string, {
     tags: ["summer", "pool", "thicc", "bikini"],
     imageCount: 24,
     createdAt: "June 2025",
-    mediaUrl: "https://www.redgifs.com/watch/illfatedquizzicalunicorn",
+    mediaUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    imageSrc: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1200&auto=format&fit=crop&q=80",
   },
   "2": {
     id: "2",
@@ -52,7 +54,8 @@ const galleriesData: Record<string, {
     tags: ["fitness", "gym", "workout"],
     imageCount: 36,
     createdAt: "May 2025",
-    mediaUrl: "https://www.redgifs.com/watch/nauticalnervousalligatorgar",
+    mediaUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+    imageSrc: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1200&auto=format&fit=crop&q=80",
   },
   "3": {
     id: "3",
@@ -66,7 +69,8 @@ const galleriesData: Record<string, {
     tags: ["editorial", "london", "glam"],
     imageCount: 18,
     createdAt: "April 2025",
-    mediaUrl: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1200&auto=format&fit=crop&q=80",
+    mediaUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    imageSrc: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1200&auto=format&fit=crop&q=80",
   },
   "4": {
     id: "4",
@@ -80,7 +84,8 @@ const galleriesData: Record<string, {
     tags: ["uncensored", "vip", "masterpiece"],
     imageCount: 42,
     createdAt: "March 2025",
-    mediaUrl: "https://www.redgifs.com/watch/illfatedquizzicalunicorn",
+    mediaUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+    imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Mia_Malkova_2016.jpg?width=1200",
   },
   "5": {
     id: "5",
@@ -94,7 +99,8 @@ const galleriesData: Record<string, {
     tags: ["miami", "beach", "party"],
     imageCount: 15,
     createdAt: "February 2025",
-    mediaUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Abella_Danger_2016.jpg?width=1200",
+    mediaUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+    imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Abella_Danger_2016.jpg?width=1200",
   },
   "6": {
     id: "6",
@@ -108,7 +114,8 @@ const galleriesData: Record<string, {
     tags: ["cosplay", "anime", "waifu"],
     imageCount: 52,
     createdAt: "January 2025",
-    mediaUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Violet_Myers_(hru,_2022,_23minA).jpg?width=1200",
+    mediaUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SmoothRide.mp4",
+    imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Violet_Myers_(hru,_2022,_23minA).jpg?width=1200",
   },
   "7": {
     id: "7",
@@ -122,7 +129,8 @@ const galleriesData: Record<string, {
     tags: ["mansion", "atlanta", "vip"],
     imageCount: 20,
     createdAt: "January 2025",
-    mediaUrl: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200&auto=format&fit=crop&q=80",
+    mediaUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
+    imageSrc: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200&auto=format&fit=crop&q=80",
   },
   "8": {
     id: "8",
@@ -136,7 +144,8 @@ const galleriesData: Record<string, {
     tags: ["goddess", "cinematic", "royalty"],
     imageCount: 64,
     createdAt: "January 2025",
-    mediaUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Angela_White_2019_by_Glenn_Francis_(cropped).jpg?width=1200",
+    mediaUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4",
+    imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Angela_White_2019_by_Glenn_Francis_(cropped).jpg?width=1200",
   },
   "15": {
     id: "15",
@@ -150,7 +159,8 @@ const galleriesData: Record<string, {
     tags: ["tryon", "slip", "thicc", "viral"],
     imageCount: 28,
     createdAt: "March 2025",
-    mediaUrl: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1200&auto=format&fit=crop&q=80",
+    mediaUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4",
+    imageSrc: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1200&auto=format&fit=crop&q=80",
   },
   "16": {
     id: "16",
@@ -164,7 +174,8 @@ const galleriesData: Record<string, {
     tags: ["pool", "stream", "baddie", "bikini"],
     imageCount: 35,
     createdAt: "March 2025",
-    mediaUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1200&auto=format&fit=crop&q=80",
+    mediaUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+    imageSrc: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1200&auto=format&fit=crop&q=80",
   },
   "17": {
     id: "17",
@@ -178,7 +189,8 @@ const galleriesData: Record<string, {
     tags: ["twitch", "hottub", "clip", "slip"],
     imageCount: 45,
     createdAt: "February 2025",
-    mediaUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Amouranth_in_2022.jpg?width=1200",
+    mediaUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Amouranth_in_2022.jpg?width=1200",
   },
   "18": {
     id: "18",
@@ -192,7 +204,8 @@ const galleriesData: Record<string, {
     tags: ["celeb", "slip", "afterparty", "vip"],
     imageCount: 30,
     createdAt: "February 2025",
-    mediaUrl: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1200&auto=format&fit=crop&q=80",
+    mediaUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    imageSrc: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1200&auto=format&fit=crop&q=80",
   },
   "19": {
     id: "19",
@@ -206,7 +219,8 @@ const galleriesData: Record<string, {
     tags: ["podcast", "raw", "bts", "slip"],
     imageCount: 24,
     createdAt: "January 2025",
-    mediaUrl: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=1200&auto=format&fit=crop&q=80",
+    mediaUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    imageSrc: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=1200&auto=format&fit=crop&q=80",
   },
   "20": {
     id: "20",
@@ -220,7 +234,8 @@ const galleriesData: Record<string, {
     tags: ["twitch", "gaming", "slip", "viral"],
     imageCount: 18,
     createdAt: "January 2025",
-    mediaUrl: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200&auto=format&fit=crop&q=80",
+    mediaUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+    imageSrc: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200&auto=format&fit=crop&q=80",
   },
 };
 
@@ -328,6 +343,7 @@ export default function GalleryDetailPage() {
               {gallery.mediaUrl ? (
                 <MediaEmbed
                   url={gallery.mediaUrl}
+                  posterUrl={gallery.imageSrc}
                   title={gallery.title}
                   isPremium={gallery.isPremium}
                 />
