@@ -36,18 +36,17 @@ function AuthForm() {
 
     try {
       if (isSignUp) {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback?redirect=${encodeURIComponent(redirectTo)}`,
-          },
+        // Use server-side signup API — no email confirmation needed
+        const res = await fetch("/api/public/auth/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
         });
-        if (error) throw error;
-        setMessage({
-          type: "success",
-          text: "Check your email for the confirmation link!",
-        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Signup failed");
+        // Signed in automatically — redirect to dashboard
+        router.push(data.redirect || redirectTo);
+        router.refresh();
       } else {
         // Use server-side login API
         const res = await fetch("/api/public/auth/login", {
