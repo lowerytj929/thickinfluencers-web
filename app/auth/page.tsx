@@ -1,73 +1,17 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Loader2, Mail, Lock, Eye, EyeOff, AlertCircle, CheckCircle2, Globe } from "lucide-react";
+import { useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import { Loader2, Mail, Lock, Eye, EyeOff, Globe } from "lucide-react";
 import Link from "next/link";
 
 function AuthForm() {
   const searchParams = useSearchParams();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isSignUp, setIsSignUp] = useState(searchParams.get("mode") === "signup");
-  const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [message, setMessage] = useState<{ type: "error" | "success"; text: string } | null>(null);
-  const router = useRouter();
-  const supabase = createClient();
-
-  // Handle redirect param
+  const error = searchParams.get("error");
+  const success = searchParams.get("success");
   const redirectTo = searchParams.get("redirect") || "/dashboard";
-
-  useEffect(() => {
-    // Check if user is already signed in
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (user) {
-        router.push(redirectTo);
-      }
-    });
-  }, [redirectTo, router, supabase.auth]);
-
-  const handleAuth = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage(null);
-
-    try {
-      if (isSignUp) {
-        // Use server-side signup API — no email confirmation needed
-        const res = await fetch("/api/public/auth/signup", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Signup failed");
-        // Signed in automatically — redirect to dashboard
-        router.push(data.redirect || redirectTo);
-        router.refresh();
-      } else {
-        // Use server-side login API
-        const res = await fetch("/api/public/auth/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Login failed");
-        router.push(data.redirect || redirectTo);
-        router.refresh();
-      }
-    } catch (err: any) {
-      setMessage({
-        type: "error",
-        text: err.message || "An error occurred. Please try again.",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [showPassword, setShowPassword] = useState(false);
+  const isSignUp = searchParams.get("mode") === "signup";
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-bg-primary px-4 py-12">
@@ -113,8 +57,28 @@ function AuthForm() {
           </div>
         </div>
 
-        {/* Auth Form */}
-        <form onSubmit={handleAuth} className="space-y-5">
+        {/* Error / Success Messages */}
+        {error && (
+          <div className="mb-4 flex items-start gap-3 p-4 rounded-xl text-sm bg-red-900/20 border border-red-900/30 text-red-400">
+            <span>{error}</span>
+          </div>
+        )}
+        {success && (
+          <div className="mb-4 flex items-start gap-3 p-4 rounded-xl text-sm bg-green-900/20 border border-green-900/30 text-green-400">
+            <span>{success}</span>
+          </div>
+        )}
+
+        {/* Auth Form - Native HTML submission */}
+        <form
+          action={
+            isSignUp
+              ? `/api/public/auth/signup?redirect=${encodeURIComponent(redirectTo)}`
+              : `/api/public/auth/login?redirect=${encodeURIComponent(redirectTo)}`
+          }
+          method="POST"
+          className="space-y-5"
+        >
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-text-secondary mb-2">
               Email
@@ -123,9 +87,8 @@ function AuthForm() {
               <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none" />
               <input
                 id="email"
+                name="email"
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full h-11 pl-10 pr-4 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-pink/50 focus:ring-1 focus:ring-accent-pink/20 transition-all"
                 placeholder="you@example.com"
@@ -141,9 +104,8 @@ function AuthForm() {
               <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none" />
               <input
                 id="password"
+                name="password"
                 type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
                 className="w-full h-11 pl-10 pr-11 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-pink/50 focus:ring-1 focus:ring-accent-pink/20 transition-all"
@@ -160,55 +122,24 @@ function AuthForm() {
             </div>
           </div>
 
-          {/* Message Display */}
-          {message && (
-            <div
-              className={`flex items-start gap-3 p-4 rounded-xl text-sm ${
-                message.type === "error"
-                  ? "bg-red-900/20 border border-red-900/30 text-red-400"
-                  : "bg-green-900/20 border border-green-900/30 text-green-400"
-              }`}
-            >
-              {message.type === "error" ? (
-                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-              ) : (
-                <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
-              )}
-              <span>{message.text}</span>
-            </div>
-          )}
-
           <button
             type="submit"
-            disabled={loading}
             className="w-full h-12 bg-gradient-to-r from-accent-pink to-accent-purple text-white font-bold text-sm rounded-xl hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-accent-pink/20"
           >
-            {loading ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Processing...
-              </>
-            ) : isSignUp ? (
-              "Create Account"
-            ) : (
-              "Sign In"
-            )}
+            {isSignUp ? "Create Account" : "Sign In"}
           </button>
         </form>
 
         {/* Toggle */}
         <div className="mt-6 text-center">
-          <button
-            onClick={() => {
-              setIsSignUp(!isSignUp);
-              setMessage(null);
-            }}
+          <Link
+            href={isSignUp ? `/auth${redirectTo !== "/dashboard" ? `?redirect=${encodeURIComponent(redirectTo)}` : ""}` : `/auth?mode=signup${redirectTo !== "/dashboard" ? `&redirect=${encodeURIComponent(redirectTo)}` : ""}`}
             className="text-accent-pink hover:text-accent-pink/80 text-sm font-medium transition-colors"
           >
             {isSignUp
               ? "Already have an account? Sign in"
               : "Don't have an account? Sign up"}
-          </button>
+          </Link>
         </div>
 
         {/* Legal */}
