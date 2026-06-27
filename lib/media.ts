@@ -4,16 +4,14 @@ import { createClient } from "@/lib/supabase/client";
 const BUCKET = "media";
 
 export async function ensureBucket(): Promise<boolean> {
-  const supabase = createClient();
-  const { data: buckets } = await supabase.storage.listBuckets();
-  if (!buckets?.find((b) => b.name === BUCKET)) {
-    const { error } = await supabase.storage.createBucket(BUCKET, {
-      public: false,
-      fileSizeLimit: 524288000, // 500MB
-    });
-    return !error;
+  // Call a server API to ensure the bucket exists (requires service_role)
+  try {
+    const res = await fetch("/api/public/ensure-bucket");
+    const data = await res.json();
+    return data.ok === true;
+  } catch {
+    return false;
   }
-  return true;
 }
 
 export async function uploadMedia(
