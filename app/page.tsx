@@ -9,25 +9,25 @@ import TagChip from "@/components/shared/TagChip";
 import { createClient } from "@/lib/supabase/client";
 
 const trendingGalleries = [
-  { id: "1", title: "Summer Collection 2025", creatorName: "Aria Mitchell", viewCount: 28400, likeCount: 3200, isPremium: false, tags: ["summer", "photography", "lifestyle"] },
-  { id: "2", title: "Behind the Scenes Vol. 3", creatorName: "Jade Rivera", viewCount: 19200, likeCount: 2100, isPremium: true, tags: ["behind-the-scenes", "exclusive"] },
-  { id: "3", title: "Urban Fashion Shoot", creatorName: "Marcus Chen", viewCount: 15700, likeCount: 1800, isPremium: false, tags: ["fashion", "urban", "editorial"] },
-  { id: "4", title: "Nightlife Series", creatorName: "Sofia Torres", viewCount: 22100, likeCount: 2600, isPremium: true, tags: ["nightlife", "events"] },
-  { id: "5", title: "Portrait Masterclass", creatorName: "Elena Voss", viewCount: 12300, likeCount: 1500, isPremium: false, tags: ["portrait", "photography"] },
-  { id: "6", title: "Travel Diary: Bali", creatorName: "Liam Nakamura", viewCount: 34100, likeCount: 4100, isPremium: true, tags: ["travel", "bali", "adventure"] },
-  { id: "7", title: "Fitness & Wellness", creatorName: "Zoe Hart", viewCount: 9800, likeCount: 1200, isPremium: false, tags: ["fitness", "wellness"] },
-  { id: "8", title: "Artistic Nudes Collection", creatorName: "Olivia Grant", viewCount: 27600, likeCount: 3400, isPremium: true, tags: ["art", "fine-art", "curated"] },
+  { id: "1", title: "Summer Poolside Glow 2025", creatorName: "Gracie Bon", viewCount: 48400, likeCount: 6200, isPremium: false, tags: ["summer", "pool", "thicc", "bikini"], imageSrc: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80" },
+  { id: "2", title: "Morning Gym Routine & Leg Day", creatorName: "Sammy Draper", viewCount: 39200, likeCount: 5100, isPremium: true, tags: ["fitness", "gym", "workout"], imageSrc: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80" },
+  { id: "3", title: "London Studio Editorial Glam", creatorName: "Sophie Hall", viewCount: 35700, likeCount: 4800, isPremium: false, tags: ["editorial", "london", "glam"], imageSrc: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&auto=format&fit=crop&q=80" },
+  { id: "4", title: "Uncensored Vault Masterpiece", creatorName: "Mia Malkova", viewCount: 92100, likeCount: 14600, isPremium: true, tags: ["uncensored", "vip", "masterpiece"], imageSrc: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&auto=format&fit=crop&q=80" },
+  { id: "5", title: "South Beach Weekend Vibes", creatorName: "Abella Danger", viewCount: 62300, likeCount: 8500, isPremium: false, tags: ["miami", "beach", "party"], imageSrc: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&auto=format&fit=crop&q=80" },
+  { id: "6", title: "Custom Anime Waifu Cosplay", creatorName: "Violet Myers", viewCount: 54100, likeCount: 7100, isPremium: true, tags: ["cosplay", "anime", "waifu"], imageSrc: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&auto=format&fit=crop&q=80" },
+  { id: "7", title: "Atlanta Mansion VIP Set", creatorName: "Moriah Mills", viewCount: 29800, likeCount: 4200, isPremium: false, tags: ["mansion", "atlanta", "vip"], imageSrc: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&auto=format&fit=crop&q=80" },
+  { id: "8", title: "Golden Goddess Cinematic Series", creatorName: "Angela White", viewCount: 87600, likeCount: 13400, isPremium: true, tags: ["goddess", "cinematic", "royalty"], imageSrc: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&auto=format&fit=crop&q=80" },
 ];
 
 const featuredCreators = [
-  { displayName: "Gracie Bon", username: "@graciebon", isVerified: true, galleryCount: 42, followerCount: 5400000, instagram: "graciebon", onlyfans: "graciebon" },
-  { displayName: "Sammy Draper", username: "@sammydraper", isVerified: true, galleryCount: 38, followerCount: 1800000, instagram: "sammydraper", onlyfans: "sammydraper" },
-  { displayName: "Sophie Hall", username: "@sophiehall", isVerified: true, galleryCount: 31, followerCount: 2200000, instagram: "sophiehall", onlyfans: "sophiehall" },
-  { displayName: "Mia Malkova", username: "@miamalkova", isVerified: true, galleryCount: 64, followerCount: 11000000, instagram: "miamalkova", onlyfans: "miamalkova" },
-  { displayName: "Abella Danger", username: "@abelladanger", isVerified: true, galleryCount: 55, followerCount: 9500000, instagram: "abelladanger", onlyfans: "abelladanger" },
-  { displayName: "Violet Myers", username: "@violetmyers", isVerified: true, galleryCount: 47, followerCount: 3400000, instagram: "waifu_violet", onlyfans: "violetmyers" },
-  { displayName: "Moriah Mills", username: "@moriahmills", isVerified: true, galleryCount: 29, followerCount: 4100000, instagram: "moriahmills", onlyfans: "moriahmills" },
-  { displayName: "Angela White", username: "@angelawhite", isVerified: true, galleryCount: 72, followerCount: 8900000, instagram: "theangelawhite", onlyfans: "angelawhite" },
+  { displayName: "Gracie Bon", username: "@graciebon", isVerified: true, galleryCount: 42, followerCount: 5400000, instagram: "graciebon", onlyfans: "graciebon", avatarSrc: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80" },
+  { displayName: "Sammy Draper", username: "@sammydraper", isVerified: true, galleryCount: 38, followerCount: 1800000, instagram: "sammydraper", onlyfans: "sammydraper", avatarSrc: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80" },
+  { displayName: "Sophie Hall", username: "@sophiehall", isVerified: true, galleryCount: 31, followerCount: 2200000, instagram: "sophiehall", onlyfans: "sophiehall", avatarSrc: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&auto=format&fit=crop&q=80" },
+  { displayName: "Mia Malkova", username: "@miamalkova", isVerified: true, galleryCount: 64, followerCount: 11000000, instagram: "miamalkova", onlyfans: "miamalkova", avatarSrc: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&auto=format&fit=crop&q=80" },
+  { displayName: "Abella Danger", username: "@abelladanger", isVerified: true, galleryCount: 55, followerCount: 9500000, instagram: "abelladanger", onlyfans: "abelladanger", avatarSrc: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&auto=format&fit=crop&q=80" },
+  { displayName: "Violet Myers", username: "@violetmyers", isVerified: true, galleryCount: 47, followerCount: 3400000, instagram: "waifu_violet", onlyfans: "violetmyers", avatarSrc: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&auto=format&fit=crop&q=80" },
+  { displayName: "Moriah Mills", username: "@moriahmills", isVerified: true, galleryCount: 29, followerCount: 4100000, instagram: "moriahmills", onlyfans: "moriahmills", avatarSrc: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&auto=format&fit=crop&q=80" },
+  { displayName: "Angela White", username: "@angelawhite", isVerified: true, galleryCount: 72, followerCount: 8900000, instagram: "theangelawhite", onlyfans: "angelawhite", avatarSrc: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&auto=format&fit=crop&q=80" },
 ];
 
 const premiumTiers = [
@@ -69,6 +69,7 @@ export default function HomePage() {
             likeCount: g.like_count || 180,
             isPremium: g.is_premium || false,
             tags: g.tags || ["vault", "trending"],
+            imageSrc: g.cover_url || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80",
           }));
           setLiveGalleries(mapped);
         }
@@ -182,6 +183,7 @@ export default function HomePage() {
                 likeCount={gallery.likeCount}
                 isPremium={gallery.isPremium}
                 tags={gallery.tags}
+                imageSrc={gallery.imageSrc}
               />
             </Link>
           ))}
@@ -227,6 +229,7 @@ export default function HomePage() {
                 followerCount={creator.followerCount}
                 instagram={creator.instagram}
                 onlyfans={creator.onlyfans}
+                avatarSrc={creator.avatarSrc}
               />
             </Link>
           ))}

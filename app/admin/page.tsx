@@ -330,10 +330,10 @@ export default function AdminPage() {
                 </thead>
                 <tbody>
                   {[
-                    { title: "Summer Collection 2025", creator: "Aria Mitchell", type: "Gallery", status: "Published", reports: 0 },
-                    { title: "Behind the Scenes Vol. 3", creator: "Jade Rivera", type: "Gallery", status: "Published", reports: 1 },
-                    { title: "Nightlife Series", creator: "Sofia Torres", type: "Gallery", status: "Flagged", reports: 3 },
-                    { title: "Artistic Nudes Collection", creator: "Olivia Grant", type: "Gallery", status: "Under Review", reports: 2 },
+                    { title: "Summer Poolside Glow 2025", creator: "Gracie Bon", type: "Gallery", status: "Published", reports: 0 },
+                    { title: "Morning Gym Routine & Leg Day", creator: "Sammy Draper", type: "Gallery", status: "Published", reports: 1 },
+                    { title: "Uncensored Vault Masterpiece", creator: "Mia Malkova", type: "Gallery", status: "Flagged", reports: 3 },
+                    { title: "Custom Anime Waifu Cosplay", creator: "Violet Myers", type: "Gallery", status: "Under Review", reports: 2 },
                   ].map((item, i) => (
                     <tr key={i} className="border-b border-border-dark/50 text-text-primary">
                       <td className="p-4 font-medium">{item.title}</td>
