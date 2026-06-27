@@ -10,7 +10,7 @@ export function createClient() {
       cookieOptions: {
         path: "/",
         sameSite: "lax",
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
         maxAge: 60 * 60 * 24 * 365, // 1 year
       },
     }

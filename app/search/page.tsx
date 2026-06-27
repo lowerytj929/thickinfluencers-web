@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Search, Compass, TrendingUp, Users, Tag, ImageIcon, Loader2 } from "lucide-react";
 import SearchBar from "@/components/shared/SearchBar";
@@ -28,14 +28,15 @@ function SearchContent() {
   const query = searchParams.get("q") || "";
   const filter = searchParams.get("filter") || "all";
   const [activeFilter, setActiveFilter] = useState(filter);
+  const [prevFilter, setPrevFilter] = useState(filter);
   const [isSearching, setIsSearching] = useState(false);
 
-  const hasQuery = query.trim().length > 0;
-
-  // Sync filter from URL
-  useEffect(() => {
+  if (filter !== prevFilter) {
+    setPrevFilter(filter);
     setActiveFilter(filter);
-  }, [filter]);
+  }
+
+  const hasQuery = query.trim().length > 0;
 
   const handleSuggestion = (suggestion: string) => {
     setIsSearching(true);
