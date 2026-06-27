@@ -7,10 +7,20 @@ import Link from "next/link";
 export default function TakedownPage() {
   const [formData, setFormData] = useState({
     fullName: "",
+    title: "",
     email: "",
-    contentDescription: "",
-    infringingUrl: "",
-    reason: "",
+    phone: "",
+    address: "",
+    city: "",
+    state: "",
+    zip: "",
+    country: "US",
+    copyrightedWork: "",
+    infringingUrls: "",
+    description: "",
+    goodFaith: false,
+    accuracyPerjury: false,
+    isOwner: false,
     additionalInfo: "",
   });
   const [loading, setLoading] = useState(false);
@@ -18,8 +28,12 @@ export default function TakedownPage() {
   const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+    const checked = type === "checkbox" ? (e.target as HTMLInputElement).checked : undefined;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -27,15 +41,23 @@ export default function TakedownPage() {
     setLoading(true);
     setError("");
 
-    // Validate
-    if (!formData.fullName || !formData.email || !formData.contentDescription || !formData.infringingUrl || !formData.reason) {
-      setError("Please fill in all required fields.");
+    // Validate required fields
+    const requiredFields = ["fullName", "email", "copyrightedWork", "infringingUrls"];
+    const missing = requiredFields.filter((f) => !formData[f as keyof typeof formData]);
+    if (missing.length > 0) {
+      setError("Please fill in all required fields marked with *.");
+      setLoading(false);
+      return;
+    }
+
+    if (!formData.goodFaith || !formData.accuracyPerjury || !formData.isOwner) {
+      setError("You must acknowledge all three legal statements to submit a DMCA notice.");
       setLoading(false);
       return;
     }
 
     // Simulate submission
-    await new Promise((r) => setTimeout(r, 1000));
+    await new Promise((r) => setTimeout(r, 1500));
     setSubmitted(true);
     setLoading(false);
   };
@@ -47,17 +69,30 @@ export default function TakedownPage() {
           <div className="w-20 h-20 rounded-full bg-green-900/20 flex items-center justify-center mx-auto mb-6">
             <CheckCircle2 className="w-10 h-10 text-green-400" />
           </div>
-          <h1 className="text-3xl font-bold text-text-primary mb-4">Takedown Request Submitted</h1>
-          <p className="text-text-secondary mb-8 max-w-md mx-auto">
-            Your DMCA takedown notice has been received. We will review your request and respond within 2-3 business days.
-            A confirmation has been sent to {formData.email}.
+          <h1 className="text-3xl font-bold text-text-primary mb-4">DMCA Takedown Request Submitted</h1>
+          <p className="text-text-secondary mb-6 max-w-md mx-auto">
+            Your DMCA takedown notice has been received by our Copyright Agent. We will review your request
+            and respond within 2-3 business days. A confirmation copy has been sent to{" "}
+            <strong className="text-text-primary">{formData.email}</strong>.
           </p>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-accent-pink text-white font-semibold rounded-xl hover:opacity-90 transition-all"
-          >
-            Back to Home
-          </Link>
+          <div className="bg-bg-card border border-border-dark rounded-xl p-5 mb-8 text-sm text-text-muted text-left max-w-md mx-auto">
+            <p className="mb-2"><strong className="text-text-primary">Reference:</strong> Please retain your confirmation email for your records. Include the reference number in any follow-up correspondence.</p>
+            <p className="text-text-muted">If you do not receive a confirmation within 24 hours, please check your spam folder or contact us directly.</p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent-pink text-white font-semibold rounded-xl hover:opacity-90 transition-all"
+            >
+              Back to Home
+            </Link>
+            <Link
+              href="/copyright"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-bg-surface border border-border-dark text-text-secondary font-medium rounded-xl hover:border-accent-pink/30 hover:text-text-primary transition-all"
+            >
+              View Copyright Policy
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -76,119 +111,262 @@ export default function TakedownPage() {
             DMCA Takedown Request
           </h1>
           <p className="text-text-secondary">
-            Submit a copyright infringement notice under the Digital Millennium Copyright Act.
-            All fields marked with * are required.
+            Submit a formal copyright infringement notice under the Digital Millennium Copyright Act
+            (17 U.S.C. &sect; 512). All fields marked with <span className="text-accent-pink">*</span> are required.
+          </p>
+        </div>
+
+        {/* Legal preamble */}
+        <div className="bg-bg-card border border-border-dark rounded-xl p-5 mb-8 text-sm text-text-muted leading-relaxed">
+          <p className="text-text-primary font-semibold mb-2">Important Legal Notice</p>
+          <p className="mb-2">
+            This form is for reporting copyright infringement only. Section 512(f) of the DMCA provides
+            that <strong>any person who knowingly materially misrepresents</strong> that material or activity
+            is infringing may be subject to liability for damages, including costs and attorneys&apos; fees.
+            Please ensure your claim is accurate and made in good faith.
+          </p>
+          <p>
+            For non-copyright issues (harassment, privacy violations, terms abuse), please contact us at{" "}
+            <a href="mailto:privacy@thickinfluencers.com" className="text-accent-pink hover:underline">privacy@thickinfluencers.com</a>.
           </p>
         </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Full Name */}
-            <div>
-              <label htmlFor="fullName" className="block text-sm font-medium text-text-secondary mb-2">
-                Full Name *
-              </label>
-              <input
-                id="fullName"
-                name="fullName"
-                type="text"
-                value={formData.fullName}
-                onChange={handleChange}
-                required
-                className="w-full h-11 px-4 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-pink/50 transition-all"
-                placeholder="Jane Smith"
-              />
+          {/* Contact Information Section */}
+          <div className="bg-bg-card border border-border-dark rounded-xl p-6">
+            <h2 className="text-lg font-semibold text-text-primary mb-4">Your Contact Information</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="md:col-span-2">
+                <label htmlFor="fullName" className="block text-sm font-medium text-text-secondary mb-2">
+                  Full Legal Name <span className="text-accent-pink">*</span>
+                </label>
+                <input
+                  id="fullName"
+                  name="fullName"
+                  type="text"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  required
+                  className="w-full h-11 px-4 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-pink/50 transition-all"
+                  placeholder="Jane Smith"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="title" className="block text-sm font-medium text-text-secondary mb-2">
+                  Title / Role
+                </label>
+                <input
+                  id="title"
+                  name="title"
+                  type="text"
+                  value={formData.title}
+                  onChange={handleChange}
+                  className="w-full h-11 px-4 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-pink/50 transition-all"
+                  placeholder="Copyright Owner"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-text-secondary mb-2">
+                  Email Address <span className="text-accent-pink">*</span>
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full h-11 px-4 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-pink/50 transition-all"
+                  placeholder="jane@example.com"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium text-text-secondary mb-2">
+                  Telephone Number
+                </label>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="w-full h-11 px-4 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-pink/50 transition-all"
+                  placeholder="+1 (555) 123-4567"
+                />
+              </div>
+
+              <div className="md:col-span-2">
+                <label htmlFor="address" className="block text-sm font-medium text-text-secondary mb-2">
+                  Street Address <span className="text-text-muted">(physical address required)</span>
+                </label>
+                <input
+                  id="address"
+                  name="address"
+                  type="text"
+                  value={formData.address}
+                  onChange={handleChange}
+                  className="w-full h-11 px-4 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-pink/50 transition-all"
+                  placeholder="123 Main Street"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="city" className="block text-sm font-medium text-text-secondary mb-2">
+                  City
+                </label>
+                <input
+                  id="city"
+                  name="city"
+                  type="text"
+                  value={formData.city}
+                  onChange={handleChange}
+                  className="w-full h-11 px-4 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-pink/50 transition-all"
+                  placeholder="Los Angeles"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="state" className="block text-sm font-medium text-text-secondary mb-2">
+                    State
+                  </label>
+                  <input
+                    id="state"
+                    name="state"
+                    type="text"
+                    value={formData.state}
+                    onChange={handleChange}
+                    className="w-full h-11 px-4 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-pink/50 transition-all"
+                    placeholder="CA"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="zip" className="block text-sm font-medium text-text-secondary mb-2">
+                    ZIP Code
+                  </label>
+                  <input
+                    id="zip"
+                    name="zip"
+                    type="text"
+                    value={formData.zip}
+                    onChange={handleChange}
+                    className="w-full h-11 px-4 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-pink/50 transition-all"
+                    placeholder="90001"
+                  />
+                </div>
+              </div>
             </div>
+          </div>
 
-            {/* Email */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-text-secondary mb-2">
-                Email Address *
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full h-11 px-4 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-pink/50 transition-all"
-                placeholder="jane@example.com"
-              />
+          {/* Infringement Details Section */}
+          <div className="bg-bg-card border border-border-dark rounded-xl p-6">
+            <h2 className="text-lg font-semibold text-text-primary mb-4">Infringement Details</h2>
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="copyrightedWork" className="block text-sm font-medium text-text-secondary mb-2">
+                  Description of Copyrighted Work <span className="text-accent-pink">*</span>
+                </label>
+                <textarea
+                  id="copyrightedWork"
+                  name="copyrightedWork"
+                  value={formData.copyrightedWork}
+                  onChange={handleChange}
+                  required
+                  rows={3}
+                  className="w-full px-4 py-3 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-pink/50 transition-all resize-none"
+                  placeholder="Describe the original copyrighted work you believe has been infringed. Include title, creator, publication date, registration number (if any), and any other identifying information..."
+                />
+              </div>
+
+              <div>
+                <label htmlFor="infringingUrls" className="block text-sm font-medium text-text-secondary mb-2">
+                  URL(s) of Infringing Content <span className="text-accent-pink">*</span>
+                </label>
+                <textarea
+                  id="infringingUrls"
+                  name="infringingUrls"
+                  value={formData.infringingUrls}
+                  onChange={handleChange}
+                  required
+                  rows={3}
+                  className="w-full px-4 py-3 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-pink/50 transition-all resize-none"
+                  placeholder="https://thickinfluencers.com/gallery/... (one URL per line for multiple items)"
+                />
+                <p className="text-xs text-text-muted mt-1">Provide the full, specific URL(s) where the infringing material appears.</p>
+              </div>
+
+              <div>
+                <label htmlFor="description" className="block text-sm font-medium text-text-secondary mb-2">
+                  Additional Information
+                </label>
+                <textarea
+                  id="description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  rows={2}
+                  className="w-full px-4 py-3 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-pink/50 transition-all resize-none"
+                  placeholder="Any additional context, such as authorization status, prior correspondence, or search terms used to locate the content..."
+                />
+              </div>
             </div>
           </div>
 
-          {/* Content Description */}
-          <div>
-            <label htmlFor="contentDescription" className="block text-sm font-medium text-text-secondary mb-2">
-              Description of Copyrighted Work *
-            </label>
-            <textarea
-              id="contentDescription"
-              name="contentDescription"
-              value={formData.contentDescription}
-              onChange={handleChange}
-              required
-              rows={3}
-              className="w-full px-4 py-3 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-pink/50 transition-all resize-none"
-              placeholder="Describe the original copyrighted work that you believe has been infringed (e.g., title, creator, publication date)..."
-            />
-          </div>
+          {/* Legal Declarations Section */}
+          <div className="bg-bg-card border border-border-dark rounded-xl p-6">
+            <h2 className="text-lg font-semibold text-text-primary mb-4">Legal Declarations</h2>
+            <p className="text-sm text-text-muted mb-4">
+              You must acknowledge all of the following statements to submit this notice. These declarations
+              are made under penalty of perjury pursuant to 17 U.S.C. &sect; 512(c)(3) and 28 U.S.C. &sect; 1746.
+            </p>
+            <div className="space-y-3">
+              <label className="flex items-start gap-3 cursor-pointer group">
+                <input
+                  type="checkbox"
+                  name="isOwner"
+                  checked={formData.isOwner}
+                  onChange={handleChange}
+                  className="mt-1 w-4 h-4 rounded border-border-dark bg-bg-surface accent-accent-pink"
+                />
+                <span className="text-sm text-text-secondary group-hover:text-text-primary transition-colors">
+                  I am the copyright owner, or I am authorized to act on behalf of the copyright owner
+                  of the work identified above.
+                </span>
+              </label>
 
-          {/* Infringing URL */}
-          <div>
-            <label htmlFor="infringingUrl" className="block text-sm font-medium text-text-secondary mb-2">
-              URL of Infringing Content *
-            </label>
-            <input
-              id="infringingUrl"
-              name="infringingUrl"
-              type="url"
-              value={formData.infringingUrl}
-              onChange={handleChange}
-              required
-              className="w-full h-11 px-4 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-pink/50 transition-all"
-              placeholder="https://thickinfluencers.com/gallery/..."
-            />
-          </div>
+              <label className="flex items-start gap-3 cursor-pointer group">
+                <input
+                  type="checkbox"
+                  name="goodFaith"
+                  checked={formData.goodFaith}
+                  onChange={handleChange}
+                  className="mt-1 w-4 h-4 rounded border-border-dark bg-bg-surface accent-accent-pink"
+                />
+                <span className="text-sm text-text-secondary group-hover:text-text-primary transition-colors">
+                  I have a good faith belief that the use of the material in the manner complained of
+                  is not authorized by the copyright owner, its agent, or the law.
+                </span>
+              </label>
 
-          {/* Reason */}
-          <div>
-            <label htmlFor="reason" className="block text-sm font-medium text-text-secondary mb-2">
-              Reason for Takedown *
-            </label>
-            <select
-              id="reason"
-              name="reason"
-              value={formData.reason}
-              onChange={handleChange}
-              required
-              className="w-full h-11 px-4 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary focus:outline-none focus:border-accent-pink/50 transition-all"
-            >
-              <option value="">Select a reason...</option>
-              <option value="unauthorized-use">Unauthorized use of copyrighted material</option>
-              <option value="not-authorized">I am not authorized to use this content</option>
-              <option value="derivative">Unauthorized derivative work</option>
-              <option value="distribution">Unauthorized distribution or display</option>
-              <option value="other">Other (please describe below)</option>
-            </select>
-          </div>
-
-          {/* Additional Info */}
-          <div>
-            <label htmlFor="additionalInfo" className="block text-sm font-medium text-text-secondary mb-2">
-              Additional Information
-            </label>
-            <textarea
-              id="additionalInfo"
-              name="additionalInfo"
-              value={formData.additionalInfo}
-              onChange={handleChange}
-              rows={3}
-              className="w-full px-4 py-3 bg-bg-surface border border-border-dark rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-pink/50 transition-all resize-none"
-              placeholder="Any additional context or supporting information..."
-            />
+              <label className="flex items-start gap-3 cursor-pointer group">
+                <input
+                  type="checkbox"
+                  name="accuracyPerjury"
+                  checked={formData.accuracyPerjury}
+                  onChange={handleChange}
+                  className="mt-1 w-4 h-4 rounded border-border-dark bg-bg-surface accent-accent-pink"
+                />
+                <span className="text-sm text-text-secondary group-hover:text-text-primary transition-colors">
+                  I declare, under penalty of perjury, that the information in this notification is
+                  accurate and that I am the copyright owner or authorized to act on the copyright
+                  owner&apos;s behalf.
+                </span>
+              </label>
+            </div>
           </div>
 
           {/* Error */}
@@ -198,19 +376,6 @@ export default function TakedownPage() {
               <span>{error}</span>
             </div>
           )}
-
-          {/* Legal notice */}
-          <div className="bg-bg-card border border-border-dark rounded-xl p-5 text-sm text-text-muted leading-relaxed">
-            <p>
-              By submitting this form, you acknowledge that:
-            </p>
-            <ul className="list-disc pl-5 mt-2 space-y-1">
-              <li>You are the copyright owner or authorized to act on their behalf</li>
-              <li>You have a good faith belief that the use is not authorized by law</li>
-              <li>The information in this notice is accurate under penalty of perjury</li>
-              <li>Knowingly submitting a false claim may result in legal liability</li>
-            </ul>
-          </div>
 
           {/* Submit */}
           <div className="flex flex-col sm:flex-row gap-4">

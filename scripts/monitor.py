@@ -48,7 +48,7 @@ PAGES = {
 API_ENDPOINTS = {
     "POST /api/stripe/checkout": ("POST", "/api/stripe/checkout", 401),  # 401 = middleware blocks unauthed
     "POST /api/stripe/webhook": ("POST", "/api/stripe/webhook", 401),    # 401 = middleware blocks
-    "POST /api/public/auth/login": ("POST", "/api/public/auth/login", 401),  # 401 = supabase rejects missing email/password
+    "POST /api/public/auth/login": ("POST", "/api/public/auth/login", 400),  # 400 = missing/invalid credentials
 }
 
 
