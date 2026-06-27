@@ -1,8 +1,12 @@
 // app/api/stripe/checkout/route.ts — Create a Stripe Checkout Session
+//
+// Authentication strategy: reads session from cookies via Supabase SSR,
+// same approach used by middleware.ts. This is the most reliable method.
 
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
-import { createAdminClient } from "@/lib/supabase/server";
+import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { PRICE_IDS } from "@/lib/constants";
 
 export async function POST(request: NextRequest) {
   try {
@@ -17,45 +21,25 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // ── Get authenticated user ──────────────────────────────────────────
-    const supabase = await createAdminClient();
+    // ── Get authenticated user via SSR cookies ──────────────────────────
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-    // Prefer the Authorization header, fall back to cookie-based session
-    const authHeader = request.headers.get("Authorization");
-    let userId: string | undefined;
-    let userEmail: string | undefined;
-
-    if (authHeader?.startsWith("Bearer ")) {
-      const token = authHeader.slice(7);
-      const { data: userData, error: userError } =
-        await supabase.auth.getUser(token);
-      if (userError || !userData.user) {
-        return NextResponse.json(
-          { error: "Invalid or expired token." },
-          { status: 401 },
-        );
-      }
-      userId = userData.user.id;
-      userEmail = userData.user.email ?? undefined;
-    } else {
-      // Fallback: cookie-based session (requires server client)
-      const { createClient } = await import("@/lib/supabase/server");
-      const serverSupabase = await createClient();
-      const {
-        data: { session },
-      } = await serverSupabase.auth.getSession();
-      if (!session?.user) {
-        return NextResponse.json(
-          { error: "Authentication required. No session found." },
-          { status: 401 },
-        );
-      }
-      userId = session.user.id;
-      userEmail = session.user.email ?? undefined;
+    if (!user) {
+      return NextResponse.json(
+        { error: "Authentication required. Please sign in first." },
+        { status: 401 },
+      );
     }
 
+    const userId = user.id;
+    const userEmail = user.email ?? undefined;
+
     // ── Look up package from Supabase ───────────────────────────────────
-    const { data: pkg, error: pkgError } = await supabase
+    const admin = await createAdminClient();
+    const { data: pkg, error: pkgError } = await admin
       .from("packages")
       .select("*")
       .eq("slug", package_slug)
@@ -71,8 +55,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // ── Determine Price ID for subscription ──────────────────────────
-    const { PRICE_IDS } = await import("@/lib/constants");
+    // ── Validate price ID exists ────────────────────────────────────────
+    const priceId = PRICE_IDS[package_slug];
+    if (!priceId) {
+      return NextResponse.json(
+        { error: `No Stripe price configured for package "${package_slug}".` },
+        { status: 500 },
+      );
+    }
 
     // ── Create Stripe Checkout Session ──────────────────────────────────
     const stripe = getStripe();
@@ -82,7 +72,7 @@ export async function POST(request: NextRequest) {
       payment_method_types: ["card"],
       line_items: [
         {
-          price: PRICE_IDS[package_slug],
+          price: priceId,
           quantity: 1,
         },
       ],
