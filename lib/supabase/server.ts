@@ -13,6 +13,7 @@ export async function createClient() {
         path: "/",
         sameSite: "lax",
         secure: process.env.NODE_ENV === "production",
+        maxAge: 60 * 60 * 24 * 365, // 1 year
       },
       cookies: {
         getAll() {
@@ -26,6 +27,7 @@ export async function createClient() {
                 path: "/",
                 sameSite: "lax",
                 secure: process.env.NODE_ENV === "production",
+                maxAge: options?.maxAge ?? 60 * 60 * 24 * 365,
               }),
             );
           } catch {
