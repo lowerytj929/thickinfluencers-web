@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Loader2, Mail, Lock, Eye, EyeOff, Globe, AlertCircle } from "lucide-react";
@@ -19,6 +19,14 @@ function AuthForm() {
   const [localError, setLocalError] = useState<string | null>(null);
   const isSignUp = searchParams.get("mode") === "signup";
   const supabase = createClient();
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        router.push(redirectTo);
+      }
+    });
+  }, [supabase, router, redirectTo]);
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();

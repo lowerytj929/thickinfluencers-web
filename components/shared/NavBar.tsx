@@ -1,7 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { createClient } from '@/lib/supabase/client';
 import {
   Search,
   LogIn,
@@ -9,6 +11,8 @@ import {
   Menu,
   X,
   Flame,
+  User,
+  LogOut,
 } from 'lucide-react';
 
 const navLinks = [
@@ -21,6 +25,28 @@ const navLinks = [
 
 export default function NavBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const router = useRouter();
+  const supabase = createClient();
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [supabase]);
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    router.push('/');
+    router.refresh();
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass">
@@ -52,20 +78,41 @@ export default function NavBar() {
 
         {/* Right: Auth buttons (desktop) */}
         <div className="hidden md:flex items-center gap-3">
-          <Link
-            href="/auth"
-            className="btn-secondary text-sm !py-2 !px-5"
-          >
-            <LogIn className="w-4 h-4" />
-            Login
-          </Link>
-          <Link
-            href="/auth"
-            className="btn-primary text-sm !py-2 !px-5"
-          >
-            <UserPlus className="w-4 h-4" />
-            Sign Up
-          </Link>
+          {user ? (
+            <>
+              <Link
+                href="/dashboard"
+                className="btn-primary text-sm !py-2 !px-5 flex items-center gap-2"
+              >
+                <User className="w-4 h-4" />
+                Dashboard
+              </Link>
+              <button
+                onClick={handleSignOut}
+                className="btn-secondary text-sm !py-2 !px-4 flex items-center gap-1.5 hover:text-red-400 hover:border-red-400/30"
+              >
+                <LogOut className="w-4 h-4" />
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/auth"
+                className="btn-secondary text-sm !py-2 !px-5"
+              >
+                <LogIn className="w-4 h-4" />
+                Login
+              </Link>
+              <Link
+                href="/auth"
+                className="btn-primary text-sm !py-2 !px-5"
+              >
+                <UserPlus className="w-4 h-4" />
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile: Hamburger */}
@@ -97,22 +144,47 @@ export default function NavBar() {
               );
             })}
             <hr className="border-border-dark my-3" />
-            <Link
-              href="/auth"
-              className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-text-secondary rounded-lg hover:text-accent-pink hover:bg-white/5 transition-all"
-              onClick={() => setMobileOpen(false)}
-            >
-              <LogIn className="w-5 h-5" />
-              Login
-            </Link>
-            <Link
-              href="/auth"
-              className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-accent-pink rounded-lg hover:bg-white/5 transition-all"
-              onClick={() => setMobileOpen(false)}
-            >
-              <UserPlus className="w-5 h-5" />
-              Sign Up
-            </Link>
+            {user ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-accent-pink rounded-lg hover:bg-white/5 transition-all"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  <User className="w-5 h-5" />
+                  My Dashboard / Profile
+                </Link>
+                <button
+                  onClick={() => {
+                    setMobileOpen(false);
+                    handleSignOut();
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-400 rounded-lg hover:bg-white/5 transition-all text-left"
+                >
+                  <LogOut className="w-5 h-5" />
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/auth"
+                  className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-text-secondary rounded-lg hover:text-accent-pink hover:bg-white/5 transition-all"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  <LogIn className="w-5 h-5" />
+                  Login
+                </Link>
+                <Link
+                  href="/auth"
+                  className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-accent-pink rounded-lg hover:bg-white/5 transition-all"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  <UserPlus className="w-5 h-5" />
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}

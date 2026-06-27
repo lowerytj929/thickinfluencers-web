@@ -9,7 +9,7 @@ const tabs = [
   { label: 'Search', href: '/search', icon: Search },
   { label: 'Trending', href: '/search?sort=trending', icon: Flame },
   { label: 'Premium', href: '/premium', icon: Crown },
-  { label: 'Profile', href: '/auth', icon: User },
+  { label: 'Profile', href: '/dashboard', icon: User },
 ];
 
 export default function MobileNav() {
