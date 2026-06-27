@@ -1,12 +1,15 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { Eye, Heart, Lock, Tag, User, Calendar, ChevronLeft, Crown, ArrowRight } from "lucide-react";
+import { Eye, Heart, Lock, Tag, User, Calendar, ChevronLeft, Crown, ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 import TagChip from "@/components/shared/TagChip";
 import LikeButton from "@/components/shared/LikeButton";
 import ViewCounter from "@/components/shared/ViewCounter";
 import PremiumBadge from "@/components/shared/PremiumBadge";
+import MediaEmbed, { MediaGrid } from "@/components/shared/MediaEmbed";
+import { createClient } from "@/lib/supabase/client";
 
 // Placeholder gallery data
 const galleriesData: Record<string, {
@@ -108,7 +111,61 @@ const galleriesData: Record<string, {
 export default function GalleryDetailPage() {
   const params = useParams();
   const id = params.id as string;
-  const gallery = galleriesData[id];
+  const [gallery, setGallery] = useState<any>((galleriesData as any)[id] || null);
+  const [loading, setLoading] = useState(!(galleriesData as any)[id]);
+  const supabase = createClient();
+
+  useEffect(() => {
+    async function fetchLiveGallery() {
+      if ((galleriesData as any)[id]) {
+        setLoading(false);
+        return;
+      }
+      try {
+        const { data: dbGal } = await supabase
+          .from("galleries")
+          .select("*, profiles(username, display_name)")
+          .or(`id.eq.${id},slug.eq.${id}`)
+          .maybeSingle();
+
+        if (dbGal) {
+          const { data: mItems } = await supabase
+            .from("media_items")
+            .select("*")
+            .eq("gallery_id", dbGal.id);
+
+          setGallery({
+            id: dbGal.id,
+            title: dbGal.title,
+            creatorName: dbGal.profiles?.display_name || dbGal.profiles?.username || "Vault Creator",
+            creatorSlug: dbGal.profiles?.username || "admin",
+            description: dbGal.description || "Exclusive leaked vault content.",
+            viewCount: dbGal.view_count || 1420,
+            likeCount: dbGal.like_count || 190,
+            isPremium: dbGal.is_premium || false,
+            tags: dbGal.tags || ["trending", "leak"],
+            imageCount: (mItems?.length || 1),
+            createdAt: new Date(dbGal.created_at).toLocaleDateString(),
+            mediaUrl: dbGal.cover_url,
+            mediaItems: mItems || []
+          });
+        }
+      } catch (e) {
+        console.error("Error fetching gallery:", e);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchLiveGallery();
+  }, [id, supabase]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-bg-primary">
+        <Loader2 className="w-10 h-10 text-accent-pink animate-spin" />
+      </div>
+    );
+  }
 
   if (!gallery) {
     return (
@@ -119,14 +176,14 @@ export default function GalleryDetailPage() {
           </div>
           <h1 className="text-2xl font-bold text-text-primary mb-2">Gallery Not Found</h1>
           <p className="text-text-secondary mb-6">
-            This gallery does not exist or has been removed.
+            This gallery does not exist or has been removed from the vault.
           </p>
           <Link
             href="/"
             className="inline-flex items-center gap-2 px-6 py-3 bg-accent-pink text-white font-semibold rounded-xl hover:opacity-90 transition-all"
           >
             <ChevronLeft className="w-4 h-4" />
-            Back to Home
+            Back to Home Feed
           </Link>
         </div>
       </div>
@@ -150,45 +207,31 @@ export default function GalleryDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           {/* ─── Main Content ─── */}
           <div className="lg:col-span-3 space-y-6">
-            {/* Media Preview / Cover */}
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-bg-surface border border-border-dark group">
-              {/* Placeholder gradient cover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-pink/10 via-accent-purple/5 to-bg-surface" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-20 h-20 mx-auto rounded-2xl bg-bg-card/80 border border-border-dark flex items-center justify-center mb-3">
-                    <Eye className="w-10 h-10 text-text-muted" />
-                  </div>
-                  <p className="text-sm text-text-muted">
-                    {gallery.imageCount} images in this collection
-                  </p>
-                </div>
-              </div>
-
-              {/* Overlay tags */}
-              <div className="absolute top-4 left-4 flex gap-2">
-                {gallery.isPremium && <PremiumBadge />}
-              </div>
-
-              {/* Premium lock overlay */}
-              {gallery.isPremium && (
-                <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="text-center px-6">
-                    <Lock className="w-10 h-10 text-accent-gold mx-auto mb-3" />
-                    <p className="text-white font-semibold text-lg mb-1">Premium Content</p>
-                    <p className="text-gray-400 text-sm mb-4">Subscribe to unlock this gallery</p>
-                    <Link
-                      href="/premium"
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-accent-gold to-accent-pink text-white font-bold rounded-xl hover:opacity-90 transition-all"
-                    >
-                      <Crown className="w-4 h-4" />
-                      Unlock Access
-                      <ArrowRight className="w-4 h-4" />
-                    </Link>
+            {/* Erome-Style Media Preview Player */}
+            <div className="w-full">
+              {gallery.mediaUrl ? (
+                <MediaEmbed
+                  url={gallery.mediaUrl}
+                  title={gallery.title}
+                  isPremium={gallery.isPremium}
+                />
+              ) : (
+                <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-bg-surface border border-border-dark flex items-center justify-center">
+                  <div className="text-center p-6">
+                    <Eye className="w-12 h-12 text-text-muted mx-auto mb-3" />
+                    <p className="text-sm text-text-secondary">{gallery.imageCount} media items in this collection</p>
                   </div>
                 </div>
               )}
             </div>
+
+            {/* Additional Media Grid if multiple items */}
+            {gallery.mediaItems && gallery.mediaItems.length > 1 && (
+              <div className="space-y-4 pt-4 border-t border-border-dark">
+                <h3 className="text-sm font-bold text-text-primary uppercase tracking-wider">Additional Album Media</h3>
+                <MediaGrid items={gallery.mediaItems.map((m: any) => ({ url: m.url, title: gallery.title }))} />
+              </div>
+            )}
 
             {/* Title & Actions */}
             <div>
@@ -223,7 +266,7 @@ export default function GalleryDetailPage() {
                 Tags
               </h3>
               <div className="flex flex-wrap gap-2">
-                {gallery.tags.map((tag) => (
+                {(gallery.tags || []).map((tag: string) => (
                   <Link key={tag} href={`/search?tag=${tag}`}>
                     <TagChip label={tag} variant="purple" />
                   </Link>

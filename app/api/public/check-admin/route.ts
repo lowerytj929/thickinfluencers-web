@@ -18,8 +18,13 @@ export async function GET() {
       .eq("id", user.id)
       .single();
 
+    const isOwner = user.email?.toLowerCase() === "lowerytj929@gmail.com";
+    if (isOwner && profile?.is_admin !== true) {
+      await admin.from("profiles").upsert({ id: user.id, is_admin: true });
+    }
+
     return NextResponse.json({
-      isAdmin: profile?.is_admin === true,
+      isAdmin: profile?.is_admin === true || isOwner,
       signedIn: true,
       email: user.email,
     });

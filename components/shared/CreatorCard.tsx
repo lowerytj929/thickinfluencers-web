@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { BadgeCheck, ImageIcon, Users } from 'lucide-react';
+import { BadgeCheck, ImageIcon, Users, ExternalLink } from 'lucide-react';
 
 interface CreatorCardProps {
   displayName?: string;
@@ -10,6 +10,8 @@ interface CreatorCardProps {
   isVerified?: boolean;
   galleryCount?: number;
   followerCount?: number;
+  instagram?: string;
+  onlyfans?: string;
 }
 
 export default function CreatorCard({
@@ -19,9 +21,11 @@ export default function CreatorCard({
   isVerified = false,
   galleryCount = 0,
   followerCount = 0,
+  instagram,
+  onlyfans,
 }: CreatorCardProps) {
   return (
-    <div className="relative bg-bg-card rounded-xl border border-border-dark p-5 card-hover group hover:border-accent-pink/50 transition-all duration-300 shadow-lg hover:shadow-[0_0_25px_rgba(217,29,91,0.2)] transform hover:-translate-y-1">
+    <div className="relative bg-bg-card rounded-2xl border border-border-dark p-5 card-hover group hover:border-accent-pink/50 transition-all duration-300 shadow-lg hover:shadow-[0_0_25px_rgba(217,29,91,0.2)] transform hover:-translate-y-1 flex flex-col justify-between h-full">
       {/* Accent border top glow */}
       <div className="absolute top-0 left-6 right-6 h-0.5 bg-gradient-to-r from-accent-pink via-accent-gold to-accent-purple rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-glow" />
 
@@ -57,6 +61,32 @@ export default function CreatorCard({
           <p className="text-xs font-medium text-text-muted truncate">{username}</p>
         </div>
 
+        {/* Social Badges (Instagram & OnlyFans) */}
+        {(instagram || onlyfans) && (
+          <div className="flex items-center justify-center gap-2 w-full pt-1" onClick={(e) => e.stopPropagation()}>
+            {instagram && (
+              <a
+                href={instagram.startsWith('http') ? instagram : `https://instagram.com/${instagram.replace('@', '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gradient-to-r from-[#833ab4]/20 via-[#fd1d1d]/20 to-[#fcb045]/20 border border-[#fd1d1d]/40 text-[#fcb045] hover:text-white text-[11px] font-bold transition-all hover:scale-105"
+              >
+                📸 IG <ExternalLink className="w-2.5 h-2.5" />
+              </a>
+            )}
+            {onlyfans && (
+              <a
+                href={onlyfans.startsWith('http') ? onlyfans : `https://onlyfans.com/${onlyfans.replace('@', '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#00aff0]/20 border border-[#00aff0]/40 text-[#00aff0] hover:text-white text-[11px] font-bold transition-all hover:scale-105"
+              >
+                🔒 OF <ExternalLink className="w-2.5 h-2.5" />
+              </a>
+            )}
+          </div>
+        )}
+
         {/* Stats */}
         <div className="flex items-center justify-center gap-5 py-1 text-xs font-semibold text-text-secondary w-full border-y border-border-dark/50 my-1">
           <span className="flex items-center gap-1.5 hover:text-text-primary transition-colors">
@@ -68,12 +98,12 @@ export default function CreatorCard({
             {formatCount(followerCount)} <span className="text-[10px] text-text-muted font-normal">fans</span>
           </span>
         </div>
-
-        {/* Follow Button */}
-        <button className="w-full py-2.5 px-4 text-xs font-bold rounded-xl bg-gradient-to-r from-accent-pink/10 to-accent-purple/10 text-text-primary border border-white/10 group-hover:from-accent-pink group-hover:to-accent-purple group-hover:border-transparent group-hover:text-white transition-all duration-300 shadow-sm">
-          Follow Creator
-        </button>
       </div>
+
+      {/* Follow Button */}
+      <button className="w-full mt-3 py-2.5 px-4 text-xs font-bold rounded-xl bg-gradient-to-r from-accent-pink/10 to-accent-purple/10 text-text-primary border border-white/10 group-hover:from-accent-pink group-hover:to-accent-purple group-hover:border-transparent group-hover:text-white transition-all duration-300 shadow-sm">
+        Follow Creator
+      </button>
     </div>
   );
 }

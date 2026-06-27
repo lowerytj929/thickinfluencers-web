@@ -1,10 +1,12 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { ArrowRight, Crown, Eye, Heart, Sparkles, Lock, Users, ChevronRight, MessageCircle, AtSign, ExternalLink, Send } from "lucide-react";
 import Link from "next/link";
 import MediaCard from "@/components/shared/MediaCard";
 import CreatorCard from "@/components/shared/CreatorCard";
 import TagChip from "@/components/shared/TagChip";
+import { createClient } from "@/lib/supabase/client";
 
 const trendingGalleries = [
   { id: "1", title: "Summer Collection 2025", creatorName: "Aria Mitchell", viewCount: 28400, likeCount: 3200, isPremium: false, tags: ["summer", "photography", "lifestyle"] },
@@ -18,14 +20,14 @@ const trendingGalleries = [
 ];
 
 const featuredCreators = [
-  { displayName: "Aria Mitchell", username: "@ariamitchell", isVerified: true, galleryCount: 24, followerCount: 45800 },
-  { displayName: "Marcus Chen", username: "@marcuschen", isVerified: true, galleryCount: 18, followerCount: 32100 },
-  { displayName: "Sofia Torres", username: "@sofiatorres", isVerified: false, galleryCount: 31, followerCount: 28900 },
-  { displayName: "Elena Voss", username: "@elenavoss", isVerified: true, galleryCount: 15, followerCount: 51200 },
-  { displayName: "Jade Rivera", username: "@jaderivera", isVerified: false, galleryCount: 22, followerCount: 19400 },
-  { displayName: "Liam Nakamura", username: "@liamnaka", isVerified: true, galleryCount: 27, followerCount: 63700 },
-  { displayName: "Zoe Hart", username: "@zoehart", isVerified: false, galleryCount: 12, followerCount: 15300 },
-  { displayName: "Olivia Grant", username: "@oliviagrant", isVerified: true, galleryCount: 35, followerCount: 78400 },
+  { displayName: "Gracie Bon", username: "@graciebon", isVerified: true, galleryCount: 42, followerCount: 5400000, instagram: "graciebon", onlyfans: "graciebon" },
+  { displayName: "Sammy Draper", username: "@sammydraper", isVerified: true, galleryCount: 38, followerCount: 1800000, instagram: "sammydraper", onlyfans: "sammydraper" },
+  { displayName: "Sophie Hall", username: "@sophiehall", isVerified: true, galleryCount: 31, followerCount: 2200000, instagram: "sophiehall", onlyfans: "sophiehall" },
+  { displayName: "Mia Malkova", username: "@miamalkova", isVerified: true, galleryCount: 64, followerCount: 11000000, instagram: "miamalkova", onlyfans: "miamalkova" },
+  { displayName: "Abella Danger", username: "@abelladanger", isVerified: true, galleryCount: 55, followerCount: 9500000, instagram: "abelladanger", onlyfans: "abelladanger" },
+  { displayName: "Violet Myers", username: "@violetmyers", isVerified: true, galleryCount: 47, followerCount: 3400000, instagram: "waifu_violet", onlyfans: "violetmyers" },
+  { displayName: "Moriah Mills", username: "@moriahmills", isVerified: true, galleryCount: 29, followerCount: 4100000, instagram: "moriahmills", onlyfans: "moriahmills" },
+  { displayName: "Angela White", username: "@angelawhite", isVerified: true, galleryCount: 72, followerCount: 8900000, instagram: "theangelawhite", onlyfans: "angelawhite" },
 ];
 
 const premiumTiers = [
@@ -47,6 +49,34 @@ const categories = [
 ];
 
 export default function HomePage() {
+  const [liveGalleries, setLiveGalleries] = useState<any[]>([]);
+  const supabase = createClient();
+
+  useEffect(() => {
+    supabase
+      .from("galleries")
+      .select("*, profiles(username, display_name)")
+      .eq("visibility", "public")
+      .order("created_at", { ascending: false })
+      .limit(12)
+      .then(({ data }) => {
+        if (data && data.length > 0) {
+          const mapped = data.map((g: any) => ({
+            id: g.slug || g.id,
+            title: g.title,
+            creatorName: g.profiles?.display_name || g.profiles?.username || "Vault Admin",
+            viewCount: g.view_count || 1240,
+            likeCount: g.like_count || 180,
+            isPremium: g.is_premium || false,
+            tags: g.tags || ["vault", "trending"],
+          }));
+          setLiveGalleries(mapped);
+        }
+      });
+  }, [supabase]);
+
+  const displayedGalleries = [...liveGalleries, ...trendingGalleries];
+
   return (
     <div className="flex flex-col w-full">
       {/* ─── Hero Section ─── */}
@@ -143,7 +173,7 @@ export default function HomePage() {
           </Link>
         </div>
         <div className="grid-gallery">
-          {trendingGalleries.map((gallery) => (
+          {displayedGalleries.map((gallery) => (
             <Link key={gallery.id} href={`/gallery/${gallery.id}`}>
               <MediaCard
                 title={gallery.title}
@@ -171,18 +201,18 @@ export default function HomePage() {
       <section className="w-full max-w-7xl mx-auto px-4 py-16 md:py-24 border-t border-border-dark">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-2">
-              Vault Creators
+            <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-2 flex items-center gap-2">
+              🔥 Popular Models & IG/OF Stars
             </h2>
             <p className="text-sm text-text-secondary">
-              Top talent in the empire&apos;s collection
+              Featuring top verified creators from Instagram and OnlyFans
             </p>
           </div>
           <Link
             href="/search?filter=creators"
             className="hidden sm:flex items-center gap-1 text-sm text-accent-pink hover:text-accent-pink/80 transition-colors font-medium"
           >
-            All Vault Creators
+            All Featured Models
             <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
@@ -195,6 +225,8 @@ export default function HomePage() {
                 isVerified={creator.isVerified}
                 galleryCount={creator.galleryCount}
                 followerCount={creator.followerCount}
+                instagram={creator.instagram}
+                onlyfans={creator.onlyfans}
               />
             </Link>
           ))}
