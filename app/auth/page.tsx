@@ -7,14 +7,14 @@ import { Loader2, Mail, Lock, Eye, EyeOff, AlertCircle, CheckCircle2, Globe } fr
 import Link from "next/link";
 
 function AuthForm() {
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(searchParams.get("mode") === "signup");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState<{ type: "error" | "success"; text: string } | null>(null);
   const router = useRouter();
-  const searchParams = useSearchParams();
   const supabase = createClient();
 
   // Handle redirect param
