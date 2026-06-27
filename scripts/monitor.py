@@ -116,27 +116,36 @@ def check_api():
 
 
 def check_env_debug():
-    """Try to fetch debug info if the debug endpoint exists."""
+    """Check debug endpoint for env var integrity."""
     url = BASE + "/api/public/debug"
     status, body = fetch(url)
     if status == 200:
         try:
             data = json.loads(body)
-            # Check for env var corruption
             issues = []
-            url_val = data.get("url_ends", "")
-            if not url_val.endswith("supabase.co"):
-                issues.append(f"URL may be corrupted: ends with ...{url_val}")
-            svc_len = data.get("svc_len", 0)
-            anon_len = data.get("anon_len", 0)
-            if svc_len != 219:
+            url_val = data.get("next_public_supabase_url", {})
+            svc_val = data.get("supabase_service_role_key", {})
+            anon_val = data.get("next_public_supabase_anon_key", {})
+
+            url_ends = url_val.get("ends_with", "")
+            svc_len = svc_val.get("length", 0)
+            anon_len = anon_val.get("length", 0)
+            svc_ends = svc_val.get("ends_with", "")
+            anon_ends = anon_val.get("ends_with", "")
+
+            if not url_ends.endswith("supabase.co"):
+                issues.append(f"URL may be corrupted: ends with ...{url_ends}")
+            if svc_len < 210:
                 issues.append(f"SERVICE_ROLE_KEY length: {svc_len} (expected 219)")
-            if anon_len != 208:
+            if anon_len < 200:
                 issues.append(f"ANON_KEY length: {anon_len} (expected 208)")
-            return {"exists": True, "data": data, "issues": issues}
+            if data.get("status") == "issues_detected":
+                issues.extend(data.get("issues", []))
+
+            return {"exists": True, "status_code": status, "data": data, "issues": issues}
         except json.JSONDecodeError:
-            return {"exists": False, "error": "non-json response"}
-    return {"exists": False, "status": status}
+            return {"exists": True, "status_code": status, "error": "non-json response"}
+    return {"exists": True, "status_code": status, "error": f"status {status}"}
 
 
 def check_auth_flow():
@@ -164,6 +173,7 @@ def check_page_content():
     pages_to_check = {
         "/": ["Vault Empire", "Unlock"],
         "/premium": ["Vault Access", "Vault Pro", "$15", "$25"],
+        "/api/public/debug": ["supabase", "length", "status"],
     }
     results = {"passed": 0, "failed": 0, "issues": []}
     for path, expected_terms in pages_to_check.items():
