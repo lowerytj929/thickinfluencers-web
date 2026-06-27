@@ -28,6 +28,19 @@ const featuredCreators = [
   { displayName: "Violet Myers", username: "@violetmyers", isVerified: true, galleryCount: 47, followerCount: 3400000, instagram: "waifu_violet", onlyfans: "violetmyers", avatarSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Violet_Myers_(hru,_2022,_23minA).jpg?width=600" },
   { displayName: "Moriah Mills", username: "@moriahmills", isVerified: true, galleryCount: 29, followerCount: 4100000, instagram: "moriahmills", onlyfans: "moriahmills", avatarSrc: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&auto=format&fit=crop&q=80" },
   { displayName: "Angela White", username: "@angelawhite", isVerified: true, galleryCount: 72, followerCount: 8900000, instagram: "theangelawhite", onlyfans: "angelawhite", avatarSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Angela_White_2019_by_Glenn_Francis_(cropped).jpg?width=600" },
+  { displayName: "Zoe Spencer", username: "@zoespencer", isVerified: true, galleryCount: 34, followerCount: 2400000, instagram: "zoespencer", onlyfans: "zoespencer", avatarSrc: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80" },
+  { displayName: "Aspen Kartier", username: "@aspenkartier", isVerified: true, galleryCount: 28, followerCount: 1800000, instagram: "aspenkartier", onlyfans: "aspenkartier", avatarSrc: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80" },
+  { displayName: "Amouranth", username: "@amouranth", isVerified: true, galleryCount: 88, followerCount: 9200000, instagram: "amouranth", onlyfans: "amouranth", avatarSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Amouranth_in_2022.jpg?width=600" },
+  { displayName: "Corinna Kopf", username: "@corinnakopf", isVerified: true, galleryCount: 52, followerCount: 6400000, instagram: "corinnakopf", onlyfans: "corinnakopf", avatarSrc: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&auto=format&fit=crop&q=80" },
+];
+
+const twitchClipsData = [
+  { id: "15", title: "Zoe Spencer VIP Wardrobe Try-On & Slip Compilation", creatorName: "Zoe Spencer", viewCount: 64200, likeCount: 8900, isPremium: false, tag: "Viral Slip", duration: "12:45", imageSrc: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80" },
+  { id: "16", title: "Aspen Kartier Uncensored Poolside Stream Highlights", creatorName: "Aspen Kartier", viewCount: 58100, likeCount: 7400, isPremium: true, tag: "Live Stream", duration: "18:20", imageSrc: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80" },
+  { id: "17", title: "Amouranth Hot Tub Stream Viral Malfunction & Slips Vault", creatorName: "Amouranth", viewCount: 112000, likeCount: 18400, isPremium: false, tag: "Twitch Slip", duration: "24:10", imageSrc: "https://commons.wikimedia.org/wiki/Special:FilePath/Amouranth_in_2022.jpg?width=600" },
+  { id: "18", title: "Celeb Slips: Corinna VIP Stream Afterparty Leaks", creatorName: "Corinna Kopf", viewCount: 94300, likeCount: 15100, isPremium: true, tag: "Celeb Slip", duration: "15:30", imageSrc: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&auto=format&fit=crop&q=80" },
+  { id: "19", title: "Sky Bri Podcast Raw Cut & Behind The Scenes Slips", creatorName: "Sky Bri", viewCount: 82100, likeCount: 12300, isPremium: false, tag: "Raw Cut", duration: "21:15", imageSrc: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&auto=format&fit=crop&q=80" },
+  { id: "20", title: "Alinity Gaming Chair Wardrobe Slip & Viral Twitch Clip", creatorName: "Alinity", viewCount: 76500, likeCount: 9800, isPremium: false, tag: "Twitch Clip", duration: "08:50", imageSrc: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&auto=format&fit=crop&q=80" },
 ];
 
 const premiumTiers = [
@@ -235,6 +248,47 @@ export default function HomePage() {
                 instagram={creator.instagram}
                 onlyfans={creator.onlyfans}
                 avatarSrc={creator.avatarSrc}
+              />
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ─── Twitch Clips & Celeb Slips Section ─── */}
+      <section className="w-full max-w-7xl mx-auto px-4 py-16 md:py-24 border-t border-border-dark bg-bg-surface/30 rounded-3xl my-8">
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-2 flex items-center gap-2">
+              🎮 Twitch Clips & Celeb Slips Vault
+            </h2>
+            <div className="flex flex-wrap items-center gap-2">
+              <p className="text-sm text-text-secondary">
+                Viral live stream highlights, unedited wardrobe slips, and exclusive try-on moments matching the brand aesthetic
+              </p>
+              <span className="inline-block px-2 py-0.5 rounded text-[10px] bg-bg-card border border-border-dark text-text-muted font-medium">
+                ⚖️ Fair Use News & Commentary Aggregator — Public Highlights
+              </span>
+            </div>
+          </div>
+          <Link
+            href="/search?filter=clips"
+            className="flex items-center gap-1 text-sm text-accent-pink hover:text-accent-pink/80 transition-colors font-medium self-start md:self-auto"
+          >
+            Explore All Clips
+            <ChevronRight className="w-4 h-4" />
+          </Link>
+        </div>
+        <div className="grid-gallery">
+          {twitchClipsData.map((clip) => (
+            <Link key={clip.id} href={`/gallery/${clip.id}`}>
+              <MediaCard
+                title={clip.title}
+                creatorName={clip.creatorName}
+                viewCount={clip.viewCount}
+                likeCount={clip.likeCount}
+                isPremium={clip.isPremium}
+                tags={[clip.tag, clip.duration]}
+                imageSrc={clip.imageSrc}
               />
             </Link>
           ))}
