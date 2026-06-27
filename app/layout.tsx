@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import NavBar from '@/components/shared/NavBar';
@@ -58,6 +58,12 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#0a0a0f',
 };
 
 export default function RootLayout({
