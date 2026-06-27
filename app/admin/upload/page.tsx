@@ -3,14 +3,14 @@
 import { useState, useRef, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { ensureBucket, uploadMedia } from "@/lib/media";
-import { Upload, FileVideo, FileImage, Loader2, CheckCircle, AlertCircle, ArrowLeft, X } from "lucide-react";
+import { Upload, FileVideo, FileImage, Loader2, CheckCircle, AlertCircle, ArrowLeft, X, User, Shield } from "lucide-react";
 import Link from "next/link";
 
 export default function AdminUploadPage() {
   const [files, setFiles] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
   const [results, setResults] = useState<{ name: string; status: "ok" | "error"; msg: string }[]>([]);
-  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+  const [authState, setAuthState] = useState<"loading" | "not_signed_in" | "not_admin" | "ok">("loading");
   const [title, setTitle] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const supabase = createClient();
@@ -18,10 +18,10 @@ export default function AdminUploadPage() {
   // Check admin access (runs client-side only)
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
-      if (!user) { window.location.href = "/auth?redirect=/admin/upload"; return; }
+      if (!user) { setAuthState("not_signed_in"); return; }
       supabase.from("profiles").select("is_admin").eq("id", user.id).single().then(({ data }) => {
-        if (!data?.is_admin) { window.location.href = "/dashboard"; return; }
-        setIsAdmin(true);
+        if (!data?.is_admin) { setAuthState("not_admin"); return; }
+        setAuthState("ok");
         ensureBucket();
       });
     });
@@ -75,10 +75,49 @@ export default function AdminUploadPage() {
     setTitle("");
   };
 
-  if (isAdmin === null) {
+  if (authState === "loading") {
     return (
       <div className="min-h-screen bg-bg-primary flex items-center justify-center">
         <Loader2 className="w-8 h-8 text-accent-pink animate-spin" />
+      </div>
+    );
+  }
+
+  if (authState === "not_signed_in") {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-bg-primary px-4">
+        <div className="text-center max-w-md">
+          <div className="w-16 h-16 rounded-full bg-accent-pink/10 flex items-center justify-center mx-auto mb-6">
+            <User className="w-8 h-8 text-accent-pink" />
+          </div>
+          <h1 className="text-2xl font-bold text-text-primary mb-3">Not Signed In</h1>
+          <p className="text-text-secondary mb-8 text-sm">
+            Sign up or sign in to upload content to the vault.
+          </p>
+          <Link href="/auth" className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-accent-pink to-accent-purple text-white font-semibold rounded-xl hover:opacity-90 transition-all text-sm">
+            <User className="w-4 h-4" />
+            Sign In
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (authState === "not_admin") {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-bg-primary px-4">
+        <div className="text-center max-w-md">
+          <div className="w-16 h-16 rounded-full bg-yellow-900/20 flex items-center justify-center mx-auto mb-6">
+            <Shield className="w-8 h-8 text-yellow-400" />
+          </div>
+          <h1 className="text-2xl font-bold text-text-primary mb-3">Admin Access Required</h1>
+          <p className="text-text-secondary mb-8 text-sm">
+            You need admin privileges to upload content. Contact support if you need access.
+          </p>
+          <Link href="/dashboard" className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent-pink text-white font-semibold rounded-xl hover:opacity-90 transition-all text-sm">
+            Go to Dashboard
+          </Link>
+        </div>
       </div>
     );
   }
